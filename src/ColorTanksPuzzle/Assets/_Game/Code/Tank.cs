@@ -24,8 +24,9 @@ namespace _Game.Code
         
         public void StartMove()
         {
-            _isMoving = true;
+            _currentLengthPercentage = 0f;
             StopMoveCoroutine();
+            _isMoving = true;
             _moveCoroutine = StartCoroutine(Move());
         }
 
@@ -48,9 +49,9 @@ namespace _Game.Code
 
                 if (_currentLengthPercentage >= 1)
                 {
-                    CirclePassed?.Invoke(this);
-                    _isMoving = false;
                     StopMoveCoroutine();
+                    _isMoving = false;
+                    CirclePassed?.Invoke(this);
                 }
 
                 yield return null;

@@ -1,42 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace _Game.Code
 {
-    public class WaitingArea
+    public class WaitingArea : MonoBehaviour
     {
-        private const int CellCount = 5;
-        
-        private List<Tank> _tanks = new();
-        
-        public event Action<Tank> Added;
-        public event Action<Tank> Removed;
+        [SerializeField] private List<WaitingAreaCell> _waitingAreaCells;
 
-        public bool Contains(Tank tank) => 
-            _tanks.Contains(tank);
+        private int _freeCellsCount;
         
+        public event Action Overflowed;
+
+        private void Awake()
+        {
+            _freeCellsCount = _waitingAreaCells.Count;
+        }
+
         public void Add(Tank tank)
         {
-            if (tank == null)
+            if (tank is null)
                 throw new ArgumentNullException(nameof(tank));
             
-            if (_tanks.Count > CellCount)
-                throw new IndexOutOfRangeException();
-            
-            _tanks.Add(tank);
-            Added?.Invoke(tank);
+            if (_freeCellsCount <= 0)
+            {
+                Overflowed?.Invoke();
+            }
+            else
+            {
+                _freeCellsCount--;
+                WaitingAreaCell waitingAreaCell = GetFreeCell();
+                waitingAreaCell.TakeOver(tank);
+                tank.transform.position = waitingAreaCell.PointPosition;
+            }
         }
 
         public void Remove(Tank tank)
         {
-            if (tank == null)
+            if (tank is null)
                 throw new ArgumentNullException(nameof(tank));
             
-            if (_tanks.Count < CellCount)
+            if (_freeCellsCount >= _waitingAreaCells.Count)
                 throw new IndexOutOfRangeException();
+
+            _freeCellsCount++;
+            WaitingAreaCell waitingAreaCell = GetTakenCell(tank);
+            waitingAreaCell.Release();
+            tank.StartMove();
+        }
+        
+        private WaitingAreaCell GetFreeCell()
+        {
+            WaitingAreaCell waitingAreaCell = _waitingAreaCells.FirstOrDefault(cell => cell.IsFree);
+
+            if (waitingAreaCell is null)
+                throw new ArgumentNullException(nameof(waitingAreaCell));
             
-            _tanks.Remove(tank);
-            Removed?.Invoke(tank);
+            return waitingAreaCell;
+        }
+
+        private WaitingAreaCell GetTakenCell(Tank tank)
+        {
+            WaitingAreaCell waitingAreaCell = _waitingAreaCells.FirstOrDefault(cell => cell.TakenTank.Equals(tank));
+
+            if (waitingAreaCell is null)
+                throw new ArgumentNullException(nameof(waitingAreaCell));
+            
+            return waitingAreaCell;
         }
     }
 }

@@ -374,6 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.TankSpawner
   _tankPrefab: {fileID: 3446851137628028536, guid: 41ae821ffcd320c43a1fc915c52d207d, type: 3}
+  _spline: {fileID: 1553780077}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,9 +521,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 391172779}
-  - component: {fileID: 391172780}
+  - component: {fileID: 391172781}
+  - component: {fileID: 391172782}
   m_Layer: 0
-  m_Name: WaitingAreaView
+  m_Name: WaitingArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -548,7 +550,7 @@ Transform:
   - {fileID: 94507947}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &391172780
+--- !u!114 &391172781
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -557,15 +559,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 391172778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 880abdce39bb43009afcc01a84408f64, type: 3}
+  m_Script: {fileID: 11500000, guid: ff890fe4deab4d4db84b8a358a0dab55, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.WaitingAreaView
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.WaitingArea
   _waitingAreaCells:
   - {fileID: 2137977532}
   - {fileID: 126673785}
   - {fileID: 753828393}
   - {fileID: 1144498949}
   - {fileID: 94507948}
+--- !u!114 &391172782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391172778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78874f9aa5fa40899c3578b4c9d84406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.WaitingAreaCircle
+  _waitingArea: {fileID: 391172781}
+  _tankSpawner: {fileID: 175000583}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,53 +907,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753828391}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &762818494
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 762818495}
-  - component: {fileID: 762818496}
-  m_Layer: 0
-  m_Name: CompositeRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &762818495
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 762818494}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &762818496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 762818494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d53f78ccc89e43959aaefd98a34400d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.CompositeRoot
-  _waitingAreaView: {fileID: 391172780}
-  _tankSpawner: {fileID: 175000583}
-  _spline: {fileID: 1553780077}
 --- !u!1 &969206262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,7 +1288,7 @@ MonoBehaviour:
           z: 0
           w: 1
     - Position:
-        x: -16
+        x: -16.5
         y: 0
         z: 27.5
       TangentIn:
@@ -1337,7 +1306,7 @@ MonoBehaviour:
           z: 0
           w: -0.00000004371139
     - Position:
-        x: -16
+        x: -16.5
         y: 0
         z: 5
       TangentIn:
@@ -1540,6 +1509,5 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 1553780078}
-  - {fileID: 762818495}
-  - {fileID: 391172779}
   - {fileID: 175000582}
+  - {fileID: 391172779}
