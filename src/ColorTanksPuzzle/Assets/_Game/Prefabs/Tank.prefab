@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 197594240621075554}
   - component: {fileID: 6297389609164148906}
   m_Layer: 0
-  m_Name: Base
+  m_Name: Hull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -270,8 +270,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ccb841cf97e164486fa2758306fbe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Tank
-  _spline: {fileID: 0}
   _speed: 0.2
+  _hull: {fileID: 2473833902365443338}
+  _turret: {fileID: 2442068817290153584}
 --- !u!1 &7444720252935813092
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +287,7 @@ GameObject:
   - component: {fileID: 4377982489147485330}
   - component: {fileID: 4997110484891951039}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,5 +399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ccb841cf97e164486fa2758306fbe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.TankMovement
-  _spline: {fileID: 0}
   _speed: 0.2
+  _hull: {fileID: 0}
+  _turret: {fileID: 0}

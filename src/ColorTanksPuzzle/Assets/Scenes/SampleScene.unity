@@ -461,13 +461,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
+  m_LocalPosition: {x: 0, y: 7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 65, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +512,56 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &351086383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 351086385}
+  - component: {fileID: 351086384}
+  m_Layer: 0
+  m_Name: PixelArtGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &351086384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351086383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d02737cea84353b63811e2447afd6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.ArtGenerator
+  _pixelPrefab: {fileID: -2724500085794367131, guid: ce8d75daf6cbb8b4e807afff7e2cdc1b, type: 3}
+  _sourceTexture: {fileID: 2800000, guid: f28277b8f54f19441a264d2c9470a5a2, type: 3}
+  _width: 20
+  _height: 20
+  _palette: {fileID: 11400000, guid: 8d9662486ba40344a8838f05077a60cf, type: 2}
+  _container: {fileID: 843210120}
+--- !u!4 &351086385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351086383}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &391172778
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,6 +957,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753828391}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &843210119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 843210120}
+  m_Layer: 0
+  m_Name: PixelArtContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &843210120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843210119}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 16.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &969206262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,7 +1261,7 @@ MonoBehaviour:
   - m_EditModeType: 1
     m_Knots:
     - Position:
-        x: -11
+        x: -10
         y: 0
         z: 0
       TangentIn:
@@ -1198,7 +1279,7 @@ MonoBehaviour:
           z: 0
           w: 1
     - Position:
-        x: 11.5
+        x: 10
         y: 0
         z: 0
       TangentIn:
@@ -1216,7 +1297,7 @@ MonoBehaviour:
           z: 0
           w: 1
     - Position:
-        x: 16.5
+        x: 15
         y: 0
         z: 5
       TangentIn:
@@ -1234,9 +1315,9 @@ MonoBehaviour:
           z: 0
           w: 1
     - Position:
-        x: 16.5
+        x: 15
         y: 0
-        z: 27.5
+        z: 29
       TangentIn:
         x: 0
         y: 0
@@ -1252,9 +1333,9 @@ MonoBehaviour:
           z: 0
           w: 1
     - Position:
-        x: 11.5
+        x: 10
         y: 0
-        z: 32.5
+        z: 34
       TangentIn:
         x: 0
         y: 0
@@ -1270,9 +1351,9 @@ MonoBehaviour:
           z: 0
           w: -0.7071068
     - Position:
-        x: -11
+        x: -10
         y: 0
-        z: 32.5
+        z: 34
       TangentIn:
         x: 0
         y: 0
@@ -1288,9 +1369,9 @@ MonoBehaviour:
           z: 0
           w: 1
     - Position:
-        x: -16.5
+        x: -15
         y: 0
-        z: 27.5
+        z: 29
       TangentIn:
         x: 0
         y: 0
@@ -1306,7 +1387,7 @@ MonoBehaviour:
           z: 0
           w: -0.00000004371139
     - Position:
-        x: -16.5
+        x: -15
         y: 0
         z: 5
       TangentIn:
@@ -1511,3 +1592,5 @@ SceneRoots:
   - {fileID: 1553780078}
   - {fileID: 175000582}
   - {fileID: 391172779}
+  - {fileID: 351086385}
+  - {fileID: 843210120}
