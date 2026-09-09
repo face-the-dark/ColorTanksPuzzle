@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -13,6 +14,7 @@ namespace _Game.Code
         [SerializeField] private float _speed = 0.2f;
         [SerializeField] private Transform _hull;
         [SerializeField] private Transform _turret;
+        [SerializeField] private List<GameObject> _tankComponents;
 
         private SplineContainer _spline;
 
@@ -22,9 +24,14 @@ namespace _Game.Code
 
         public event Action<Tank> CirclePassed;
 
-        public void Initialize(SplineContainer spline)
+        public void Initialize(SplineContainer spline, Color color)
         {
             _spline = spline;
+            
+            foreach (GameObject tankComponent in _tankComponents)
+            {
+                tankComponent.GetComponent<Renderer>().material.color = color;
+            }
         }
 
         public void StartMove()
