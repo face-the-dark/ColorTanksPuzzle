@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace _Game.Code
 {
@@ -10,6 +12,10 @@ namespace _Game.Code
         [SerializeField] private int _height = 20;
         [SerializeField] private Palette _palette;
         [SerializeField] private Transform _container;
+
+        private List<Material> _pixelMaterials = new();
+
+        public event Action<List<Material>> ArtGenerated;
 
         private void Start()
         {
@@ -27,12 +33,14 @@ namespace _Game.Code
             {
                 for (int x = 0; x < _width; x++)
                 {
-                    Vector3 position = new Vector3(x - xOffset, 1.5f, z - zOffset);
+                    Vector3 position = new Vector3(x - xOffset, 1f, z - zOffset);
                     Pixel pixel = Instantiate(_pixelPrefab, position, Quaternion.identity, _container);
                     Color originalColor = resizedTexture.GetPixel(x, z);
                     ApplyColor(originalColor, pixel);
                 }
             }
+            
+            ArtGenerated?.Invoke(_pixelMaterials);
         }
 
         private Texture2D ResizeTexture()
@@ -59,14 +67,16 @@ namespace _Game.Code
 
         private void ApplyColor(Color originalColor, Pixel pixel)
         {
-            Color paletteColor = FindClosestColorInPalette(originalColor);
             Renderer rendererComponent = pixel.GetComponent<Renderer>();
-            Material sharedMaterial = rendererComponent.sharedMaterial;
-            Material newMaterial = new Material(sharedMaterial)
+            
+            Material newMaterial = new Material(rendererComponent.sharedMaterial)
             {
-                color = paletteColor
+                color = FindClosestColorInPalette(originalColor)
             };
+            
             rendererComponent.sharedMaterial = newMaterial;
+            
+            _pixelMaterials.Add(newMaterial);
         }
 
         private Color FindClosestColorInPalette(Color originalColor)

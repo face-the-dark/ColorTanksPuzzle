@@ -10,7 +10,7 @@ namespace _Game.Code
         [SerializeField] private List<WaitingAreaCell> _waitingAreaCells;
 
         private int _freeCellsCount;
-        
+
         public event Action Overflowed;
 
         private void Awake()
@@ -22,7 +22,7 @@ namespace _Game.Code
         {
             if (tank is null)
                 throw new ArgumentNullException(nameof(tank));
-            
+
             if (_freeCellsCount <= 0)
             {
                 Overflowed?.Invoke();
@@ -40,7 +40,7 @@ namespace _Game.Code
         {
             if (tank is null)
                 throw new ArgumentNullException(nameof(tank));
-            
+
             if (_freeCellsCount >= _waitingAreaCells.Count)
                 throw new IndexOutOfRangeException();
 
@@ -49,24 +49,24 @@ namespace _Game.Code
             waitingAreaCell.Release();
             tank.StartMove();
         }
-        
+
         private WaitingAreaCell GetFreeCell()
         {
             WaitingAreaCell waitingAreaCell = _waitingAreaCells.FirstOrDefault(cell => cell.IsFree);
 
             if (waitingAreaCell is null)
                 throw new ArgumentNullException(nameof(waitingAreaCell));
-            
+
             return waitingAreaCell;
         }
 
         private WaitingAreaCell GetTakenCell(Tank tank)
         {
-            WaitingAreaCell waitingAreaCell = _waitingAreaCells.FirstOrDefault(cell => cell.TakenTank.Equals(tank));
+            WaitingAreaCell waitingAreaCell = _waitingAreaCells.FirstOrDefault(cell => tank.Equals(cell.TakenTank));
 
             if (waitingAreaCell is null)
                 throw new ArgumentNullException(nameof(waitingAreaCell));
-            
+
             return waitingAreaCell;
         }
     }
