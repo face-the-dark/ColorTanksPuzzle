@@ -235,6 +235,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2961718925980060974}
   - component: {fileID: 3446851137628028536}
+  - component: {fileID: 5071630348431066589}
+  - component: {fileID: 9204070678284714604}
+  - component: {fileID: 4943949501064425123}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -252,7 +255,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2473833902365443338}
@@ -271,13 +274,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ccb841cf97e164486fa2758306fbe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Tank
+  _tankMover: {fileID: 5071630348431066589}
+  _tankRotator: {fileID: 9204070678284714604}
+  _tankShooter: {fileID: 25583628535201225}
+  _tankDyer: {fileID: 4943949501064425123}
+--- !u!114 &5071630348431066589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884587981952729076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8417e1f5f028455ab190e36815e44aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.TankComponents.TankMover
   _speed: 0.2
+--- !u!114 &9204070678284714604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884587981952729076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3307a6e76d384f7c9bec88fec8fa13c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.TankComponents.TankRotator
   _hull: {fileID: 2473833902365443338}
   _turret: {fileID: 2442068817290153584}
-  _tankComponents:
-  - {fileID: 2895193578368902486}
-  - {fileID: 7444720252935813092}
-  - {fileID: 3031632298220571887}
+--- !u!114 &4943949501064425123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884587981952729076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b909db50372d4ee59b8d291a34a043cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.TankComponents.TankDyer
+  _tankParts:
+  - {fileID: 2473833902365443338}
+  - {fileID: 2442068817290153584}
+  - {fileID: 6787960452218528463}
 --- !u!1 &4059252456867480845
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +364,6 @@ GameObject:
   - component: {fileID: 8340196266975533013}
   - component: {fileID: 3748535274579976390}
   - component: {fileID: 4377982489147485330}
-  - component: {fileID: 4997110484891951039}
   - component: {fileID: 25583628535201225}
   m_Layer: 0
   m_Name: Turret
@@ -424,22 +466,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4997110484891951039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7444720252935813092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22ccb841cf97e164486fa2758306fbe5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.TankMovement
-  _speed: 0.2
-  _hull: {fileID: 0}
-  _turret: {fileID: 0}
-  _tankComponents: []
 --- !u!114 &25583628535201225
 MonoBehaviour:
   m_ObjectHideFlags: 0

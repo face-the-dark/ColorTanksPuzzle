@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Code.Configurations;
+using _Game.Code.Data;
+using _Game.Code.Pixels;
 using UnityEngine;
 
-namespace _Game.Code
+namespace _Game.Code.Generators
 {
     public class PixelArtGenerator : MonoBehaviour
     {
+        private const float HalfSizeDivisor = 2f;
+        
         [SerializeField] private Pixel _pixelPrefab;
         [SerializeField] private Texture2D _sourceTexture;
         [SerializeField] private int _width = 20;
@@ -13,9 +18,9 @@ namespace _Game.Code
         [SerializeField] private Palette _palette;
         [SerializeField] private Transform _container;
 
-        private List<Material> _pixelMaterials = new();
+        private readonly List<PixelData> _pixelData = new();
 
-        public event Action<List<Material>> ArtGenerated;
+        public event Action<List<PixelData>> ArtGenerated;
 
         private void Start()
         {
@@ -26,21 +31,26 @@ namespace _Game.Code
         {
             Texture2D resizedTexture = ResizeTexture();
 
-            float xOffset = (_width - 1) / 2f - _container.position.x;
-            float zOffset = _height / 2f - _container.position.z;
+            float xOffset = (_width - 1) / HalfSizeDivisor - _container.position.x;
+            float zOffset = _height / HalfSizeDivisor - _container.position.z;
 
             for (int z = 0; z < _height; z++)
             {
                 for (int x = 0; x < _width; x++)
                 {
-                    Vector3 position = new Vector3(x - xOffset, 1f, z - zOffset);
+                    float positionX = x - xOffset;
+                    float positionY = z - zOffset;
+                    Vector3 position = new Vector3(positionX, transform.position.y, positionY);
+
                     Pixel pixel = Instantiate(_pixelPrefab, position, Quaternion.identity, _container);
                     Color originalColor = resizedTexture.GetPixel(x, z);
-                    ApplyColor(originalColor, pixel);
+                    Color pixelColor = ApplyColor(pixel, originalColor);
+
+                    _pixelData.Add(new PixelData(positionX, positionY, pixelColor));
                 }
             }
-            
-            ArtGenerated?.Invoke(_pixelMaterials);
+
+            ArtGenerated?.Invoke(_pixelData);
         }
 
         private Texture2D ResizeTexture()
@@ -65,39 +75,44 @@ namespace _Game.Code
             return texture;
         }
 
-        private void ApplyColor(Color originalColor, Pixel pixel)
+        private Color ApplyColor(Pixel pixel, Color originalColor)
         {
             Renderer rendererComponent = pixel.GetComponent<Renderer>();
-            
+
+            if (rendererComponent == null)
+                throw new ArgumentNullException(nameof(rendererComponent));
+
+            Color paletteColor = FindClosestColorInPalette(originalColor);
+
             Material newMaterial = new Material(rendererComponent.sharedMaterial)
             {
-                color = FindClosestColorInPalette(originalColor)
+                color = paletteColor
             };
-            
+
             rendererComponent.sharedMaterial = newMaterial;
-            
-            _pixelMaterials.Add(newMaterial);
+
+            return paletteColor;
         }
 
         private Color FindClosestColorInPalette(Color originalColor)
         {
-            int bestIndex = 0;
-            float bestDistance = float.MaxValue;
+            int bestPaletteColorIndex = 0;
+            float paletteColorMagnitude = float.MaxValue;
 
             for (int i = 0; i < _palette.Colors.Count; i++)
             {
-                float magnitude = Mathf.Pow(originalColor.r - _palette.Colors[i].r, 2)
-                                  + Mathf.Pow(originalColor.g - _palette.Colors[i].g, 2)
-                                  + Mathf.Pow(originalColor.b - _palette.Colors[i].b, 2);
+                float originalColorMagnitude = Mathf.Pow(originalColor.r - _palette.Colors[i].r, 2)
+                                               + Mathf.Pow(originalColor.g - _palette.Colors[i].g, 2)
+                                               + Mathf.Pow(originalColor.b - _palette.Colors[i].b, 2);
 
-                if (magnitude < bestDistance)
+                if (originalColorMagnitude < paletteColorMagnitude)
                 {
-                    bestDistance = magnitude;
-                    bestIndex = i;
+                    paletteColorMagnitude = originalColorMagnitude;
+                    bestPaletteColorIndex = i;
                 }
             }
 
-            return _palette.Colors[bestIndex];
+            return _palette.Colors[bestPaletteColorIndex];
         }
     }
 }

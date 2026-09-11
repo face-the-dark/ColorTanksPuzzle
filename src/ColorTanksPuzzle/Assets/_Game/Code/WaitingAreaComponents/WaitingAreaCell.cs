@@ -1,7 +1,8 @@
 ﻿using System;
+using _Game.Code.Tanks;
 using UnityEngine;
 
-namespace _Game.Code
+namespace _Game.Code.WaitingAreaComponents
 {
     public class WaitingAreaCell : MonoBehaviour
     {

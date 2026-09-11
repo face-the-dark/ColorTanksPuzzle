@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using _Game.Code.Pixels;
+using UnityEngine;
 
-namespace _Game.Code
+namespace _Game.Code.Bullets
 {
     [RequireComponent(typeof(Rigidbody))]
     public class Bullet : MonoBehaviour
