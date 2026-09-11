@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Game.Code
+namespace _Game.Code.Configurations
 {
-    [CreateAssetMenu(fileName = "Palette", menuName = "Palette")]
+    [CreateAssetMenu(fileName = "Palette", menuName = "Configurations/Palette")]
     public class Palette : ScriptableObject
     {
         [SerializeField] private List<Color> _colors;

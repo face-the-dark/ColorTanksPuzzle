@@ -1,77 +1,48 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
+using _Game.Code.Extensions;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace _Game.Code
+namespace _Game.Code.Tanks
 {
-    public class Tank : MonoBehaviour
+    public class TankRotator : MonoBehaviour
     {
-        private const float MaxSplineLengthPercentage = 1f;
-
-        [SerializeField] private float _speed = 0.2f;
         [SerializeField] private Transform _hull;
         [SerializeField] private Transform _turret;
-        [SerializeField] private List<GameObject> _tankComponents;
-
+        
         private SplineContainer _spline;
 
         private float _currentLengthPercentage;
-        private Coroutine _moveCoroutine;
+        private bool _isRotating = false;
         private Coroutine _rotateCoroutine;
 
-        public event Action<Tank> CirclePassed;
-
-        public void Initialize(SplineContainer spline, Color color)
+        public void Initialize(SplineContainer spline)
         {
             _spline = spline;
-            
-            foreach (GameObject tankComponent in _tankComponents)
-            {
-                tankComponent.GetComponent<Renderer>().material.color = color;
-            }
         }
 
-        public void StartMove()
+        public void StartRotate()
         {
-            _currentLengthPercentage = 0f;
-
-            StopCurrentCoroutine(ref _moveCoroutine);
-            StopCurrentCoroutine(ref _rotateCoroutine);
-
-            _moveCoroutine = StartCoroutine(Move());
+            StopRotate();
+            _isRotating = true;
             _rotateCoroutine = StartCoroutine(Rotate());
         }
 
-        private void StopCurrentCoroutine(ref Coroutine coroutine)
+        public void StopRotate()
         {
-            if (coroutine != null)
-            {
-                StopCoroutine(coroutine);
-                coroutine = null;
-            }
+            _isRotating = false;
+            this.StopCurrentCoroutine(ref _rotateCoroutine);
         }
 
-        private IEnumerator Move()
+        public void UpdateCurrentLengthPercentage(float currentLengthPercentage)
         {
-            while (_currentLengthPercentage < MaxSplineLengthPercentage)
-            {
-                _currentLengthPercentage += _speed * Time.deltaTime;
-                transform.position = _spline.EvaluatePosition(_currentLengthPercentage);
-
-                yield return null;
-            }
-
-            StopCurrentCoroutine(ref _moveCoroutine);
-            
-            CirclePassed?.Invoke(this);
+            _currentLengthPercentage = currentLengthPercentage;
         }
 
         private IEnumerator Rotate()
         {
-            while (_currentLengthPercentage < MaxSplineLengthPercentage)
+            while (_isRotating)
             {
                 float3 localTangent = _spline.EvaluateTangent(_currentLengthPercentage);
                 Vector3 forwardWorldDirection = _spline.transform.TransformDirection(localTangent).normalized;
@@ -81,8 +52,6 @@ namespace _Game.Code
 
                 yield return null;
             }
-
-            StopCurrentCoroutine(ref _rotateCoroutine);
 
             _hull.rotation = Quaternion.LookRotation(Vector3.forward, _spline.transform.up);
             _turret.rotation = Quaternion.LookRotation(Vector3.forward, _spline.transform.up);
@@ -98,7 +67,7 @@ namespace _Game.Code
             float3 localUpVector = _spline.EvaluateUpVector(_currentLengthPercentage);
             Vector3 worldUpDirection = _spline.transform.TransformDirection(localUpVector).normalized;
             Vector3 worldLeftDirection = Vector3.Cross(forwardWorldDirection, worldUpDirection);
-            
+
             _turret.rotation = Quaternion.LookRotation(worldLeftDirection, _spline.transform.up);
         }
     }

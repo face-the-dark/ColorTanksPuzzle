@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Code.Tanks;
 using UnityEngine;
 
-namespace _Game.Code
+namespace _Game.Code.WaitingAreaComponents
 {
     public class WaitingArea : MonoBehaviour
     {
@@ -47,7 +48,7 @@ namespace _Game.Code
             _freeCellsCount++;
             WaitingAreaCell waitingAreaCell = GetTakenCell(tank);
             waitingAreaCell.Release();
-            tank.StartMove();
+            tank.MoveToSpline();
         }
 
         private WaitingAreaCell GetFreeCell()

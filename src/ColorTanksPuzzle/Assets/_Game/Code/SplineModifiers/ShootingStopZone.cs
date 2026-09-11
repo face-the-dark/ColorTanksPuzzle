@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using _Game.Code.Tanks;
+using UnityEngine;
 
-namespace _Game.Code
+namespace _Game.Code.SplineModifiers
 {
     public class ShootingStopZone : MonoBehaviour
     {
@@ -10,13 +11,13 @@ namespace _Game.Code
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out TankShooter tankShooter))
-                tankShooter.CannotShoot();
+                tankShooter.StopShoot();
         }
 
         private void OnTriggerExit(Collider other)
         {
             if (other.TryGetComponent(out TankShooter tankShooter))
-                tankShooter.CanShoot();
+                tankShooter.StartShoot();
         }
 
         private void OnDrawGizmos()
