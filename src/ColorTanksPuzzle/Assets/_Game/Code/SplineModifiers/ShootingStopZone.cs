@@ -10,13 +10,13 @@ namespace _Game.Code.SplineModifiers
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out TankShooter tankShooter))
+            if (other.TryGetComponent(out Tank tankShooter))
                 tankShooter.StopShoot();
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out TankShooter tankShooter))
+            if (other.TryGetComponent(out Tank tankShooter))
                 tankShooter.StartShoot();
         }
 

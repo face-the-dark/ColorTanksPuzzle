@@ -40,7 +40,7 @@ namespace _Game.Code.Generators
                 {
                     float positionX = x - xOffset;
                     float positionY = z - zOffset;
-                    Vector3 position = new Vector3(positionX, transform.position.y, positionY);
+                    Vector3 position = new Vector3(positionX, _container.transform.position.y, positionY);
 
                     Pixel pixel = Instantiate(_pixelPrefab, position, Quaternion.identity, _container);
                     Color originalColor = resizedTexture.GetPixel(x, z);

@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using _Game.Code.Data;
 using _Game.Code.Generators;
+using _Game.Code.Tanks;
+using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace _Game.Code.Tanks
+namespace _Game.Code.Spawners
 {
     public class TankSpawner : MonoBehaviour
     {
         [SerializeField] private Tank _tankPrefab;
         [SerializeField] private SplineContainer _spline;
         [SerializeField] private TanksDataGenerator _tanksDataGenerator;
-        [SerializeField] private Transform[] _lanes;
+        [SerializeField] private WaitingArea _waitingArea;
+        [SerializeField] private SpawningLane[] _lanes;
 
         private void OnEnable() => 
             _tanksDataGenerator.DataGenerated += OnDataGenerated;
@@ -26,41 +29,37 @@ namespace _Game.Code.Tanks
 
         private void SpawnTanks(List<TankData> tanksData)
         {
-            for (var i = 0; i < _lanes.Length; i++)
+            for (int i = 0; i < _lanes.Length; i++)
             {
-                float zOffset = 0f;
-
                 List<TankData> laneTanksData = tanksData.FindAll(x => x.LaneIndex == i);
 
                 foreach (TankData tankData in laneTanksData)
                 {
-                    Transform lane = _lanes[tankData.LaneIndex];
+                    SpawningLane lane = _lanes[tankData.LaneIndex];
 
-                    Spawn(tankData, lane, zOffset);
-
-                    zOffset += 8f;
+                    Spawn(tankData, lane);
                 }
+            }
+
+            foreach (SpawningLane spawningLane in _lanes)
+            {
+                spawningLane.UnblockFirstTank();
             }
         }
 
-        private void Spawn(TankData tankData, Transform lane, float zOffset)
+        private void Spawn(TankData tankData, SpawningLane lane)
         {
-            Vector3 position = new Vector3
-            (
-                lane.transform.position.x,
-                lane.transform.position.y,
-                lane.transform.position.z - zOffset
-            );
-
             Tank tank = Instantiate
             (
                 _tankPrefab,
-                position,
+                Vector3.zero,
                 Quaternion.identity,
-                lane
+                lane.transform
             );
+            
+            lane.Add(tank);
 
-            tank.Initialize(_spline, tankData);
+            tank.Initialize(_spline, tankData, _waitingArea, lane);
         }
     }
 }
