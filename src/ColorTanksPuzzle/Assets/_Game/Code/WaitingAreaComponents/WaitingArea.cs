@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using _Game.Code.Tanks;
 using UnityEngine;
 
@@ -42,18 +41,17 @@ namespace _Game.Code.WaitingAreaComponents
             if (tank is null)
                 throw new ArgumentNullException(nameof(tank));
 
-            if (_freeCellsCount >= _waitingAreaCells.Count)
+            if (_freeCellsCount > _waitingAreaCells.Count)
                 throw new IndexOutOfRangeException();
 
             _freeCellsCount++;
             WaitingAreaCell waitingAreaCell = GetTakenCell(tank);
             waitingAreaCell.Release();
-            tank.MoveToSpline();
         }
 
         private WaitingAreaCell GetFreeCell()
         {
-            WaitingAreaCell waitingAreaCell = _waitingAreaCells.FirstOrDefault(cell => cell.IsFree);
+            WaitingAreaCell waitingAreaCell = _waitingAreaCells.Find(cell => cell.IsFree);
 
             if (waitingAreaCell is null)
                 throw new ArgumentNullException(nameof(waitingAreaCell));
@@ -63,7 +61,7 @@ namespace _Game.Code.WaitingAreaComponents
 
         private WaitingAreaCell GetTakenCell(Tank tank)
         {
-            WaitingAreaCell waitingAreaCell = _waitingAreaCells.FirstOrDefault(cell => tank.Equals(cell.TakenTank));
+            WaitingAreaCell waitingAreaCell = _waitingAreaCells.Find(cell => tank.Equals(cell.TakenTank));
 
             if (waitingAreaCell is null)
                 throw new ArgumentNullException(nameof(waitingAreaCell));
