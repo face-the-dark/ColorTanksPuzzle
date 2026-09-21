@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da2581bec90846948f8576f58d8fb5f4, type: 3}
+  m_Name: Hard
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Difficulty.DifficultySettings
+  _difficultyMode: 2
+  _hpSettings:
+  - _hpValue: 10
+    _hpWeight: 5
+    _hpDepth: 15
+  - _hpValue: 20
+    _hpWeight: 15
+    _hpDepth: 30
+  - _hpValue: 30
+    _hpWeight: 30
+    _hpDepth: 30
+  - _hpValue: 40
+    _hpWeight: 30
+    _hpDepth: 55
+  - _hpValue: 50
+    _hpWeight: 20
+    _hpDepth: 55

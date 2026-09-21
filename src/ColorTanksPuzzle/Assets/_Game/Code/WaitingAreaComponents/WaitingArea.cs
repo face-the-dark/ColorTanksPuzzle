@@ -11,6 +11,8 @@ namespace _Game.Code.WaitingAreaComponents
 
         private int _freeCellsCount;
 
+        public int TakenCellsCount => _waitingAreaCells.Count - _freeCellsCount;
+        
         public event Action Overflowed;
 
         private void Awake()
@@ -32,7 +34,6 @@ namespace _Game.Code.WaitingAreaComponents
                 _freeCellsCount--;
                 WaitingAreaCell waitingAreaCell = GetFreeCell();
                 waitingAreaCell.TakeOver(tank);
-                tank.transform.position = waitingAreaCell.PointPosition;
             }
         }
 

@@ -4,15 +4,13 @@ namespace _Game.Code.Data
 {
     public class PixelData
     {
-        public PixelData(float x, float z, Color color)
+        public PixelData(Color color, int depth)
         {
-            X = x;
-            Z = z;
             Color = color;
+            Depth = depth;
         }
 
-        public float X { get; }
-        public float Z { get; }
         public Color Color { get; }
+        public int Depth { get; }
     }
 }

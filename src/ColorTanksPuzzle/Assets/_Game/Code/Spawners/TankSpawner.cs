@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using _Game.Code.Data;
 using _Game.Code.Generators;
 using _Game.Code.Tanks;
@@ -15,6 +17,10 @@ namespace _Game.Code.Spawners
         [SerializeField] private TanksDataGenerator _tanksDataGenerator;
         [SerializeField] private WaitingArea _waitingArea;
         [SerializeField] private SpawningLane[] _lanes;
+        
+        private readonly List<Tank> _spawnedTanks = new();
+        
+        public event Action<List<Tank>> TanksSpawned; 
 
         private void OnEnable() => 
             _tanksDataGenerator.DataGenerated += OnDataGenerated;
@@ -22,29 +28,28 @@ namespace _Game.Code.Spawners
         private void OnDisable() => 
             _tanksDataGenerator.DataGenerated -= OnDataGenerated;
 
-        private void OnDataGenerated(List<TankData> tanksData)
-        {
+        private void OnDataGenerated(List<TankData> tanksData) => 
             SpawnTanks(tanksData);
-        }
 
         private void SpawnTanks(List<TankData> tanksData)
         {
             for (int i = 0; i < _lanes.Length; i++)
             {
-                List<TankData> laneTanksData = tanksData.FindAll(x => x.LaneIndex == i);
-
-                foreach (TankData tankData in laneTanksData)
+                IEnumerable<TankData> tankDatas = tanksData
+                    .Where(x => x.LaneIndex == i);
+                
+                foreach (TankData tankData in tankDatas)
                 {
-                    SpawningLane lane = _lanes[tankData.LaneIndex];
+                    SpawningLane lane = _lanes[i];
 
                     Spawn(tankData, lane);
                 }
             }
 
-            foreach (SpawningLane spawningLane in _lanes)
-            {
+            TanksSpawned?.Invoke(_spawnedTanks);
+
+            foreach (SpawningLane spawningLane in _lanes) 
                 spawningLane.UnblockFirstTank();
-            }
         }
 
         private void Spawn(TankData tankData, SpawningLane lane)
@@ -58,7 +63,8 @@ namespace _Game.Code.Spawners
             );
             
             lane.Add(tank);
-
+            _spawnedTanks.Add(tank);
+            
             tank.Initialize(_spline, tankData, _waitingArea, lane);
         }
     }

@@ -8,16 +8,17 @@ namespace _Game.Code.Tanks
 {
     public class TankMover : MonoBehaviour
     {
-        private const float MaxSplineLengthPercentage = 1f;
+        private const float MaxSplineLengtHpercentage = 1f;
         
         [SerializeField] private float _speed = 0.2f;
+        [SerializeField] private float _speedModifier = 2f;
 
         private SplineContainer _spline;
 
-        private float _currentLengthPercentage;
+        private float _currentLengtHpercentage;
         private Coroutine _moveCoroutine;
 
-        public event Action<float> CurrentLengthPercentageIncreased;
+        public event Action<float> CurrentLengtHpercentageIncreased;
         public event Action CirclePassed;
         
         public void Initialize(SplineContainer spline)
@@ -27,7 +28,7 @@ namespace _Game.Code.Tanks
         
         public void StartMove()
         {
-            _currentLengthPercentage = 0f;
+            _currentLengtHpercentage = 0f;
 
             this.StopCurrentCoroutine(ref _moveCoroutine);
             _moveCoroutine = StartCoroutine(Move());
@@ -37,16 +38,21 @@ namespace _Game.Code.Tanks
         {
             this.StopCurrentCoroutine(ref _moveCoroutine);
         }
-        
+
+        public void IncreaseSpeed()
+        {
+            _speed *= _speedModifier; 
+        }
+
         private IEnumerator Move()
         {
-            while (_currentLengthPercentage < MaxSplineLengthPercentage)
+            while (_currentLengtHpercentage < MaxSplineLengtHpercentage)
             {
-                _currentLengthPercentage += _speed * Time.deltaTime;
+                _currentLengtHpercentage += _speed * Time.deltaTime;
                 
-                CurrentLengthPercentageIncreased?.Invoke(_currentLengthPercentage);
+                CurrentLengtHpercentageIncreased?.Invoke(_currentLengtHpercentage);
                 
-                transform.position = _spline.EvaluatePosition(_currentLengthPercentage);
+                transform.position = _spline.EvaluatePosition(_currentLengtHpercentage);
 
                 yield return null;
             }

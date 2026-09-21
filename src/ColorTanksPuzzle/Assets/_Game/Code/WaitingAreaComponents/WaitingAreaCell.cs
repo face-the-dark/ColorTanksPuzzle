@@ -11,7 +11,6 @@ namespace _Game.Code.WaitingAreaComponents
         private bool _isFree = true;
 
         public Tank TakenTank { get; private set; }
-        public Vector3 PointPosition => _point.position;
         public bool IsFree => _isFree;
 
         public void TakeOver(Tank tank)
@@ -21,6 +20,8 @@ namespace _Game.Code.WaitingAreaComponents
 
             _isFree = false;
             TakenTank = tank;
+            
+            tank.transform.position = _point.position;
         }
 
         public void Release()
