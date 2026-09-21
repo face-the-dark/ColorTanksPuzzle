@@ -10,7 +10,7 @@ namespace _Game.Code.Tanks
     {
         [SerializeField] private Transform _hull;
         [SerializeField] private Transform _turret;
-        
+
         private SplineContainer _spline;
 
         private float _currentLengthPercentage;
@@ -33,6 +33,8 @@ namespace _Game.Code.Tanks
         {
             _isRotating = false;
             this.StopCurrentCoroutine(ref _rotateCoroutine);
+
+            ResetRotation();
         }
 
         public void UpdateCurrentLengthPercentage(float currentLengthPercentage)
@@ -52,23 +54,30 @@ namespace _Game.Code.Tanks
 
                 yield return null;
             }
+        }
 
+        private void ResetRotation()
+        {
             _hull.rotation = Quaternion.LookRotation(Vector3.forward, _spline.transform.up);
             _turret.rotation = Quaternion.LookRotation(Vector3.forward, _spline.transform.up);
         }
 
         private void RotateHull(Vector3 forwardWorldDirection)
         {
-            _hull.rotation = Quaternion.LookRotation(forwardWorldDirection, _spline.transform.up);
+            if (forwardWorldDirection != Vector3.zero)
+                _hull.rotation = Quaternion.LookRotation(forwardWorldDirection, _spline.transform.up);
         }
 
         private void RotateTurret(Vector3 forwardWorldDirection)
         {
-            float3 localUpVector = _spline.EvaluateUpVector(_currentLengthPercentage);
-            Vector3 worldUpDirection = _spline.transform.TransformDirection(localUpVector).normalized;
-            Vector3 worldLeftDirection = Vector3.Cross(forwardWorldDirection, worldUpDirection);
+            if (forwardWorldDirection != Vector3.zero)
+            {
+                float3 localUpVector = _spline.EvaluateUpVector(_currentLengthPercentage);
+                Vector3 worldUpDirection = _spline.transform.TransformDirection(localUpVector).normalized;
+                Vector3 worldLeftDirection = Vector3.Cross(forwardWorldDirection, worldUpDirection);
 
-            _turret.rotation = Quaternion.LookRotation(worldLeftDirection, _spline.transform.up);
+                _turret.rotation = Quaternion.LookRotation(worldLeftDirection, _spline.transform.up);
+            }
         }
     }
 }

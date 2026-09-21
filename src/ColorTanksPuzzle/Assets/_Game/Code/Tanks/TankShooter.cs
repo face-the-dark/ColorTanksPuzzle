@@ -16,18 +16,24 @@ namespace _Game.Code.Tanks
         [SerializeField] private Bullet _bulletPrefab;
 
         private Color _color;
-        private int _hp;
+        private int _Hp;
 
         private Coroutine _shootCoroutine;
         private Pixel _currentPixel;
-        private bool _isShooting = false;
+        private bool _isShooting;
 
         public event Action Died;
+        public event Action<int> HpChanged;
 
         public void Initialize(TankData tankData)
         {
             _color = tankData.Color;
-            _hp = tankData.Hp;
+            _Hp = tankData.Hp;
+        }
+
+        private void Start()
+        {
+            HpChanged?.Invoke(_Hp);
         }
 
         public void StartShoot()
@@ -83,10 +89,12 @@ namespace _Game.Code.Tanks
 
         private void ReduceHp()
         {
-            _hp--;
+            _Hp--;
 
-            if (_hp <= 0) 
+            if (_Hp <= 0) 
                 Died?.Invoke();
+            
+            HpChanged?.Invoke(_Hp);
         }
     }
 }
