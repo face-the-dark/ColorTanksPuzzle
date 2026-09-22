@@ -9,19 +9,13 @@ namespace _Game.Code.UI
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private TankDispatcher _tankDispatcher;
 
-        private void OnEnable()
-        {
+        private void OnEnable() => 
             _tankDispatcher.TanksCountChanged += OnTanksCountChanged;
-        }
 
-        private void OnDisable()
-        {
+        private void OnDisable() => 
             _tankDispatcher.TanksCountChanged -= OnTanksCountChanged;
-        }
 
-        private void OnTanksCountChanged(string text)
-        {
+        private void OnTanksCountChanged(string text) => 
             _text.text = text;
-        }
     }
 }

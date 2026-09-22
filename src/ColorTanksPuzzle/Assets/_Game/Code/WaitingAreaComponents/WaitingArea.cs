@@ -10,8 +10,6 @@ namespace _Game.Code.WaitingAreaComponents
         [SerializeField] private List<WaitingAreaCell> _waitingAreaCells;
 
         private int _freeCellsCount;
-
-        public int TakenCellsCount => _waitingAreaCells.Count - _freeCellsCount;
         
         public event Action Overflowed;
 

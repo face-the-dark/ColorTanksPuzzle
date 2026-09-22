@@ -10,10 +10,8 @@ namespace _Game.Code.Players
 
         public event Action<Vector2> Clicked;
         
-        private void Awake()
-        {
+        private void Awake() => 
             _playerInput = new PlayerInput();
-        }
 
         private void OnEnable()
         {

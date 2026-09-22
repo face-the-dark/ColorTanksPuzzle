@@ -6,7 +6,7 @@ namespace _Game.Code.Pixels
     public class Pixel : MonoBehaviour
     {
         private Renderer _renderer;
-        private bool _isWillBeDestroyed = false;
+        private bool _isWillBeDestroyed;
 
         public Color Color => _renderer.material.color;
         public bool IsWillBeDestroyed => _isWillBeDestroyed;

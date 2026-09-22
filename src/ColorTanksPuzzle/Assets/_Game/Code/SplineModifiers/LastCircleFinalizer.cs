@@ -9,22 +9,18 @@ namespace _Game.Code.SplineModifiers
     {
         [SerializeField] private TankSpawner _tankSpawner;
 
-        private List<Tank> _tanks = new();
+        private readonly List<Tank> _tanks = new();
         private bool _isActive;
 
-        private void OnEnable()
-        {
+        private void OnEnable() => 
             _tankSpawner.TanksSpawned += OnTanksSpawned;
-        }
 
-        private void OnDisable()
-        {
+        private void OnDisable() => 
             _tankSpawner.TanksSpawned -= OnTanksSpawned;
-        }
 
         private void OnTanksSpawned(List<Tank> tanks)
         {
-            _tanks = tanks;
+            _tanks.AddRange(tanks);
 
             foreach (Tank tank in tanks) 
                 tank.Died += OnDied;
@@ -36,19 +32,18 @@ namespace _Game.Code.SplineModifiers
             
             _tanks.Remove(tank);
 
-            if (_isActive == false && _tanks.Count <= 5)
-            {
+            if (_isActive == false && _tanks.Count <= 5) 
                 Activate();
-            }
         }
 
         private void Activate()
         {
-            _isActive = true;
-            
-            foreach (Tank tank in _tanks)
+            if (_isActive == false)
             {
-                tank.StartLoopMove();
+                _isActive = true;
+            
+                foreach (Tank tank in _tanks) 
+                    tank.StartLoopMove();
             }
         }
     }

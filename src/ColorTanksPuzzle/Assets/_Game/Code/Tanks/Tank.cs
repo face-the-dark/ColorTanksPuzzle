@@ -55,7 +55,7 @@ namespace _Game.Code.Tanks
                 else
                     _lane.Remove(this);
 
-            _tankMover.CurrentLengtHpercentageIncreased += OnCurrentLengthPercentageIncreased;
+            _tankMover.CurrentLengthPercentageIncreased += OnCurrentLengthPercentageIncreased;
             _tankMover.CirclePassed += OnCirclePassed;
 
             _tankMover.StartMove();
@@ -83,7 +83,7 @@ namespace _Game.Code.Tanks
         private void OnDied()
         {
             _tankShooter.Died -= OnDied;
-            _tankMover.CurrentLengtHpercentageIncreased -= OnCurrentLengthPercentageIncreased;
+            _tankMover.CurrentLengthPercentageIncreased -= OnCurrentLengthPercentageIncreased;
             _tankMover.CirclePassed -= OnCirclePassed;
 
             MovingStopped?.Invoke(this);
@@ -97,7 +97,7 @@ namespace _Game.Code.Tanks
 
         private void OnCirclePassed()
         {
-            _tankMover.CurrentLengtHpercentageIncreased -= OnCurrentLengthPercentageIncreased;
+            _tankMover.CurrentLengthPercentageIncreased -= OnCurrentLengthPercentageIncreased;
             _tankMover.CirclePassed -= OnCirclePassed;
             
             if (_isLoopMoving)
