@@ -14,13 +14,11 @@ namespace _Game.Code.Tanks
         private SplineContainer _spline;
 
         private float _currentLengthPercentage;
-        private bool _isRotating = false;
+        private bool _isRotating;
         private Coroutine _rotateCoroutine;
 
-        public void Initialize(SplineContainer spline)
-        {
+        public void Initialize(SplineContainer spline) => 
             _spline = spline;
-        }
 
         public void StartRotate()
         {
@@ -37,10 +35,8 @@ namespace _Game.Code.Tanks
             ResetRotation();
         }
 
-        public void UpdateCurrentLengthPercentage(float currentLengthPercentage)
-        {
+        public void UpdateCurrentLengthPercentage(float currentLengthPercentage) => 
             _currentLengthPercentage = currentLengthPercentage;
-        }
 
         private IEnumerator Rotate()
         {

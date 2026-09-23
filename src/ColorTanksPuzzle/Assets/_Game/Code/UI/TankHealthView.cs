@@ -9,19 +9,13 @@ namespace _Game.Code.UI
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private TankShooter _tankShooter;
 
-        private void OnEnable()
-        {
+        private void OnEnable() => 
             _tankShooter.HpChanged += OnHpChanged;
-        }
 
-        private void OnDisable()
-        {
+        private void OnDisable() => 
             _tankShooter.HpChanged -= OnHpChanged;
-        }
 
-        private void OnHpChanged(int Hp)
-        {
-            _text.text = Hp.ToString();
-        }
+        private void OnHpChanged(int hp) => 
+            _text.text = hp.ToString();
     }
 }

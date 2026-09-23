@@ -2,30 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Code.Data;
-using _Game.Code.Generators;
+using _Game.Code.Generators.Tanks;
+using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Tanks;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
 using UnityEngine.Splines;
+using VContainer;
 
 namespace _Game.Code.Spawners
 {
-    public class TankSpawner : MonoBehaviour
+    public class TankSpawner : MonoBehaviour, IDisposable
     {
-        [SerializeField] private Tank _tankPrefab;
         [SerializeField] private SplineContainer _spline;
-        [SerializeField] private TanksDataGenerator _tanksDataGenerator;
         [SerializeField] private WaitingArea _waitingArea;
         [SerializeField] private SpawningLane[] _lanes;
-        
+
         private readonly List<Tank> _spawnedTanks = new();
+
+        private TanksDataGenerator _tanksDataGenerator;
+        private Tank _tankPrefab;
+
+        public int LanesCount => _lanes.Length;
         
-        public event Action<List<Tank>> TanksSpawned; 
+        public event Action<List<Tank>> TanksSpawned;
 
-        private void OnEnable() => 
+        [Inject]
+        public void Construct(TanksDataGenerator tanksDataGenerator, LoadService loadService)
+        {
+            _tanksDataGenerator = tanksDataGenerator;
+            _tankPrefab = loadService.LoadTank();
+            
             _tanksDataGenerator.DataGenerated += OnDataGenerated;
+        }
 
-        private void OnDisable() => 
+        public void Dispose() => 
             _tanksDataGenerator.DataGenerated -= OnDataGenerated;
 
         private void OnDataGenerated(List<TankData> tanksData) => 

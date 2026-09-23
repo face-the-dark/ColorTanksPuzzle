@@ -18,20 +18,14 @@ namespace _Game.Code.Players
         
         public event Action<string> TanksCountChanged;
 
-        private void Start()
-        {
+        private void Start() => 
             TanksCountChanged?.Invoke($"{_currentTanksCountOnSpline}/{_maxTanksCountOnSpline}");
-        }
 
-        private void OnEnable()
-        {
+        private void OnEnable() => 
             _inputReader.Clicked += OnClicked;
-        }
 
-        private void OnDisable()
-        {
+        private void OnDisable() => 
             _inputReader.Clicked -= OnClicked;
-        }
 
         private void OnClicked(Vector2 position)
         {
@@ -55,6 +49,9 @@ namespace _Game.Code.Players
 
         private void OnTankMovingStopped(Tank tank)
         {
+            if (tank is null)
+                throw new ArgumentNullException(nameof(tank));
+            
             _currentTanksCountOnSpline--;
             tank.MovingStopped -= OnTankMovingStopped;
             
