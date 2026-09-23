@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Code.Tanks;
 using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.Players
 {
@@ -8,15 +9,20 @@ namespace _Game.Code.Players
     {
         [Header("Dependencies")]
         [SerializeField] private Camera _camera;
-        [SerializeField] private InputReader _inputReader;
-        
+
         [Header("Settings")]
         [SerializeField] private LayerMask _tankLayer;
         [SerializeField] private int _maxTanksCountOnSpline = 5;
         
+        private InputReader _inputReader;
+
         private int _currentTanksCountOnSpline;
         
         public event Action<string> TanksCountChanged;
+
+        [Inject]
+        public void Construct(InputReader inputReader) => 
+            _inputReader = inputReader;
 
         private void Start() => 
             TanksCountChanged?.Invoke($"{_currentTanksCountOnSpline}/{_maxTanksCountOnSpline}");

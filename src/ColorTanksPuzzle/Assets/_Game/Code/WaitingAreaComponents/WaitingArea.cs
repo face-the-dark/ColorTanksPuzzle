@@ -1,22 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Code.Spawners;
 using _Game.Code.Tanks;
-using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.WaitingAreaComponents
 {
-    public class WaitingArea : MonoBehaviour
+    public class WaitingArea : IDisposable
     {
-        [SerializeField] private List<WaitingAreaCell> _waitingAreaCells;
+        private WaitingAreaCellSpawner _waitingAreaCellSpawner;
+        
+        private List<WaitingAreaCell> _waitingAreaCells;
 
         private int _freeCellsCount;
         
         public event Action Overflowed;
 
-        private void Awake()
+        [Inject]
+        public void Construct(WaitingAreaCellSpawner waitingAreaCellSpawner)
         {
-            _freeCellsCount = _waitingAreaCells.Count;
+            _waitingAreaCellSpawner = waitingAreaCellSpawner;
+            
+            _waitingAreaCellSpawner.CellsSpawned += OnCellSpawned;
         }
+
+        public void Dispose() => 
+            _waitingAreaCellSpawner.CellsSpawned -= OnCellSpawned;
 
         public void Add(Tank tank)
         {
@@ -66,6 +75,13 @@ namespace _Game.Code.WaitingAreaComponents
                 throw new ArgumentNullException(nameof(waitingAreaCell));
 
             return waitingAreaCell;
+        }
+
+        private void OnCellSpawned(List<WaitingAreaCell> waitingAreaCells)
+        {
+            _waitingAreaCells = waitingAreaCells;
+            
+            _freeCellsCount = _waitingAreaCells.Count;
         }
     }
 }

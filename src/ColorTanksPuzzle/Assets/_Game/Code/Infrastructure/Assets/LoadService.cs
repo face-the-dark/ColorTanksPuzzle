@@ -5,6 +5,7 @@ using _Game.Code.Configurations.Difficulty;
 using _Game.Code.Configurations.Palettes;
 using _Game.Code.Pixels;
 using _Game.Code.Tanks;
+using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
 
 namespace _Game.Code.Infrastructure.Assets
@@ -27,5 +28,8 @@ namespace _Game.Code.Infrastructure.Assets
 
         public Bullet LoadBullet() => 
             Resources.Load<Bullet>(AssetPath.BulletPrefabPath);
+
+        public WaitingAreaCell LoadWaitingAreaCell() => 
+            Resources.Load<WaitingAreaCell>(AssetPath.WaitingAreaCellPrefabPath);
     }
 }

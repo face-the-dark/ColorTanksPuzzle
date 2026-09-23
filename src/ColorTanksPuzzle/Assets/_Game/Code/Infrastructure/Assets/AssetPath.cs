@@ -7,5 +7,6 @@
         public const string PixelPrefabPath = "Prefabs/Pixel";
         public const string TankPrefabPath = "Prefabs/Tank";
         public const string BulletPrefabPath = "Prefabs/Bullet";
+        public const string WaitingAreaCellPrefabPath = "Prefabs/WaitingAreaCell";
     }
 }

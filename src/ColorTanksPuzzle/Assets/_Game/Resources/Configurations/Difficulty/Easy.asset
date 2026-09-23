@@ -31,3 +31,4 @@ MonoBehaviour:
     _depthWeight: 25
   - _depthValue: 2
     _depthWeight: 5
+  _maxTanksCount: 5
