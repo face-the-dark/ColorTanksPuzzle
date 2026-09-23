@@ -10,10 +10,8 @@ namespace _Game.Code.Bullets
 
         private Rigidbody _rigidbody;
 
-        private void Awake()
-        {
+        private void Awake() => 
             _rigidbody = GetComponent<Rigidbody>();
-        }
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -24,9 +22,7 @@ namespace _Game.Code.Bullets
             }
         }
 
-        public void Fly(Vector3 direction)
-        {
+        public void AddForce(Vector3 direction) => 
             _rigidbody.AddForce(_speed * direction, ForceMode.Impulse);
-        }
     }
 }

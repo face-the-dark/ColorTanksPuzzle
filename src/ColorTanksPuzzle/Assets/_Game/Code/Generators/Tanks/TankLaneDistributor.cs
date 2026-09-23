@@ -16,30 +16,16 @@ namespace _Game.Code.Generators.Tanks
             _laneCount = laneCount;
         }
 
-        public List<TankData> Distribute(List<TankData> tanks)
+        public void Distribute(List<TankData> tanks)
         {
             if  (tanks == null || tanks.Count == 0)
                 throw new ArgumentNullException(nameof(tanks));
-            
-            List<TankData> result = new List<TankData>(tanks.Count);
 
             for (int i = 0; i < tanks.Count; i++)
             {
-                TankData tank = tanks[i];
-
                 int laneIndex = i % _laneCount;
-
-                result.Add(
-                    new TankData(
-                        tank.Color,
-                        tank.Hp,
-                        tank.Depth,
-                        laneIndex
-                    )
-                );
+                tanks[i].LaneIndex = laneIndex;
             }
-
-            return result;
         }
     }
 }

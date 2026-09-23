@@ -37,59 +37,55 @@ namespace _Game.Code.Generators.Tanks
         private void GenerateTanksData(List<PixelData> pixelsData)
         {
             List<TankData> tanks = new();
-            
-            List<KeyValuePair<Color, List<PixelData>>> orderedPixelsDataByColor = OrderPixelsByColor(pixelsData);
-            
+
+            List<KeyValuePair<Color, List<PixelData>>> orderedPixelsDataByColor = OrderPixelsDataByColor(pixelsData);
+
             foreach (KeyValuePair<Color, List<PixelData>> pixelsDataByColor in orderedPixelsDataByColor)
             {
                 Color color = pixelsDataByColor.Key;
+                List<PixelData> dataByColor = pixelsDataByColor.Value;
+                
+                List<PixelData> orderedPixelsDataByDepth = OrderPixelsDataByDepth(dataByColor);
 
-                List<PixelData> colorPixels = pixelsDataByColor.Value
-                    .OrderBy(pixel => pixel.Depth)
-                    .ToList();
-
-                GenerateTanksForColor(color, colorPixels, tanks);
+                GenerateTanksDataForColor(color, orderedPixelsDataByDepth, tanks);
             }
 
             tanks = _orderGenerator.OrderByDepth(tanks);
-            tanks = _laneDistributor.Distribute(tanks);
+            
+            _laneDistributor.Distribute(tanks);
 
             DataGenerated?.Invoke(tanks);
         }
 
-        private List<KeyValuePair<Color, List<PixelData>>> OrderPixelsByColor(List<PixelData> pixelsData)
+        private List<KeyValuePair<Color, List<PixelData>>> OrderPixelsDataByColor(List<PixelData> pixelsData)
         {
-            Dictionary<Color, List<PixelData>> pixelsByColor = new();
-
-            foreach (PixelData pixel in pixelsData)
-            {
-                if (pixelsByColor.TryGetValue(pixel.Color, out List<PixelData> pixels) == false)
-                {
-                    pixels = new List<PixelData>();
-                    pixelsByColor.Add(pixel.Color, pixels);
-                }
-
-                pixels.Add(pixel);
-            }
-
-            return pixelsByColor
-                .OrderBy(pair => pair.Key.GetHashCode())
+            return pixelsData
+                .GroupBy(p => p.Color)
+                .OrderBy(g => g.Key.GetHashCode())
+                .Select(g => new KeyValuePair<Color, List<PixelData>>(g.Key, g.ToList()))
                 .ToList();
         }
 
-        private void GenerateTanksForColor(Color color, List<PixelData> pixels, List<TankData> result)
+        private List<PixelData> OrderPixelsDataByDepth(List<PixelData> pixelsData)
         {
-            List<int> hpValues = _hpGenerator.Generate(pixels.Count);
+            return pixelsData
+                .OrderBy(pixel => pixel.Depth)
+                .ToList();
+        }
+
+        private void GenerateTanksDataForColor(Color color, List<PixelData> pixelData, List<TankData> tanksData)
+        {
+            List<int> hpValues = _hpGenerator.GenerateTanksHpByPixelsCount(pixelData.Count);
 
             int pixelIndex = 0;
 
             foreach (int hp in hpValues)
             {
-                PixelData firstPixel = pixels[pixelIndex];
+                PixelData firstPixel = pixelData[pixelIndex];
 
-                TankData tank = new TankData(color, hp, firstPixel.Depth, 0);
+                TankData tank = new TankData(color, hp, firstPixel.Depth);
 
-                result.Add(tank);
+                tanksData.Add(tank);
 
                 pixelIndex += hp;
             }

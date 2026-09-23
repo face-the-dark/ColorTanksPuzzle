@@ -82,7 +82,7 @@ namespace _Game.Code.Tanks
         private void SpawnBullet()
         {
             Bullet bullet = Instantiate(_bulletPrefab, _shootPoint.position, Quaternion.identity);
-            bullet.Fly(transform.forward);
+            bullet.AddForce(transform.forward);
         }
 
         private void ReduceHp()

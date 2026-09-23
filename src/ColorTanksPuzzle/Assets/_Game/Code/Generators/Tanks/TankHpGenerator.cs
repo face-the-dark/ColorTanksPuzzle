@@ -32,7 +32,7 @@ namespace _Game.Code.Generators.Tanks
             _random = random ?? throw new ArgumentNullException(nameof(random));
         }
 
-        public List<int> Generate(int pixelCount)
+        public List<int> GenerateTanksHpByPixelsCount(int pixelCount)
         {
             if (pixelCount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(pixelCount));

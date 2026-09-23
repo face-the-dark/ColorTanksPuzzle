@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Configurations.LevelSettings
   _id: 1
   _picture: {fileID: 2800000, guid: f28277b8f54f19441a264d2c9470a5a2, type: 3}
-  _difficultyMode: 0
+  _difficultyMode: 2
   _seed: 12345
