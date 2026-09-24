@@ -18,14 +18,14 @@ namespace _Game.Code.Spawners
 
         private readonly DifficultyConfigurationProvider _difficultyConfigurationProvider;
         private readonly LevelConfigurationProvider _levelConfigurationProvider;
+        private readonly WaitingAreaSpawnBoundaries _waitingAreaSpawnBoundaries;
+
+        private readonly List<WaitingAreaCell> _currentWaitingAreaCells = new();
 
         private WaitingAreaCell _waitingAreaCellPrefab;
-        private WaitingAreaSpawnBoundaries _waitingAreaSpawnBoundaries;
 
         private float _currentPositionByX;
         private float _currentPositionByZ;
-
-        private List<WaitingAreaCell> _currentWaitingAreaCells = new();
 
         public WaitingAreaCellSpawner
         (
@@ -35,35 +35,36 @@ namespace _Game.Code.Spawners
             LevelConfigurationProvider levelConfigurationProvider
         )
         {
-            _waitingAreaSpawnBoundaries = waitingAreaSpawnBoundaries;
-            _difficultyConfigurationProvider = difficultyConfigurationProvider;
-            _levelConfigurationProvider = levelConfigurationProvider;
+            _waitingAreaSpawnBoundaries = waitingAreaSpawnBoundaries ??
+                                          throw new ArgumentNullException(nameof(waitingAreaSpawnBoundaries));
+
+            _difficultyConfigurationProvider = difficultyConfigurationProvider ??
+                                               throw new ArgumentNullException(nameof(difficultyConfigurationProvider));
+
+            _levelConfigurationProvider = levelConfigurationProvider ??
+                                          throw new ArgumentNullException(nameof(levelConfigurationProvider));
+
+            if (loadService == null)
+                throw new ArgumentNullException(nameof(loadService));
 
             _waitingAreaCellPrefab = loadService.LoadWaitingAreaCell();
         }
 
         public event Action<List<WaitingAreaCell>> CellsSpawned;
+        public event Action<WaitingAreaCell> CellAdded;
 
         public void SpawnStartCells()
         {
-            DifficultyMode difficultyMode = _levelConfigurationProvider.LevelConfiguration.DifficultyMode;
-            DifficultyConfiguration difficultyConfiguration = _difficultyConfigurationProvider.Get(difficultyMode);
+            DifficultyConfiguration difficultyConfiguration = _levelConfigurationProvider.GetDifficultyConfiguration();
 
             if (difficultyConfiguration == null)
-                throw new ArgumentNullException();
+                throw new InvalidOperationException(nameof(difficultyConfiguration));
 
-            int startMaxTanksCount = difficultyConfiguration.MaxTanksCount;
+            InitializeStartPosition();
 
-            _currentPositionByX = _waitingAreaSpawnBoundaries.LeftUpBoundary.position.x;
-            _currentPositionByX += _waitingAreaCellPrefab.transform.localScale.x / Divisor;
-
-            _currentPositionByZ = _waitingAreaSpawnBoundaries.LeftUpBoundary.position.z;
-            _currentPositionByZ -= _waitingAreaCellPrefab.transform.localScale.z / Divisor;
-            
-            for (int i = 0; i < startMaxTanksCount; i++)
+            for (int i = 0; i < difficultyConfiguration.StartMaxTanksCount; i++)
             {
                 SpawnCell();
-
                 UpdateNextPosition();
             }
 
@@ -74,25 +75,40 @@ namespace _Game.Code.Spawners
 
         public void AddCell()
         {
-            SpawnCell();
+            WaitingAreaCell waitingAreaCell = SpawnCell();
+
             UpdateNextPosition();
+
             AlignCellsInCenterByRows();
+
+            CellAdded?.Invoke(waitingAreaCell);
         }
 
-        private void SpawnCell()
+        private void InitializeStartPosition()
         {
-            Vector3 position = new Vector3(_currentPositionByX, 0.5f, _currentPositionByZ);
+            _currentPositionByX = _waitingAreaSpawnBoundaries.LeftUpBoundary.position.x;
+            _currentPositionByX += _waitingAreaCellPrefab.transform.localScale.x / Divisor;
+
+            _currentPositionByZ = _waitingAreaSpawnBoundaries.LeftUpBoundary.position.z;
+            _currentPositionByZ -= _waitingAreaCellPrefab.transform.localScale.z / Divisor;
+        }
+
+        private WaitingAreaCell SpawnCell()
+        {
+            Vector3 position = new(_currentPositionByX, 0.5f, _currentPositionByZ);
 
             WaitingAreaCell waitingAreaCell = Object.Instantiate(_waitingAreaCellPrefab, position, Quaternion.identity);
 
             _currentWaitingAreaCells.Add(waitingAreaCell);
+
+            return waitingAreaCell;
         }
 
         private void UpdateNextPosition()
         {
             _currentPositionByX += _waitingAreaCellPrefab.transform.localScale.x;
             _currentPositionByX += DistanceBetweenCells;
-                
+
             if (_currentPositionByX > _waitingAreaSpawnBoundaries.RightUpBoundary.position.x)
             {
                 _currentPositionByX = _waitingAreaSpawnBoundaries.LeftUpBoundary.position.x;
@@ -105,96 +121,30 @@ namespace _Game.Code.Spawners
 
         private void AlignCellsInCenterByRows()
         {
-            List<WaitingAreaCell> currentWaitingAreaCells = new List<WaitingAreaCell>(_currentWaitingAreaCells);
-
-            while (currentWaitingAreaCells.Count % MaxAreaCellsInRow > 0)
+            for (int i = 0; i < _currentWaitingAreaCells.Count; i += MaxAreaCellsInRow)
             {
-                List<WaitingAreaCell> partOfCurrentWaitingAreaCells = new List<WaitingAreaCell>();
-                
-                int cellsCount = MaxAreaCellsInRow;
-                
-                if (currentWaitingAreaCells.Count < MaxAreaCellsInRow)
-                    cellsCount = currentWaitingAreaCells.Count;
-                
-                for (int i = 0; i < cellsCount; i++)
-                {
-                    partOfCurrentWaitingAreaCells.Add(currentWaitingAreaCells[i]);
-                }
-                
-                currentWaitingAreaCells.RemoveRange(0, partOfCurrentWaitingAreaCells.Count);
-                
-                AlignCellsInCenter(partOfCurrentWaitingAreaCells);
+                int cellsInRow = Mathf.Min(MaxAreaCellsInRow, _currentWaitingAreaCells.Count - i);
+
+                List<WaitingAreaCell> row = _currentWaitingAreaCells.GetRange(i, cellsInRow);
+
+                AlignCellsInCenter(row);
             }
         }
 
-        private void AlignCellsInCenter(List<WaitingAreaCell> waitingAreaCells)
+        private void AlignCellsInCenter(List<WaitingAreaCell> cells)
         {
-            if (waitingAreaCells.Count % 2 != 0)
+            float step = _waitingAreaCellPrefab.transform.localScale.x + DistanceBetweenCells;
+
+            float startX = -(cells.Count - 1) * step / Divisor;
+
+            for (int i = 0; i < cells.Count; i++)
             {
-                int centerCellIndex = waitingAreaCells.Count / 2;
-                WaitingAreaCell cell = waitingAreaCells[centerCellIndex];
+                Transform cellTransform = cells[i].transform;
 
-                cell.transform.localPosition =
-                    new Vector3(0f, cell.transform.localPosition.y, cell.transform.localPosition.z);
-
-                float leftPositionByX = cell.transform.localPosition.x;
-
-                for (int i = centerCellIndex - 1; i >= 0; i--)
-                {
-                    leftPositionByX -= DistanceBetweenCells;
-                    leftPositionByX -= _waitingAreaCellPrefab.transform.localScale.x;
-
-                    waitingAreaCells[i].transform.localPosition = new Vector3
-                    (
-                        leftPositionByX, cell.transform.localPosition.y, cell.transform.localPosition.z
-                    );
-                }
-
-                float rightPositionByX = cell.transform.localPosition.x;
-
-                for (int i = centerCellIndex + 1; i < waitingAreaCells.Count; i++)
-                {
-                    rightPositionByX += DistanceBetweenCells;
-                    rightPositionByX += _waitingAreaCellPrefab.transform.localScale.x;
-
-                    waitingAreaCells[i].transform.localPosition = new Vector3
-                    (
-                        rightPositionByX, cell.transform.localPosition.y, cell.transform.localPosition.z
-                    );
-                }
-            }
-            else
-            {
-                float halfDistanceBetweenCells = DistanceBetweenCells / 2f;
-                int halfCellsCount = waitingAreaCells.Count / 2;
-
-                float firstDistanceByX = _waitingAreaCellPrefab.transform.localScale.x / 2f;
-
-                float leftPositionByX = -firstDistanceByX - halfDistanceBetweenCells;
-
-                for (int i = halfCellsCount - 1; i >= 0; i--)
-                {
-                    Vector3 cellLocalPosition = waitingAreaCells[i].transform.localPosition;
-
-                    waitingAreaCells[i].transform.localPosition =
-                        new Vector3(leftPositionByX, cellLocalPosition.y, cellLocalPosition.z);
-
-                    leftPositionByX -= DistanceBetweenCells;
-                    leftPositionByX -= _waitingAreaCellPrefab.transform.localScale.x;
-                }
-
-                float rightPositionByX = firstDistanceByX + halfDistanceBetweenCells;
-
-                for (int i = halfCellsCount; i < waitingAreaCells.Count; i++)
-                {
-                    Vector3 cellLocalPosition = waitingAreaCells[i].transform.localPosition;
-
-                    waitingAreaCells[i].transform.localPosition =
-                        new Vector3(rightPositionByX, cellLocalPosition.y, cellLocalPosition.z);
-
-                    rightPositionByX += DistanceBetweenCells;
-                    rightPositionByX += _waitingAreaCellPrefab.transform.localScale.x;
-                }
+                float positionByX = startX + i * step;
+                
+                cellTransform.localPosition = 
+                    new Vector3(positionByX, cellTransform.localPosition.y, cellTransform.localPosition.z);
             }
         }
     }

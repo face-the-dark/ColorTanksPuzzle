@@ -21,11 +21,15 @@ namespace _Game.Code.WaitingAreaComponents
         {
             _waitingAreaCellSpawner = waitingAreaCellSpawner;
             
-            _waitingAreaCellSpawner.CellsSpawned += OnCellSpawned;
+            _waitingAreaCellSpawner.CellsSpawned += OnCellsSpawned;
+            _waitingAreaCellSpawner.CellAdded += OnCellAdded;
         }
 
-        public void Dispose() => 
-            _waitingAreaCellSpawner.CellsSpawned -= OnCellSpawned;
+        public void Dispose()
+        {
+            _waitingAreaCellSpawner.CellsSpawned -= OnCellsSpawned;
+            _waitingAreaCellSpawner.CellAdded -= OnCellAdded;
+        }
 
         public void Add(Tank tank)
         {
@@ -77,11 +81,17 @@ namespace _Game.Code.WaitingAreaComponents
             return waitingAreaCell;
         }
 
-        private void OnCellSpawned(List<WaitingAreaCell> waitingAreaCells)
+        private void OnCellsSpawned(List<WaitingAreaCell> waitingAreaCells)
         {
-            _waitingAreaCells = waitingAreaCells;
+            _waitingAreaCells = new List<WaitingAreaCell>(waitingAreaCells);
             
             _freeCellsCount = _waitingAreaCells.Count;
+        }
+
+        private void OnCellAdded(WaitingAreaCell waitingAreaCell)
+        {
+            _waitingAreaCells.Add(waitingAreaCell);
+            _freeCellsCount++;
         }
     }
 }

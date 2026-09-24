@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Code.Providers;
 using _Game.Code.Tanks;
 using UnityEngine;
 using VContainer;
@@ -12,17 +13,24 @@ namespace _Game.Code.Players
 
         [Header("Settings")]
         [SerializeField] private LayerMask _tankLayer;
-        [SerializeField] private int _maxTanksCountOnSpline = 5;
         
         private InputReader _inputReader;
 
+        private int _maxTanksCountOnSpline;
         private int _currentTanksCountOnSpline;
         
         public event Action<string> TanksCountChanged;
 
         [Inject]
-        public void Construct(InputReader inputReader) => 
-            _inputReader = inputReader;
+        public void Construct(InputReader inputReader, LevelConfigurationProvider levelConfigurationProvider)
+        {
+            _inputReader = inputReader ?? throw new ArgumentNullException(nameof(inputReader));
+            
+            if (levelConfigurationProvider is null)
+                throw new ArgumentNullException(nameof(levelConfigurationProvider));
+            
+            _maxTanksCountOnSpline = levelConfigurationProvider.GetDifficultyConfiguration().StartMaxTanksCount;
+        }
 
         private void Start() => 
             TanksCountChanged?.Invoke($"{_currentTanksCountOnSpline}/{_maxTanksCountOnSpline}");
@@ -60,6 +68,13 @@ namespace _Game.Code.Players
             
             _currentTanksCountOnSpline--;
             tank.MovingStopped -= OnTankMovingStopped;
+            
+            TanksCountChanged?.Invoke($"{_currentTanksCountOnSpline}/{_maxTanksCountOnSpline}");
+        }
+
+        public void IncreaseMaxCellsCount()
+        {
+            _maxTanksCountOnSpline++;
             
             TanksCountChanged?.Invoke($"{_currentTanksCountOnSpline}/{_maxTanksCountOnSpline}");
         }

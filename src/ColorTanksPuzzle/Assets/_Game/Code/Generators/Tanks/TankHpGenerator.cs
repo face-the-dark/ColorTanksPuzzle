@@ -4,6 +4,7 @@ using System.Linq;
 using _Game.Code.Configurations.Difficulty;
 using _Game.Code.Providers;
 using _Game.Code.Utilities;
+using VContainer;
 
 namespace _Game.Code.Generators.Tanks
 {
@@ -11,21 +12,12 @@ namespace _Game.Code.Generators.Tanks
     {
         private const int MinimumStandardHp = 10;
 
-        private readonly DifficultyConfigurationProvider _difficultyConfigurationProvider;
         private readonly LevelConfigurationProvider _levelConfigurationProvider;
         private readonly DeterministicRandom _random;
 
-        public TankHpGenerator
-        (
-            DifficultyConfigurationProvider difficultyConfigurationProvider,
-            LevelConfigurationProvider levelConfigurationProvider,
-            DeterministicRandom random
-        )
+        [Inject]
+        public TankHpGenerator(LevelConfigurationProvider levelConfigurationProvider, DeterministicRandom random)
         {
-            _difficultyConfigurationProvider = difficultyConfigurationProvider
-                                               ?? throw new ArgumentNullException(
-                                                   nameof(difficultyConfigurationProvider));
-
             _levelConfigurationProvider = levelConfigurationProvider
                                           ?? throw new ArgumentNullException(nameof(levelConfigurationProvider));
 
@@ -65,11 +57,9 @@ namespace _Game.Code.Generators.Tanks
 
             List<int> possibleHp = new();
             List<int> weights = new();
-
-            DifficultyMode difficultyMode = _levelConfigurationProvider.LevelConfiguration.DifficultyMode;
             
-            List<HpConfiguration> hpConfigurations =
-                _difficultyConfigurationProvider.Get(difficultyMode).HpConfigurations;
+            List<HpConfiguration> hpConfigurations = 
+                _levelConfigurationProvider.GetDifficultyConfiguration().HpConfigurations;
 
             if (hpConfigurations == null || hpConfigurations.Count == 0)
                 throw new ArgumentNullException(nameof(hpConfigurations));

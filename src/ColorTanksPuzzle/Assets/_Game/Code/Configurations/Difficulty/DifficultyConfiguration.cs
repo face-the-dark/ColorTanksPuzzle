@@ -9,11 +9,11 @@ namespace _Game.Code.Configurations.Difficulty
         [SerializeField] private DifficultyMode _difficultyMode;
         [SerializeField] private List<HpConfiguration> _hpConfigurations;
         [SerializeField] private List<DepthConfiguration> _depthConfigurations;
-        [SerializeField] private int _maxTanksCount;
+        [SerializeField] private int _startMaxTanksCount;
 
         public DifficultyMode DifficultyMode => _difficultyMode;
         public List<HpConfiguration> HpConfigurations => _hpConfigurations;
         public List<DepthConfiguration> DepthConfigurations => _depthConfigurations;
-        public int MaxTanksCount => _maxTanksCount;
+        public int StartMaxTanksCount => _startMaxTanksCount;
     }
 }

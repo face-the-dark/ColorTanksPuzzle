@@ -5,25 +5,18 @@ using _Game.Code.Configurations.Difficulty;
 using _Game.Code.Data;
 using _Game.Code.Providers;
 using _Game.Code.Utilities;
+using VContainer;
 
 namespace _Game.Code.Generators.Tanks
 {
     public class TankOrderGenerator
     {
-        private readonly DifficultyConfigurationProvider _difficultyConfigurationProvider;
         private readonly LevelConfigurationProvider _levelConfigurationProvider;
         private readonly DeterministicRandom _random;
 
-        public TankOrderGenerator
-        (
-            DifficultyConfigurationProvider difficultyConfigurationProvider,
-            LevelConfigurationProvider levelConfigurationProvider,
-            DeterministicRandom random
-        )
+        [Inject]
+        public TankOrderGenerator(LevelConfigurationProvider levelConfigurationProvider, DeterministicRandom random)
         {
-            _difficultyConfigurationProvider = difficultyConfigurationProvider ??
-                                               throw new ArgumentNullException(nameof(difficultyConfigurationProvider));
-
             _levelConfigurationProvider = levelConfigurationProvider ??
                                           throw new ArgumentNullException(nameof(levelConfigurationProvider));
             
@@ -58,10 +51,8 @@ namespace _Game.Code.Generators.Tanks
             List<int> possibleDepths = new();
             List<int> depthWeights = new();
 
-            DifficultyMode difficultyMode = _levelConfigurationProvider.LevelConfiguration.DifficultyMode;
-
-            List<DepthConfiguration> depthConfigurations =
-                _difficultyConfigurationProvider.Get(difficultyMode).DepthConfigurations;
+            List<DepthConfiguration> depthConfigurations = 
+                _levelConfigurationProvider.GetDifficultyConfiguration().DepthConfigurations;
 
             if (depthConfigurations == null || depthConfigurations.Count == 0)
                 throw new ArgumentNullException(nameof(depthConfigurations));
