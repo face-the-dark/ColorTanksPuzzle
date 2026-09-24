@@ -4,25 +4,27 @@ using UnityEngine.InputSystem;
 
 namespace _Game.Code.Players
 {
-    public class InputReader : MonoBehaviour
+    public class InputReader : IDisposable
     {
-        private PlayerInput _playerInput;
+        private readonly PlayerInput _playerInput;
 
-        public event Action<Vector2> Clicked;
-        
-        private void Awake() => 
-            _playerInput = new PlayerInput();
-
-        private void OnEnable()
+        public InputReader(PlayerInput playerInput)
         {
+            _playerInput = playerInput;
+            
             _playerInput.Enable();
 
             _playerInput.Player.ClickAction.performed += OnClicked;
+            _playerInput.Player.FirstBonusAction.performed += OnFirstBonusActivated;
         }
 
-        private void OnDisable()
+        public event Action<Vector2> Clicked;
+        public event Action FirstBonusUsed;
+
+        public void Dispose()
         {
             _playerInput.Player.ClickAction.performed -= OnClicked;
+            _playerInput.Player.FirstBonusAction.performed -= OnFirstBonusActivated;
             
             _playerInput.Disable();
         }
@@ -32,6 +34,12 @@ namespace _Game.Code.Players
             Vector2 position = _playerInput.Player.PositionAction.ReadValue<Vector2>();
             
             Clicked?.Invoke(position);
+        }
+
+        private void OnFirstBonusActivated(InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+                FirstBonusUsed?.Invoke();
         }
     }
 }

@@ -15,12 +15,13 @@ namespace _Game.Code.Spawners
     public class TankSpawner : MonoBehaviour, IDisposable
     {
         [SerializeField] private SplineContainer _spline;
-        [SerializeField] private WaitingArea _waitingArea;
         [SerializeField] private SpawningLane[] _lanes;
 
         private readonly List<Tank> _spawnedTanks = new();
 
         private TanksDataGenerator _tanksDataGenerator;
+        private WaitingArea _waitingArea;
+        
         private Tank _tankPrefab;
 
         public int LanesCount => _lanes.Length;
@@ -28,9 +29,11 @@ namespace _Game.Code.Spawners
         public event Action<List<Tank>> TanksSpawned;
 
         [Inject]
-        public void Construct(TanksDataGenerator tanksDataGenerator, LoadService loadService)
+        public void Construct(TanksDataGenerator tanksDataGenerator, WaitingArea waitingArea, LoadService loadService)
         {
             _tanksDataGenerator = tanksDataGenerator;
+            _waitingArea = waitingArea;
+            
             _tankPrefab = loadService.LoadTank();
             
             _tanksDataGenerator.DataGenerated += OnDataGenerated;

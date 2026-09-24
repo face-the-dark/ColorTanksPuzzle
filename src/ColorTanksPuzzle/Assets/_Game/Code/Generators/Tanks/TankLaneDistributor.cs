@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Code.Data;
+using VContainer;
 
 namespace _Game.Code.Generators.Tanks
 {
@@ -8,6 +9,7 @@ namespace _Game.Code.Generators.Tanks
     {
         private readonly int _laneCount;
 
+        [Inject]
         public TankLaneDistributor(int laneCount)
         {
             if (laneCount <= 0)

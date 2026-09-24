@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Game.Code.Data;
 using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.Generators.Tanks
 {
@@ -15,6 +16,7 @@ namespace _Game.Code.Generators.Tanks
 
         public event Action<List<TankData>> DataGenerated;
 
+        [Inject]
         public TanksDataGenerator
         (
             PixelArtGenerator pixelArtGenerator,

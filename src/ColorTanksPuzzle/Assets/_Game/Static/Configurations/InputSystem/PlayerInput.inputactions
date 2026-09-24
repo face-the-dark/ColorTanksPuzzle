@@ -25,6 +25,16 @@
                     "interactions": "",
                     "initialStateCheck": true,
                     "priority": 0
+                },
+                {
+                    "name": "FirstBonusAction",
+                    "type": "Button",
+                    "id": "17299885-ad1b-45e3-8486-c738db7c69f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -34,7 +44,7 @@
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Mouse",
+                    "groups": "Mouse & Keyboard",
                     "action": "PositionAction",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -56,8 +66,19 @@
                     "path": "<Mouse>/press",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Mouse",
+                    "groups": "Mouse & Keyboard",
                     "action": "ClickAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9fd4dc2-1ebc-4d85-91bd-4a61686c4bc8",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse & Keyboard",
+                    "action": "FirstBonusAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -66,11 +87,16 @@
     ],
     "controlSchemes": [
         {
-            "name": "Mouse",
-            "bindingGroup": "Mouse",
+            "name": "Mouse & Keyboard",
+            "bindingGroup": "Mouse & Keyboard",
             "devices": [
                 {
                     "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
                     "isOptional": false,
                     "isOR": false
                 }
