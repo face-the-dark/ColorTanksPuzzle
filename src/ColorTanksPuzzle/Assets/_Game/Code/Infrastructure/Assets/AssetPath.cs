@@ -3,6 +3,7 @@
     public class AssetPath
     {
         public const string DifficultyConfigurationPath = "Configurations/Difficulty";
+        public const string BonusesConfigurationPath = "Configurations/Bonuses/BonusesConfiguration";
         public const string PalettePath = "Configurations/Palettes/DefaultPalette";
         public const string PixelPrefabPath = "Prefabs/Pixel";
         public const string TankPrefabPath = "Prefabs/Tank";

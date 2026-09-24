@@ -2,6 +2,7 @@
 {
     public enum Bonus
     {
-        Expansion
+        ExpansionBonus,
+        FreezeSplineBonus
     }
 }

@@ -5,13 +5,13 @@ using VContainer;
 
 namespace _Game.Code.Bonuses
 {
-    public class Expansion : IBonus
+    public class ExpansionBonus : IBonus
     {
         private readonly WaitingAreaCellSpawner _waitingAreaCellSpawner;
         private readonly TankDispatcher _tankDispatcher;
 
         [Inject]
-        public Expansion(WaitingAreaCellSpawner waitingAreaCellSpawner, TankDispatcher tankDispatcher)
+        public ExpansionBonus(WaitingAreaCellSpawner waitingAreaCellSpawner, TankDispatcher tankDispatcher)
         {
             _waitingAreaCellSpawner =
                 waitingAreaCellSpawner ?? throw new ArgumentNullException(nameof(waitingAreaCellSpawner));
@@ -19,7 +19,7 @@ namespace _Game.Code.Bonuses
             _tankDispatcher = tankDispatcher ?? throw new ArgumentNullException(nameof(tankDispatcher));
         }
 
-        public Bonus Bonus => Bonus.Expansion;
+        public Bonus Bonus => Bonus.ExpansionBonus;
 
         public void Activate()
         {

@@ -15,16 +15,19 @@ namespace _Game.Code.Players
             _playerInput.Enable();
 
             _playerInput.Player.ClickAction.performed += OnClicked;
-            _playerInput.Player.FirstBonusAction.performed += OnFirstBonusActivated;
+            _playerInput.Player.ExpansionBonusAction.performed += OnExpansionBonusActivated;
+            _playerInput.Player.FreezeSplineBonusAction.performed += OnFreezeSplineBonusActivated;
         }
 
         public event Action<Vector2> Clicked;
-        public event Action FirstBonusUsed;
+        public event Action ExpansionBonusUsed;
+        public event Action FreezeSplineBonusUsed;
 
         public void Dispose()
         {
             _playerInput.Player.ClickAction.performed -= OnClicked;
-            _playerInput.Player.FirstBonusAction.performed -= OnFirstBonusActivated;
+            _playerInput.Player.ExpansionBonusAction.performed -= OnExpansionBonusActivated;
+            _playerInput.Player.FreezeSplineBonusAction.performed -= OnFreezeSplineBonusActivated;
             
             _playerInput.Disable();
         }
@@ -36,10 +39,16 @@ namespace _Game.Code.Players
             Clicked?.Invoke(position);
         }
 
-        private void OnFirstBonusActivated(InputAction.CallbackContext callbackContext)
+        private void OnExpansionBonusActivated(InputAction.CallbackContext callbackContext)
         {
             if (callbackContext.performed)
-                FirstBonusUsed?.Invoke();
+                ExpansionBonusUsed?.Invoke();
+        }
+        
+        private void OnFreezeSplineBonusActivated(InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+                FreezeSplineBonusUsed?.Invoke();
         }
     }
 }

@@ -19,11 +19,15 @@ namespace _Game.Code.Bonuses
 
             _bonuses = bonuses.ToDictionary(k => k.Bonus, bonus => bonus);
 
-            _inputReader.FirstBonusUsed += ActivateExpansionBonus;
+            _inputReader.ExpansionBonusUsed += ActivateExpansionBonus;
+            _inputReader.FreezeSplineBonusUsed += ActivateFreezeSplineBonus;
         }
 
-        public void Dispose() =>
-            _inputReader.FirstBonusUsed -= ActivateExpansionBonus;
+        public void Dispose()
+        {
+            _inputReader.ExpansionBonusUsed -= ActivateExpansionBonus;
+            _inputReader.FreezeSplineBonusUsed -= ActivateFreezeSplineBonus;
+        }
 
         public void ActivateBonus(Bonus bonus)
         {
@@ -36,6 +40,9 @@ namespace _Game.Code.Bonuses
         }
 
         private void ActivateExpansionBonus() => 
-            ActivateBonus(Bonus.Expansion);
+            ActivateBonus(Bonus.ExpansionBonus);
+        
+        private void ActivateFreezeSplineBonus() => 
+            ActivateBonus(Bonus.FreezeSplineBonus);
     }
 }

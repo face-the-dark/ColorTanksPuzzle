@@ -15,6 +15,7 @@ namespace _Game.Code.Tanks
 
         private SplineContainer _spline;
 
+        private float _currentSpeed;
         private float _currentLengthPercentage;
         private Coroutine _moveCoroutine;
 
@@ -37,6 +38,21 @@ namespace _Game.Code.Tanks
 
         public void IncreaseSpeed() => 
             _speed *= _speedModifier;
+
+        public void ZeroingSpeed()
+        {
+            if (_speed != 0f)
+            {
+                _currentSpeed = _speed;
+                _speed = 0f;
+            }
+        }
+
+        public void UnZeroingSpeed()
+        {
+            if  (_speed == 0f)
+                _speed = _currentSpeed;
+        }
 
         private IEnumerator Move()
         {

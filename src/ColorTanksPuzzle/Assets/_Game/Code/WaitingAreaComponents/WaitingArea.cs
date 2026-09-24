@@ -90,6 +90,11 @@ namespace _Game.Code.WaitingAreaComponents
 
         private void OnCellAdded(WaitingAreaCell waitingAreaCell)
         {
+            foreach (WaitingAreaCell cell in _waitingAreaCells)
+            {
+                cell.UpdateTakenTankPosition();
+            }
+            
             _waitingAreaCells.Add(waitingAreaCell);
             _freeCellsCount++;
         }

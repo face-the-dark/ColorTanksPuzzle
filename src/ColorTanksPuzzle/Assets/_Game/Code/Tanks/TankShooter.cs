@@ -59,7 +59,9 @@ namespace _Game.Code.Tanks
                     {
                         if (CanDestroyPixel(pixel))
                         {
-                            SpawnBullet();
+                            Vector3 bulletSpawnPosition = GetBulletSpawnPosition(pixel);
+                            SpawnBullet(bulletSpawnPosition);
+                            
                             pixel.MarkForDestruction();
                             _currentPixel = pixel;
 
@@ -79,9 +81,9 @@ namespace _Game.Code.Tanks
                    && pixel.IsWillBeDestroyed == false;
         }
 
-        private void SpawnBullet()
+        private void SpawnBullet(Vector3 bulletSpawnPosition)
         {
-            Bullet bullet = Instantiate(_bulletPrefab, _shootPoint.position, Quaternion.identity);
+            Bullet bullet = Instantiate(_bulletPrefab, bulletSpawnPosition, Quaternion.identity);
             bullet.AddForce(transform.forward);
         }
 
@@ -93,6 +95,23 @@ namespace _Game.Code.Tanks
                 Died?.Invoke();
             
             HpChanged?.Invoke(_hp);
+        }
+        
+        private Vector3 GetBulletSpawnPosition(Pixel pixel)
+        {
+            if (pixel.TryGetComponent(out Collider colliderComponent))
+            {
+                Vector3 targetCenter = colliderComponent.bounds.center;
+
+                Vector3 axisOrigin = _shootPoint.position;
+                Vector3 axisDirection = _shootPoint.right.normalized;
+
+                float distance = Vector3.Dot(targetCenter - axisOrigin, axisDirection);
+
+                return axisOrigin + axisDirection * distance;
+            }
+            
+            return _shootPoint.position;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _Game.Code.Bullets;
+using _Game.Code.Configurations.Bonuses;
 using _Game.Code.Configurations.Difficulty;
 using _Game.Code.Configurations.Palettes;
 using _Game.Code.Pixels;
@@ -31,5 +32,8 @@ namespace _Game.Code.Infrastructure.Assets
 
         public WaitingAreaCell LoadWaitingAreaCell() => 
             Resources.Load<WaitingAreaCell>(AssetPath.WaitingAreaCellPrefabPath);
+
+        public BonusesConfiguration LoadBonusesConfiguration() => 
+            Resources.Load<BonusesConfiguration>(AssetPath.BonusesConfigurationPath);
     }
 }
