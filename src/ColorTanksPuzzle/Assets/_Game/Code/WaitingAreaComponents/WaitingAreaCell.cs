@@ -33,5 +33,11 @@ namespace _Game.Code.WaitingAreaComponents
             _isFree = true;
             _takenTank = null;
         }
+
+        public void UpdateTakenTankPosition()
+        {
+            if (_takenTank != null) 
+                _takenTank.transform.position = _point.position;
+        }
     }
 }

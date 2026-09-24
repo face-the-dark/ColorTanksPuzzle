@@ -27,9 +27,19 @@
                     "priority": 0
                 },
                 {
-                    "name": "FirstBonusAction",
+                    "name": "ExpansionBonusAction",
                     "type": "Button",
                     "id": "17299885-ad1b-45e3-8486-c738db7c69f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "FreezeSplineBonusAction",
+                    "type": "Button",
+                    "id": "854fc1c0-7c38-4a59-8500-907c07aa439d",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -78,7 +88,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Mouse & Keyboard",
-                    "action": "FirstBonusAction",
+                    "action": "ExpansionBonusAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db8f2980-12ba-4afd-b96d-284b9df30b8b",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Mouse & Keyboard",
+                    "action": "FreezeSplineBonusAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

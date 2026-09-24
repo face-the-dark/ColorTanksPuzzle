@@ -741,7 +741,7 @@ Transform:
   m_GameObject: {fileID: 391172778}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1577,7 +1577,7 @@ Transform:
   m_GameObject: {fileID: 843210119}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 16.5}
+  m_LocalPosition: {x: 0, y: 1.5, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1597,7 +1597,7 @@ GameObject:
   - component: {fileID: 1055238752}
   - component: {fileID: 1055238755}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ExpansionBonusButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1714,10 +1714,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1055238750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1f90df347549bc9f632a232c67337c, type: 3}
+  m_Script: {fileID: 11500000, guid: b2968d18e0be476a860660bf9c8cfe9c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.BonusButton
-  _bonus: 0
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.BonusButtons.ExpansionBonusButton
 --- !u!1 &1120542250
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,8 +2027,9 @@ GameObject:
   - component: {fileID: 1432756478}
   - component: {fileID: 1432756477}
   - component: {fileID: 1432756476}
+  - component: {fileID: 1432756479}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: FreezeSplineBonusButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2137,6 +2137,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432756474}
   m_CullTransparentMesh: 1
+--- !u!114 &1432756479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432756474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90eff5bb768d457f873d0d09856ca9e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.BonusButtons.FreezeSplineBonusButton
 --- !u!1 &1502670209
 GameObject:
   m_ObjectHideFlags: 0
@@ -2529,7 +2541,7 @@ Transform:
   m_GameObject: {fileID: 1553780073}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 5.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3135,8 +3147,8 @@ MonoBehaviour:
   _tankSpawner: {fileID: 175000583}
   _tankDispatcher: {fileID: 1605477652}
   _waitingAreaSpawnBoundaries: {fileID: 391172780}
-  _bonusButtons:
-  - {fileID: 1055238755}
+  _expansionBonusButton: {fileID: 1055238755}
+  _freezeSplineBonusButton: {fileID: 1432756479}
 --- !u!4 &1857952941
 Transform:
   m_ObjectHideFlags: 0

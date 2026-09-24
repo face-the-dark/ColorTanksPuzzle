@@ -113,9 +113,19 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""priority"": 0
                 },
                 {
-                    ""name"": ""FirstBonusAction"",
+                    ""name"": ""ExpansionBonusAction"",
                     ""type"": ""Button"",
                     ""id"": ""17299885-ad1b-45e3-8486-c738db7c69f0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""FreezeSplineBonusAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""854fc1c0-7c38-4a59-8500-907c07aa439d"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -164,7 +174,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Mouse & Keyboard"",
-                    ""action"": ""FirstBonusAction"",
+                    ""action"": ""ExpansionBonusAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db8f2980-12ba-4afd-b96d-284b9df30b8b"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse & Keyboard"",
+                    ""action"": ""FreezeSplineBonusAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -205,7 +226,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_ClickAction = m_Player.FindAction("ClickAction", throwIfNotFound: true);
         m_Player_PositionAction = m_Player.FindAction("PositionAction", throwIfNotFound: true);
-        m_Player_FirstBonusAction = m_Player.FindAction("FirstBonusAction", throwIfNotFound: true);
+        m_Player_ExpansionBonusAction = m_Player.FindAction("ExpansionBonusAction", throwIfNotFound: true);
+        m_Player_FreezeSplineBonusAction = m_Player.FindAction("FreezeSplineBonusAction", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -288,7 +310,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_ClickAction;
     private readonly InputAction m_Player_PositionAction;
-    private readonly InputAction m_Player_FirstBonusAction;
+    private readonly InputAction m_Player_ExpansionBonusAction;
+    private readonly InputAction m_Player_FreezeSplineBonusAction;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -309,9 +332,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @PositionAction => m_Wrapper.m_Player_PositionAction;
         /// <summary>
-        /// Provides access to the underlying input action "Player/FirstBonusAction".
+        /// Provides access to the underlying input action "Player/ExpansionBonusAction".
         /// </summary>
-        public InputAction @FirstBonusAction => m_Wrapper.m_Player_FirstBonusAction;
+        public InputAction @ExpansionBonusAction => m_Wrapper.m_Player_ExpansionBonusAction;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/FreezeSplineBonusAction".
+        /// </summary>
+        public InputAction @FreezeSplineBonusAction => m_Wrapper.m_Player_FreezeSplineBonusAction;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -344,9 +371,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PositionAction.started += instance.OnPositionAction;
             @PositionAction.performed += instance.OnPositionAction;
             @PositionAction.canceled += instance.OnPositionAction;
-            @FirstBonusAction.started += instance.OnFirstBonusAction;
-            @FirstBonusAction.performed += instance.OnFirstBonusAction;
-            @FirstBonusAction.canceled += instance.OnFirstBonusAction;
+            @ExpansionBonusAction.started += instance.OnExpansionBonusAction;
+            @ExpansionBonusAction.performed += instance.OnExpansionBonusAction;
+            @ExpansionBonusAction.canceled += instance.OnExpansionBonusAction;
+            @FreezeSplineBonusAction.started += instance.OnFreezeSplineBonusAction;
+            @FreezeSplineBonusAction.performed += instance.OnFreezeSplineBonusAction;
+            @FreezeSplineBonusAction.canceled += instance.OnFreezeSplineBonusAction;
         }
 
         /// <summary>
@@ -364,9 +394,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PositionAction.started -= instance.OnPositionAction;
             @PositionAction.performed -= instance.OnPositionAction;
             @PositionAction.canceled -= instance.OnPositionAction;
-            @FirstBonusAction.started -= instance.OnFirstBonusAction;
-            @FirstBonusAction.performed -= instance.OnFirstBonusAction;
-            @FirstBonusAction.canceled -= instance.OnFirstBonusAction;
+            @ExpansionBonusAction.started -= instance.OnExpansionBonusAction;
+            @ExpansionBonusAction.performed -= instance.OnExpansionBonusAction;
+            @ExpansionBonusAction.canceled -= instance.OnExpansionBonusAction;
+            @FreezeSplineBonusAction.started -= instance.OnFreezeSplineBonusAction;
+            @FreezeSplineBonusAction.performed -= instance.OnFreezeSplineBonusAction;
+            @FreezeSplineBonusAction.canceled -= instance.OnFreezeSplineBonusAction;
         }
 
         /// <summary>
@@ -448,11 +481,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPositionAction(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "FirstBonusAction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ExpansionBonusAction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnFirstBonusAction(InputAction.CallbackContext context);
+        void OnExpansionBonusAction(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "FreezeSplineBonusAction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFreezeSplineBonusAction(InputAction.CallbackContext context);
     }
 }

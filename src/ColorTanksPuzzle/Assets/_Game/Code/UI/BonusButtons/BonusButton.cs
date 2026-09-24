@@ -1,19 +1,18 @@
 ﻿using _Game.Code.Bonuses;
-using _Game.Code.Players;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
-namespace _Game.Code.UI
+namespace _Game.Code.UI.BonusButtons
 {
     [RequireComponent(typeof(Button))]
-    public class BonusButton : MonoBehaviour
+    public abstract class BonusButton : MonoBehaviour
     {
-        [SerializeField] private Bonus _bonus;
-        
         private Button _button;
-        
+
         private BonusActivator _bonusActivator;
+
+        protected abstract Bonus Bonus { get; }
 
         [Inject]
         public void Construct(BonusActivator bonusActivator) => 
@@ -29,6 +28,6 @@ namespace _Game.Code.UI
             _button.onClick.RemoveListener(OnButtonClick);
 
         private void OnButtonClick() => 
-            _bonusActivator.ActivateBonus(_bonus);
+            _bonusActivator.ActivateBonus(Bonus);
     }
 }

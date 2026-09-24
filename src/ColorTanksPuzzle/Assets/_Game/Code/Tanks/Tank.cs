@@ -1,9 +1,11 @@
 using System;
 using _Game.Code.Data;
+using _Game.Code.Providers;
 using _Game.Code.Spawners;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
 using UnityEngine.Splines;
+using VContainer;
 
 namespace _Game.Code.Tanks
 {
@@ -79,6 +81,16 @@ namespace _Game.Code.Tanks
 
         public void Unblock() =>
             _isBlocked = false;
+
+        public void FreezeMoving()
+        {
+            _tankMover.ZeroingSpeed();
+        }
+
+        public void UnfreezeMoving()
+        {
+            _tankMover.UnZeroingSpeed();
+        }
 
         private void OnDied()
         {
