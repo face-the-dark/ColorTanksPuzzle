@@ -1,11 +1,9 @@
 using System;
 using _Game.Code.Data;
-using _Game.Code.Providers;
 using _Game.Code.Spawners;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
 using UnityEngine.Splines;
-using VContainer;
 
 namespace _Game.Code.Tanks
 {
@@ -26,6 +24,8 @@ namespace _Game.Code.Tanks
 
         public bool IsMoving => _isMoving;
         public bool IsBlocked => _isBlocked;
+        public int Hp => _tankShooter.Hp;
+        public Color Color => _tankShooter.Color;
 
         public event Action<Tank> MovingStopped;
         public event Action<Tank> Died;
@@ -46,16 +46,13 @@ namespace _Game.Code.Tanks
             _waitingArea = waitingArea;
             _lane = spawningLane;
 
-            _tankShooter.Died += OnDied;
+            _tankShooter.Died += Die;
         }
 
         public void MoveToSpline()
         {
-            if (_isMoving == false)
-                if (_isFirstCirclePassed)
-                    _waitingArea.Remove(this);
-                else
-                    _lane.Remove(this);
+            if (_isMoving == false) 
+                RemoveFromWaitingAreaOrLane();
 
             _tankMover.CurrentLengthPercentageIncreased += OnCurrentLengthPercentageIncreased;
             _tankMover.CirclePassed += OnCirclePassed;
@@ -65,6 +62,14 @@ namespace _Game.Code.Tanks
             _tankShooter.StartShoot();
 
             _isMoving = true;
+        }
+
+        public void RemoveFromWaitingAreaOrLane()
+        {
+            if (_isFirstCirclePassed)
+                _waitingArea.Remove(this);
+            else
+                _lane.Remove(this);
         }
 
         public void StartLoopMove()
@@ -90,11 +95,11 @@ namespace _Game.Code.Tanks
         public void UnfreezeMoving()
         {
             _tankMover.UnZeroingSpeed();
-        }
+        }  
 
-        private void OnDied()
+        public void Die()
         {
-            _tankShooter.Died -= OnDied;
+            _tankShooter.Died -= Die;
             _tankMover.CurrentLengthPercentageIncreased -= OnCurrentLengthPercentageIncreased;
             _tankMover.CirclePassed -= OnCirclePassed;
 

@@ -24,8 +24,10 @@ namespace _Game.Code.Generators
         private readonly Transform _container;
         private readonly LevelConfiguration _levelConfiguration;
         private readonly List<PixelData> _pixelData = new();
+        private readonly List<Pixel> _pixels = new();
 
-        public event Action<List<PixelData>> ArtGenerated;
+        public event Action<List<PixelData>> PixelsDataGenerated;
+        public event Action<List<Pixel>> ArtGenerated;
 
         [Inject]
         public PixelArtGenerator
@@ -64,11 +66,15 @@ namespace _Game.Code.Generators
                     Color pixelColor = ApplyColor(pixel, originalColor);
                     int depth = DefineDepth(x, z);
 
-                    _pixelData.Add(new PixelData(pixelColor, depth));
+                    _pixels.Add(pixel);
+                    PixelData pixelData = new PixelData(pixelColor, depth);
+                    pixel.Initialize(pixelData);
+                    _pixelData.Add(pixelData);
                 }
             }
 
-            ArtGenerated?.Invoke(_pixelData);
+            ArtGenerated?.Invoke(_pixels);
+            PixelsDataGenerated?.Invoke(_pixelData);
         }
 
         private Texture2D ResizeTexture()

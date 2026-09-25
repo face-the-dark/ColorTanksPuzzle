@@ -131,8 +131,9 @@ GameObject:
   - component: {fileID: 101430155}
   - component: {fileID: 101430154}
   - component: {fileID: 101430153}
+  - component: {fileID: 101430156}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: SacrificeBonus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,6 +241,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101430151}
   m_CullTransparentMesh: 1
+--- !u!114 &101430156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101430151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e186618a5b7749e89b343cddb61e3acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.BonusButtons.SacrificeBonusButton
 --- !u!1 &175000581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,6 +1014,7 @@ GameObject:
   - component: {fileID: 483331857}
   - component: {fileID: 483331859}
   - component: {fileID: 483331858}
+  - component: {fileID: 483331860}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1016,16 +1030,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483331856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.052827276}
+  m_LocalPosition: {x: 0, y: 0, z: -0.052827284}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 726481661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.113288485}
-  m_SizeDelta: {x: 4, y: 4}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &483331858
 MonoBehaviour:
@@ -1047,7 +1061,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5/5
+  m_text: 10/10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1127,6 +1141,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483331856}
   m_CullTransparentMesh: 1
+--- !u!114 &483331860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483331856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea994080b91444b2aa0571bbc3a41694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.SplineTanksCountView
 --- !u!1 &490654052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,7 +1267,6 @@ GameObject:
   - component: {fileID: 726481660}
   - component: {fileID: 726481659}
   - component: {fileID: 726481658}
-  - component: {fileID: 726481657}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1249,20 +1274,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &726481657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726481656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea994080b91444b2aa0571bbc3a41694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.SplineTanksCountView
-  _text: {fileID: 483331858}
-  _tankDispatcher: {fileID: 1605477652}
 --- !u!114 &726481658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1334,7 +1345,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726481656}
   m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1344,7 +1355,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -15, y: 0}
-  m_SizeDelta: {x: 4, y: 6}
+  m_SizeDelta: {x: 6, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &826888161
 GameObject:
@@ -2781,54 +2792,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604987490}
   m_CullTransparentMesh: 1
---- !u!1 &1605477650
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1605477651}
-  - component: {fileID: 1605477652}
-  m_Layer: 0
-  m_Name: TankDispatcher
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1605477651
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605477650}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1605477652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605477650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b81f6a2ebda4fd4afe528ecc5a1cea3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Player.TankDispatcher
-  _camera: {fileID: 330585545}
-  _tankLayer:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!1 &1650245172
 GameObject:
   m_ObjectHideFlags: 0
@@ -3110,6 +3073,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 391172779}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1734336497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1734336498}
+  m_Layer: 0
+  m_Name: CameraSeparationPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1734336498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734336497}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 19, z: -54}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1857952939
 GameObject:
   m_ObjectHideFlags: 0
@@ -3145,10 +3139,13 @@ MonoBehaviour:
   autoInjectGameObjects: []
   _pixelArtContainer: {fileID: 843210120}
   _tankSpawner: {fileID: 175000583}
-  _tankDispatcher: {fileID: 1605477652}
   _waitingAreaSpawnBoundaries: {fileID: 391172780}
   _expansionBonusButton: {fileID: 1055238755}
   _freezeSplineBonusButton: {fileID: 1432756479}
+  _sacrificeSplineBonusButton: {fileID: 101430156}
+  _camera: {fileID: 330585545}
+  _splineTanksCountView: {fileID: 483331860}
+  _cameraSeparationPoint: {fileID: 1734336498}
 --- !u!4 &1857952941
 Transform:
   m_ObjectHideFlags: 0
@@ -3176,7 +3173,7 @@ SceneRoots:
   - {fileID: 391172779}
   - {fileID: 1655969780}
   - {fileID: 175000582}
-  - {fileID: 1605477651}
   - {fileID: 726481661}
-  - {fileID: 1650245175}
   - {fileID: 490654056}
+  - {fileID: 1650245175}
+  - {fileID: 1734336498}

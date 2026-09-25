@@ -24,6 +24,9 @@ namespace _Game.Code.Tanks
 
         public event Action Died;
         public event Action<int> HpChanged;
+        
+        public int Hp => _hp;
+        public Color Color => _color;
 
         public void Initialize(TankData tankData)
         {

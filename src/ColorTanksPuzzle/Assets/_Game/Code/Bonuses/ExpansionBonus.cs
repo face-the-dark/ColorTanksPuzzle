@@ -10,6 +10,8 @@ namespace _Game.Code.Bonuses
         private readonly WaitingAreaCellSpawner _waitingAreaCellSpawner;
         private readonly TankDispatcher _tankDispatcher;
 
+        private bool _isBlocked;
+
         [Inject]
         public ExpansionBonus(WaitingAreaCellSpawner waitingAreaCellSpawner, TankDispatcher tankDispatcher)
         {
@@ -19,12 +21,20 @@ namespace _Game.Code.Bonuses
             _tankDispatcher = tankDispatcher ?? throw new ArgumentNullException(nameof(tankDispatcher));
         }
 
-        public Bonus Bonus => Bonus.ExpansionBonus;
+        public event Action<IBonus> Activated;
+        
+        public Bonus Bonus => Bonus.Expansion;
 
         public void Activate()
         {
             _waitingAreaCellSpawner.AddCell();
             _tankDispatcher.IncreaseMaxCellsCount();
         }
+
+        public void Block() => 
+            _isBlocked = true;
+
+        public void Unblock() => 
+            _isBlocked = false;
     }
 }

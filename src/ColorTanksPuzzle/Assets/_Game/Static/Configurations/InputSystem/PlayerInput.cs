@@ -131,6 +131,16 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""initialStateCheck"": false,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""ScrificeBonusAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd8ed072-b831-4b30-981e-4573d44937c3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -188,6 +198,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""FreezeSplineBonusAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e018765e-c64d-480b-bf48-07a01647ba3d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse & Keyboard"",
+                    ""action"": ""ScrificeBonusAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -228,6 +249,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_PositionAction = m_Player.FindAction("PositionAction", throwIfNotFound: true);
         m_Player_ExpansionBonusAction = m_Player.FindAction("ExpansionBonusAction", throwIfNotFound: true);
         m_Player_FreezeSplineBonusAction = m_Player.FindAction("FreezeSplineBonusAction", throwIfNotFound: true);
+        m_Player_ScrificeBonusAction = m_Player.FindAction("ScrificeBonusAction", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -312,6 +334,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PositionAction;
     private readonly InputAction m_Player_ExpansionBonusAction;
     private readonly InputAction m_Player_FreezeSplineBonusAction;
+    private readonly InputAction m_Player_ScrificeBonusAction;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -339,6 +362,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/FreezeSplineBonusAction".
         /// </summary>
         public InputAction @FreezeSplineBonusAction => m_Wrapper.m_Player_FreezeSplineBonusAction;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ScrificeBonusAction".
+        /// </summary>
+        public InputAction @ScrificeBonusAction => m_Wrapper.m_Player_ScrificeBonusAction;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -377,6 +404,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @FreezeSplineBonusAction.started += instance.OnFreezeSplineBonusAction;
             @FreezeSplineBonusAction.performed += instance.OnFreezeSplineBonusAction;
             @FreezeSplineBonusAction.canceled += instance.OnFreezeSplineBonusAction;
+            @ScrificeBonusAction.started += instance.OnScrificeBonusAction;
+            @ScrificeBonusAction.performed += instance.OnScrificeBonusAction;
+            @ScrificeBonusAction.canceled += instance.OnScrificeBonusAction;
         }
 
         /// <summary>
@@ -400,6 +430,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @FreezeSplineBonusAction.started -= instance.OnFreezeSplineBonusAction;
             @FreezeSplineBonusAction.performed -= instance.OnFreezeSplineBonusAction;
             @FreezeSplineBonusAction.canceled -= instance.OnFreezeSplineBonusAction;
+            @ScrificeBonusAction.started -= instance.OnScrificeBonusAction;
+            @ScrificeBonusAction.performed -= instance.OnScrificeBonusAction;
+            @ScrificeBonusAction.canceled -= instance.OnScrificeBonusAction;
         }
 
         /// <summary>
@@ -494,5 +527,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnFreezeSplineBonusAction(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ScrificeBonusAction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnScrificeBonusAction(InputAction.CallbackContext context);
     }
 }

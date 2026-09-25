@@ -30,11 +30,11 @@ namespace _Game.Code.Generators.Tanks
             _orderGenerator = orderGenerator;
             _laneDistributor = laneDistributor;
 
-            _pixelArtGenerator.ArtGenerated += GenerateTanksData;
+            _pixelArtGenerator.PixelsDataGenerated += GenerateTanksData;
         }
 
         public void Dispose() =>
-            _pixelArtGenerator.ArtGenerated -= GenerateTanksData;
+            _pixelArtGenerator.PixelsDataGenerated -= GenerateTanksData;
 
         private void GenerateTanksData(List<PixelData> pixelsData)
         {
