@@ -42,11 +42,5 @@ namespace _Game.Code.Bonuses
                 _tankDispatcher.FreezeTanksOnSpline();
             }
         }
-        
-        public void Block() => 
-            _isBlocked = true;
-
-        public void Unblock() => 
-            _isBlocked = false;
     }
 }

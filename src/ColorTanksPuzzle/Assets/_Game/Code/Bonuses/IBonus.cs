@@ -8,7 +8,5 @@ namespace _Game.Code.Bonuses
         
         Bonus Bonus { get; }
         void Activate();
-        void Block();
-        void Unblock();
     }
 }

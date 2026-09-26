@@ -18,7 +18,6 @@ namespace _Game.Code.Bonuses
         private readonly PixelArtGenerator _pixelArtGenerator;
 
         private bool _isActivated;
-        private bool _isBlocked;
 
         private Dictionary<Color, List<Pixel>> _pixelsByColor;
 
@@ -48,6 +47,9 @@ namespace _Game.Code.Bonuses
             _pixelsByColor = pixels
                 .GroupBy(x => x.Color)
                 .ToDictionary(x => x.Key, x => x.ToList());
+
+            foreach (Pixel pixel in pixels) 
+                pixel.PixelWillBeDestroyed += OnPixelWillBeDestroyed;
         }
 
         public void Dispose()
@@ -65,12 +67,6 @@ namespace _Game.Code.Bonuses
             }
         }
 
-        public void Block() =>
-            _isBlocked = true;
-
-        public void Unblock() =>
-            _isBlocked = false;
-
         private void Sacrifice(Tank tank)
         {
             if (_isActivated)
@@ -87,6 +83,8 @@ namespace _Game.Code.Bonuses
                             Pixel pixel = pixels.First();
                             
                             pixels.Remove(pixel);
+                            
+                            pixel.MarkForDestruction();
                             pixel.Die();
                         }
 
@@ -101,6 +99,13 @@ namespace _Game.Code.Bonuses
                 
                 Activated?.Invoke(this);
             }
+        }
+
+        private void OnPixelWillBeDestroyed(Pixel pixel)
+        {
+            pixel.PixelWillBeDestroyed -= OnPixelWillBeDestroyed;
+            
+            _pixelsByColor[pixel.Color].Remove(pixel);
         }
     }
 }

@@ -13,6 +13,8 @@ namespace _Game.Code.Bonuses
 
         private readonly Dictionary<Bonus, IBonus> _bonuses;
 
+        private bool _isAllBonusesBlocked;
+
         [Inject]
         public BonusActivator(InputReader inputReader , TankDispatcher tankDispatcher, IReadOnlyList<IBonus> bonuses)
         {
@@ -33,31 +35,16 @@ namespace _Game.Code.Bonuses
             _inputReader.SacrificeBonusUsed -= ActivateSacrificeBonus;
         }
 
-        public IBonus ActivateBonus(Bonus bonus)
+        public void ActivateBonus(Bonus bonus)
         {
-            _bonuses.TryGetValue(bonus, out IBonus activeBonus);
-
-            if (activeBonus == null)
-                throw new InvalidOperationException(nameof(activeBonus));
-
-            activeBonus.Activate();
-            
-            return activeBonus;
-        }
-
-        public void BlockAllBonuses()
-        {
-            foreach (var bonus in _bonuses.Values)
+            if (_isAllBonusesBlocked == false)
             {
-                bonus.Block();
-            }
-        }
+                _bonuses.TryGetValue(bonus, out IBonus activeBonus);
 
-        public void UnblockAllBonuses()
-        {
-            foreach (var bonus in _bonuses.Values)
-            {
-                bonus.Unblock();
+                if (activeBonus == null)
+                    throw new InvalidOperationException(nameof(activeBonus));
+
+                activeBonus.Activate();
             }
         }
 
@@ -69,22 +56,28 @@ namespace _Game.Code.Bonuses
 
         private void ActivateSacrificeBonus()
         {
-            _tankDispatcher.Block();
+            ActivateBonus(Bonus.Sacrifice);
             
+            _tankDispatcher.Block();
             BlockAllBonuses();
 
-            IBonus activateBonus = ActivateBonus(Bonus.Sacrifice);
-            
-            activateBonus.Activated += OnActivatedSacrificeBonus;
+            IBonus sacrificeBonus = _bonuses[Bonus.Sacrifice];
+
+            sacrificeBonus.Activated += OnActivatedSacrificeBonus;
         }
 
-        private void OnActivatedSacrificeBonus(IBonus bonus)
+        private void OnActivatedSacrificeBonus(IBonus sacrificeBonus)
         {
-            bonus.Activated -= OnActivatedSacrificeBonus;
+            sacrificeBonus.Activated -= OnActivatedSacrificeBonus;
             
             _tankDispatcher.Unblock();
-            
             UnblockAllBonuses();
         }
+        
+        private void BlockAllBonuses() => 
+            _isAllBonusesBlocked = true;
+
+        private void UnblockAllBonuses() => 
+            _isAllBonusesBlocked = false;
     }
 }
