@@ -1,20 +1,33 @@
-﻿using UnityEngine;
+﻿using System;
+using _Game.Code.Data;
+using UnityEngine;
 
 namespace _Game.Code.Pixels
 {
-    [RequireComponent(typeof(Renderer))]
     public class Pixel : MonoBehaviour
     {
-        private Renderer _renderer;
+        private Color _color;
         private bool _isWillBeDestroyed;
 
-        public Color Color => _renderer.material.color;
+        public event Action<Pixel> PixelWillBeDestroyed;
+        
+        public Color Color => _color;
         public bool IsWillBeDestroyed => _isWillBeDestroyed;
 
-        private void Awake() => 
-            _renderer = GetComponent<Renderer>();
+        public void Initialize(PixelData pixelData) => 
+            _color = pixelData.Color;
 
-        public void MarkForDestruction() => 
+        public void MarkForDestruction()
+        {
             _isWillBeDestroyed = true;
+            
+            PixelWillBeDestroyed?.Invoke(this);
+        }
+
+        public void Die()
+        {
+            if (_isWillBeDestroyed)
+                Destroy(gameObject);
+        }
     }
 }

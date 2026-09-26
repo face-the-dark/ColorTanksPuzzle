@@ -30,7 +30,9 @@ namespace _Game.Code.Spawners
         {
             if (_tanks.Contains(tank) && tank.IsBlocked == false)
             {
-                for (int i = _tanks.Count - 1; i > 0; i--)
+                int tankIndex = _tanks.IndexOf(tank);
+                
+                for (int i = _tanks.Count - 1; i > tankIndex; i--)
                 {
                     _tanks[i].transform.position = _tanks[i - 1].transform.position;
                 }

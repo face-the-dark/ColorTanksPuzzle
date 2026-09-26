@@ -45,6 +45,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "ScrificeBonusAction",
+                    "type": "Button",
+                    "id": "dd8ed072-b831-4b30-981e-4573d44937c3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -100,6 +110,17 @@
                     "processors": "",
                     "groups": ";Mouse & Keyboard",
                     "action": "FreezeSplineBonusAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e018765e-c64d-480b-bf48-07a01647ba3d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Mouse & Keyboard",
+                    "action": "ScrificeBonusAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -17,17 +17,20 @@ namespace _Game.Code.Players
             _playerInput.Player.ClickAction.performed += OnClicked;
             _playerInput.Player.ExpansionBonusAction.performed += OnExpansionBonusActivated;
             _playerInput.Player.FreezeSplineBonusAction.performed += OnFreezeSplineBonusActivated;
+            _playerInput.Player.ScrificeBonusAction.performed += OnSacrificeBonusActivated;
         }
 
         public event Action<Vector2> Clicked;
         public event Action ExpansionBonusUsed;
         public event Action FreezeSplineBonusUsed;
+        public event Action SacrificeBonusUsed;
 
         public void Dispose()
         {
             _playerInput.Player.ClickAction.performed -= OnClicked;
             _playerInput.Player.ExpansionBonusAction.performed -= OnExpansionBonusActivated;
             _playerInput.Player.FreezeSplineBonusAction.performed -= OnFreezeSplineBonusActivated;
+            _playerInput.Player.ScrificeBonusAction.performed -= OnSacrificeBonusActivated;
             
             _playerInput.Disable();
         }
@@ -49,6 +52,12 @@ namespace _Game.Code.Players
         {
             if (callbackContext.performed)
                 FreezeSplineBonusUsed?.Invoke();
+        }
+        
+        private void OnSacrificeBonusActivated(InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+                SacrificeBonusUsed?.Invoke();
         }
     }
 }

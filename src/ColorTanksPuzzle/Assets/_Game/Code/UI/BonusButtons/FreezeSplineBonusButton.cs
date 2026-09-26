@@ -4,6 +4,6 @@ namespace _Game.Code.UI.BonusButtons
 {
     public class FreezeSplineBonusButton : BonusButton
     {
-        protected override Bonus Bonus => Bonus.FreezeSplineBonus;
+        protected override Bonus Bonus => Bonus.FreezeSpline;
     }
 }

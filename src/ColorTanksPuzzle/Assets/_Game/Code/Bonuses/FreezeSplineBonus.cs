@@ -12,6 +12,7 @@ namespace _Game.Code.Bonuses
         private readonly BonusesConfigurationProvider _bonusesConfigurationProvider;
 
         private float _endTime;
+        private bool _isBlocked;
         
         private bool IsActive => Time.time < _endTime;
 
@@ -28,7 +29,9 @@ namespace _Game.Code.Bonuses
                                             throw new ArgumentNullException(nameof(bonusesConfigurationProvider));
         }
 
-        public Bonus Bonus => Bonus.FreezeSplineBonus;
+        public event Action<IBonus> Activated;
+        
+        public Bonus Bonus => Bonus.FreezeSpline;
 
         public void Activate()
         {
@@ -36,7 +39,7 @@ namespace _Game.Code.Bonuses
             {
                 _endTime = Time.time + _bonusesConfigurationProvider.BonusesConfiguration.FreezeSplineBonusTime;
                 
-                _tankDispatcher.FreezeTanks();
+                _tankDispatcher.FreezeTanksOnSpline();
             }
         }
     }

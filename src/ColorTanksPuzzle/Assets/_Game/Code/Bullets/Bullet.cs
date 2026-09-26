@@ -17,12 +17,16 @@ namespace _Game.Code.Bullets
         {
             if (collision.collider.TryGetComponent(out Pixel pixel))
             {
-                Destroy(pixel.gameObject);
-                Destroy(gameObject);
+                pixel.Die();
+                
+                Die();
             }
         }
 
         public void AddForce(Vector3 direction) => 
             _rigidbody.AddForce(_speed * direction, ForceMode.Impulse);
+
+        private void Die() => 
+            Destroy(gameObject);
     }
 }

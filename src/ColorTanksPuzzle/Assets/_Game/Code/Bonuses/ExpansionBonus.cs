@@ -19,7 +19,9 @@ namespace _Game.Code.Bonuses
             _tankDispatcher = tankDispatcher ?? throw new ArgumentNullException(nameof(tankDispatcher));
         }
 
-        public Bonus Bonus => Bonus.ExpansionBonus;
+        public event Action<IBonus> Activated;
+        
+        public Bonus Bonus => Bonus.Expansion;
 
         public void Activate()
         {

@@ -1,91 +1,101 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using _Game.Code.Extensions;
 using _Game.Code.Providers;
 using _Game.Code.Tanks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
 namespace _Game.Code.Players
 {
-    public class TankDispatcher : MonoBehaviour
+    public class TankDispatcher : IDisposable
     {
-        [Header("Dependencies")] [SerializeField]
-        private Camera _camera;
+        private readonly LevelConfigurationProvider _levelConfigurationProvider;
+        private readonly BonusesConfigurationProvider _bonusesConfigurationProvider;
+        private readonly TankSelector _tankSelector;
+        private readonly List<Tank> _tanksOnSpline = new();
 
-        [Header("Settings")] [SerializeField] private LayerMask _tankLayer;
-
-        private InputReader _inputReader;
-        private BonusesConfigurationProvider _bonusesConfigurationProvider;
-
-        private List<Tank> _tanksOnSpline = new();
         private int _maxTanksCountOnSpline;
         private Coroutine _unfreezeTanksCoroutine;
+
+        private bool _isBlocked;
 
         public event Action<string> TanksCountChanged;
 
         [Inject]
-        public void Construct
+        public TankDispatcher
         (
-            InputReader inputReader,
             LevelConfigurationProvider levelConfigurationProvider,
-            BonusesConfigurationProvider bonusesConfigurationProvider
+            BonusesConfigurationProvider bonusesConfigurationProvider,
+            TankSelector tankSelector
         )
         {
-            _inputReader = inputReader ?? throw new ArgumentNullException(nameof(inputReader));
             _bonusesConfigurationProvider = bonusesConfigurationProvider ??
                                             throw new ArgumentNullException(nameof(bonusesConfigurationProvider));
 
-            if (levelConfigurationProvider is null)
-                throw new ArgumentNullException(nameof(levelConfigurationProvider));
+            _levelConfigurationProvider = levelConfigurationProvider ??
+                                          throw new ArgumentNullException(nameof(levelConfigurationProvider));
+            
+            _tankSelector = tankSelector ?? throw new ArgumentNullException(nameof(tankSelector));
 
-            _maxTanksCountOnSpline = levelConfigurationProvider.GetDifficultyConfiguration().StartMaxTanksCount;
+            _tankSelector.TankSelected += Dispatch;
+
+            Initialize();
         }
 
-        private void Start() =>
-            TanksCountChanged?.Invoke($"{_tanksOnSpline.Count}/{_maxTanksCountOnSpline}");
+        public void Dispose()
+        {
+            _tankSelector.TankSelected -= Dispatch;
+        }
 
-        private void OnEnable() =>
-            _inputReader.Clicked += OnClicked;
-
-        private void OnDisable() =>
-            _inputReader.Clicked -= OnClicked;
-
-        public void FreezeTanks()
+        public void FreezeTanksOnSpline()
         {
             foreach (Tank tank in _tanksOnSpline)
                 tank.FreezeMoving();
 
-            this.StopCurrentCoroutine(ref _unfreezeTanksCoroutine);
-            _unfreezeTanksCoroutine = StartCoroutine(DelayUnfreezeTanks());
+            DelayUnfreezeTanks().Forget();
         }
 
-        private IEnumerator DelayUnfreezeTanks()
+        public void IncreaseMaxCellsCount()
         {
-            yield return new WaitForSeconds(_bonusesConfigurationProvider.BonusesConfiguration.FreezeSplineBonusTime);
+            _maxTanksCountOnSpline++;
+
+            TanksCountChanged?.Invoke($"{_tanksOnSpline.Count}/{_maxTanksCountOnSpline}");
+        }
+
+        public void Block() => 
+            _isBlocked = true;
+
+        public void Unblock() => 
+            _isBlocked = false;
+
+        private void Initialize()
+        {
+            _maxTanksCountOnSpline = _levelConfigurationProvider.GetDifficultyConfiguration().StartMaxTanksCount;
+
+            TanksCountChanged?.Invoke($"{_tanksOnSpline.Count}/{_maxTanksCountOnSpline}");
+        }
+
+        private async UniTask DelayUnfreezeTanks()
+        {
+            await UniTask.WaitForSeconds((int)_bonusesConfigurationProvider.BonusesConfiguration.FreezeSplineBonusTime);
 
             foreach (Tank tank in _tanksOnSpline)
                 tank.UnfreezeMoving();
         }
 
-        private void OnClicked(Vector2 position)
+        private void Dispatch(Tank tank)
         {
-            Ray ray = _camera.ScreenPointToRay(position);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _tankLayer))
+            if (_isBlocked == false)
             {
-                if (hit.collider.TryGetComponent(out Tank tank) && tank.IsMoving == false && tank.IsBlocked == false)
+                if (_tanksOnSpline.Count < _maxTanksCountOnSpline && tank.IsBlocked == false)
                 {
-                    if (_tanksOnSpline.Count < _maxTanksCountOnSpline)
-                    {
-                        tank.MoveToSpline();
-                        tank.MovingStopped += OnTankMovingStopped;
+                    tank.MoveToSpline();
+                    tank.MovingStopped += OnTankMovingStopped;
 
-                        _tanksOnSpline.Add(tank);
+                    _tanksOnSpline.Add(tank);
 
-                        TanksCountChanged?.Invoke($"{_tanksOnSpline.Count}/{_maxTanksCountOnSpline}");
-                    }
+                    TanksCountChanged?.Invoke($"{_tanksOnSpline.Count}/{_maxTanksCountOnSpline}");
                 }
             }
         }
@@ -97,13 +107,6 @@ namespace _Game.Code.Players
 
             tank.MovingStopped -= OnTankMovingStopped;
             _tanksOnSpline.Remove(tank);
-
-            TanksCountChanged?.Invoke($"{_tanksOnSpline.Count}/{_maxTanksCountOnSpline}");
-        }
-
-        public void IncreaseMaxCellsCount()
-        {
-            _maxTanksCountOnSpline++;
 
             TanksCountChanged?.Invoke($"{_tanksOnSpline.Count}/{_maxTanksCountOnSpline}");
         }
