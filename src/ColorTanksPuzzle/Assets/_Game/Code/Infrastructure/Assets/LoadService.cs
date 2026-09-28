@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _Game.Code.Bonuses;
 using _Game.Code.Bullets;
+using _Game.Code.ColorRocketComponents;
 using _Game.Code.Configurations;
 using _Game.Code.Configurations.Bonuses;
 using _Game.Code.Configurations.Difficulty;
@@ -39,5 +41,8 @@ namespace _Game.Code.Infrastructure.Assets
 
         public TankSettings LoadTankSettings() => 
             Resources.Load<TankSettings>(AssetPath.TankSettingsPath);
+
+        public ColorRocket LoadColorRocketPrefab() => 
+            Resources.Load<ColorRocket>(AssetPath.ColorRocketPrefabPath);
     }
 }

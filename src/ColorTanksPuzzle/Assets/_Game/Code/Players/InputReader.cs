@@ -18,12 +18,14 @@ namespace _Game.Code.Players
             _playerInput.Player.ExpansionBonusAction.performed += OnExpansionBonusActivated;
             _playerInput.Player.FreezeSplineBonusAction.performed += OnFreezeSplineBonusActivated;
             _playerInput.Player.ScrificeBonusAction.performed += OnSacrificeBonusActivated;
+            _playerInput.Player.ColorRocketBonusAction.performed += OnColorRocketBonusActivated;
         }
 
         public event Action<Vector2> Clicked;
         public event Action ExpansionBonusUsed;
         public event Action FreezeSplineBonusUsed;
         public event Action SacrificeBonusUsed;
+        public event Action ColorRocketBonusUsed;
 
         public void Dispose()
         {
@@ -31,10 +33,11 @@ namespace _Game.Code.Players
             _playerInput.Player.ExpansionBonusAction.performed -= OnExpansionBonusActivated;
             _playerInput.Player.FreezeSplineBonusAction.performed -= OnFreezeSplineBonusActivated;
             _playerInput.Player.ScrificeBonusAction.performed -= OnSacrificeBonusActivated;
+            _playerInput.Player.ColorRocketBonusAction.performed -= OnColorRocketBonusActivated;
             
             _playerInput.Disable();
         }
-
+        
         private void OnClicked(InputAction.CallbackContext callbackContext)
         {
             Vector2 position = _playerInput.Player.PositionAction.ReadValue<Vector2>();
@@ -58,6 +61,12 @@ namespace _Game.Code.Players
         {
             if (callbackContext.performed)
                 SacrificeBonusUsed?.Invoke();
+        }
+        
+        private void OnColorRocketBonusActivated(InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+                ColorRocketBonusUsed?.Invoke();
         }
     }
 }

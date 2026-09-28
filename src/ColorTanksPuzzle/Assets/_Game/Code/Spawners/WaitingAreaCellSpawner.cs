@@ -6,6 +6,7 @@ using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Providers;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
+using VContainer;
 using Object = UnityEngine.Object;
 
 namespace _Game.Code.Spawners
@@ -16,17 +17,17 @@ namespace _Game.Code.Spawners
         private const float Divisor = 2f;
         private const int MaxAreaCellsInRow = 5;
 
-        private readonly DifficultyConfigurationProvider _difficultyConfigurationProvider;
         private readonly LevelConfigurationProvider _levelConfigurationProvider;
         private readonly WaitingAreaSpawnBoundaries _waitingAreaSpawnBoundaries;
 
         private readonly List<WaitingAreaCell> _currentWaitingAreaCells = new();
 
-        private WaitingAreaCell _waitingAreaCellPrefab;
+        private readonly WaitingAreaCell _waitingAreaCellPrefab;
 
         private float _currentPositionByX;
         private float _currentPositionByZ;
 
+        [Inject]
         public WaitingAreaCellSpawner
         (
             WaitingAreaSpawnBoundaries waitingAreaSpawnBoundaries,
@@ -37,9 +38,6 @@ namespace _Game.Code.Spawners
         {
             _waitingAreaSpawnBoundaries = waitingAreaSpawnBoundaries ??
                                           throw new ArgumentNullException(nameof(waitingAreaSpawnBoundaries));
-
-            _difficultyConfigurationProvider = difficultyConfigurationProvider ??
-                                               throw new ArgumentNullException(nameof(difficultyConfigurationProvider));
 
             _levelConfigurationProvider = levelConfigurationProvider ??
                                           throw new ArgumentNullException(nameof(levelConfigurationProvider));

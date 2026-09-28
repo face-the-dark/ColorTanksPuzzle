@@ -6,18 +6,18 @@ namespace _Game.Code.Infrastructure
 {
     public class GameEntryPoint : IInitializable
     {
-        private readonly PixelArtGenerator _pixelArtGenerator;
+        private readonly PixelArtSpawner _pixelArtSpawner;
         private readonly WaitingAreaCellSpawner _waitingAreaCellSpawner;
 
-        public GameEntryPoint(PixelArtGenerator pixelArtGenerator, WaitingAreaCellSpawner waitingAreaCellSpawner)
+        public GameEntryPoint(PixelArtSpawner pixelArtSpawner, WaitingAreaCellSpawner waitingAreaCellSpawner)
         {
-            _pixelArtGenerator = pixelArtGenerator;
+            _pixelArtSpawner = pixelArtSpawner;
             _waitingAreaCellSpawner = waitingAreaCellSpawner;
         }
 
         public void Initialize()
         {
-            _pixelArtGenerator.Generate();
+            _pixelArtSpawner.Generate();
             _waitingAreaCellSpawner.SpawnStartCells();
         }
     }

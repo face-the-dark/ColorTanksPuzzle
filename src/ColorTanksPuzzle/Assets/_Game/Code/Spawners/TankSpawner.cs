@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Code.Data;
+using _Game.Code.Generators.Data;
 using _Game.Code.Generators.Tanks;
 using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Tanks;
@@ -9,28 +9,26 @@ using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
 using UnityEngine.Splines;
 using VContainer;
+using Object = UnityEngine.Object;
 
 namespace _Game.Code.Spawners
 {
-    public class TankSpawner : MonoBehaviour, IDisposable
+    public class TankSpawner : IDisposable
     {
-        [SerializeField] private SplineContainer _spline;
-        [SerializeField] private SpawningLane[] _lanes;
-
+        private readonly SplineContainer _spline;
+        private readonly IReadOnlyList<SpawningLane> _spawningLanes;
         private readonly List<Tank> _spawnedTanks = new();
-
-        private TanksDataGenerator _tanksDataGenerator;
-        private WaitingArea _waitingArea;
-        
-        private Tank _tankPrefab;
-
-        public int LanesCount => _lanes.Length;
+        private readonly TanksDataGenerator _tanksDataGenerator;
+        private readonly WaitingArea _waitingArea;
+        private readonly Tank _tankPrefab;
         
         public event Action<List<Tank>> TanksSpawned;
 
         [Inject]
-        public void Construct(TanksDataGenerator tanksDataGenerator, WaitingArea waitingArea, LoadService loadService)
+        public TankSpawner(SplineContainer spline, SpawningLanesContainer spawningLanesContainer, TanksDataGenerator tanksDataGenerator, WaitingArea waitingArea, LoadService loadService)
         {
+            _spline = spline;
+            _spawningLanes = spawningLanesContainer.SpawningLanes;
             _tanksDataGenerator = tanksDataGenerator;
             _waitingArea = waitingArea;
             
@@ -47,14 +45,14 @@ namespace _Game.Code.Spawners
 
         private void SpawnTanks(List<TankData> tanksData)
         {
-            for (int i = 0; i < _lanes.Length; i++)
+            for (int i = 0; i < _spawningLanes.Count; i++)
             {
                 IEnumerable<TankData> tankDatas = tanksData
                     .Where(x => x.LaneIndex == i);
                 
                 foreach (TankData tankData in tankDatas)
                 {
-                    SpawningLane lane = _lanes[i];
+                    SpawningLane lane = _spawningLanes[i];
 
                     Spawn(tankData, lane);
                 }
@@ -62,13 +60,13 @@ namespace _Game.Code.Spawners
 
             TanksSpawned?.Invoke(_spawnedTanks);
 
-            foreach (SpawningLane spawningLane in _lanes) 
+            foreach (SpawningLane spawningLane in _spawningLanes) 
                 spawningLane.UnblockFirstTank();
         }
 
         private void Spawn(TankData tankData, SpawningLane lane)
         {
-            Tank tank = Instantiate
+            Tank tank = Object.Instantiate
             (
                 _tankPrefab,
                 Vector3.zero,

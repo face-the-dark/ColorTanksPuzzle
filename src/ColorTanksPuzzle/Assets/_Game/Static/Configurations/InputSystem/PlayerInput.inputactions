@@ -55,6 +55,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "ColorRocketBonusAction",
+                    "type": "Button",
+                    "id": "2ac43dea-3327-4a87-b7e9-2763d9cb3427",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -121,6 +131,17 @@
                     "processors": "",
                     "groups": ";Mouse & Keyboard",
                     "action": "ScrificeBonusAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03518160-df99-406d-97d5-401f52e73936",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ColorRocketBonusAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

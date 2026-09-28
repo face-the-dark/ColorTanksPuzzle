@@ -141,6 +141,16 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""initialStateCheck"": false,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""ColorRocketBonusAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""2ac43dea-3327-4a87-b7e9-2763d9cb3427"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -209,6 +219,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""ScrificeBonusAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03518160-df99-406d-97d5-401f52e73936"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ColorRocketBonusAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -250,6 +271,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_ExpansionBonusAction = m_Player.FindAction("ExpansionBonusAction", throwIfNotFound: true);
         m_Player_FreezeSplineBonusAction = m_Player.FindAction("FreezeSplineBonusAction", throwIfNotFound: true);
         m_Player_ScrificeBonusAction = m_Player.FindAction("ScrificeBonusAction", throwIfNotFound: true);
+        m_Player_ColorRocketBonusAction = m_Player.FindAction("ColorRocketBonusAction", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -335,6 +357,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ExpansionBonusAction;
     private readonly InputAction m_Player_FreezeSplineBonusAction;
     private readonly InputAction m_Player_ScrificeBonusAction;
+    private readonly InputAction m_Player_ColorRocketBonusAction;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -366,6 +389,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/ScrificeBonusAction".
         /// </summary>
         public InputAction @ScrificeBonusAction => m_Wrapper.m_Player_ScrificeBonusAction;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ColorRocketBonusAction".
+        /// </summary>
+        public InputAction @ColorRocketBonusAction => m_Wrapper.m_Player_ColorRocketBonusAction;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -407,6 +434,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ScrificeBonusAction.started += instance.OnScrificeBonusAction;
             @ScrificeBonusAction.performed += instance.OnScrificeBonusAction;
             @ScrificeBonusAction.canceled += instance.OnScrificeBonusAction;
+            @ColorRocketBonusAction.started += instance.OnColorRocketBonusAction;
+            @ColorRocketBonusAction.performed += instance.OnColorRocketBonusAction;
+            @ColorRocketBonusAction.canceled += instance.OnColorRocketBonusAction;
         }
 
         /// <summary>
@@ -433,6 +463,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ScrificeBonusAction.started -= instance.OnScrificeBonusAction;
             @ScrificeBonusAction.performed -= instance.OnScrificeBonusAction;
             @ScrificeBonusAction.canceled -= instance.OnScrificeBonusAction;
+            @ColorRocketBonusAction.started -= instance.OnColorRocketBonusAction;
+            @ColorRocketBonusAction.performed -= instance.OnColorRocketBonusAction;
+            @ColorRocketBonusAction.canceled -= instance.OnColorRocketBonusAction;
         }
 
         /// <summary>
@@ -534,5 +567,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnScrificeBonusAction(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ColorRocketBonusAction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnColorRocketBonusAction(InputAction.CallbackContext context);
     }
 }

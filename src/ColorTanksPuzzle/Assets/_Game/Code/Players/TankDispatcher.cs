@@ -12,7 +12,7 @@ namespace _Game.Code.Players
     {
         private readonly LevelConfigurationProvider _levelConfigurationProvider;
         private readonly BonusesConfigurationProvider _bonusesConfigurationProvider;
-        private readonly TankSelector _tankSelector;
+        private readonly Selector _selector;
         private readonly List<Tank> _tanksOnSpline = new();
 
         private int _maxTanksCountOnSpline;
@@ -27,7 +27,7 @@ namespace _Game.Code.Players
         (
             LevelConfigurationProvider levelConfigurationProvider,
             BonusesConfigurationProvider bonusesConfigurationProvider,
-            TankSelector tankSelector
+            Selector selector
         )
         {
             _bonusesConfigurationProvider = bonusesConfigurationProvider ??
@@ -36,16 +36,16 @@ namespace _Game.Code.Players
             _levelConfigurationProvider = levelConfigurationProvider ??
                                           throw new ArgumentNullException(nameof(levelConfigurationProvider));
             
-            _tankSelector = tankSelector ?? throw new ArgumentNullException(nameof(tankSelector));
+            _selector = selector ?? throw new ArgumentNullException(nameof(selector));
 
-            _tankSelector.TankSelected += Dispatch;
+            _selector.TankSelected += Dispatch;
 
             Initialize();
         }
 
         public void Dispose()
         {
-            _tankSelector.TankSelected -= Dispatch;
+            _selector.TankSelected -= Dispatch;
         }
 
         public void FreezeTanksOnSpline()

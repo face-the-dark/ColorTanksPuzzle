@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using _Game.Code.Bullets;
-using _Game.Code.Data;
 using _Game.Code.Extensions;
+using _Game.Code.Generators.Data;
 using _Game.Code.Pixels;
 using UnityEngine;
 

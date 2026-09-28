@@ -1,5 +1,5 @@
 ﻿using System;
-using _Game.Code.Data;
+using _Game.Code.Generators.Data;
 using UnityEngine;
 
 namespace _Game.Code.Pixels

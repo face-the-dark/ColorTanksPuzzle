@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Code.Data
+namespace _Game.Code.Generators.Data
 {
     public class TankData
     {

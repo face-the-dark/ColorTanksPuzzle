@@ -26,6 +26,7 @@ namespace _Game.Code.Bonuses
             _inputReader.ExpansionBonusUsed += ActivateExpansionBonus;
             _inputReader.FreezeSplineBonusUsed += ActivateFreezeSplineBonus;
             _inputReader.SacrificeBonusUsed += ActivateSacrificeBonus;
+            _inputReader.ColorRocketBonusUsed += ActivateColorRocketBonus;
         }
 
         public void Dispose()
@@ -33,6 +34,7 @@ namespace _Game.Code.Bonuses
             _inputReader.ExpansionBonusUsed -= ActivateExpansionBonus;
             _inputReader.FreezeSplineBonusUsed -= ActivateFreezeSplineBonus;
             _inputReader.SacrificeBonusUsed -= ActivateSacrificeBonus;
+            _inputReader.ColorRocketBonusUsed -= ActivateColorRocketBonus;
         }
 
         public void ActivateBonus(Bonus bonus)
@@ -63,12 +65,24 @@ namespace _Game.Code.Bonuses
 
             IBonus sacrificeBonus = _bonuses[Bonus.Sacrifice];
 
-            sacrificeBonus.Activated += OnActivatedSacrificeBonus;
+            sacrificeBonus.Activated += OnActivatedBonus;
+        }
+        
+        private void ActivateColorRocketBonus()
+        {
+            ActivateBonus(Bonus.ColorRocket);
+            
+            _tankDispatcher.Block();
+            BlockAllBonuses();
+
+            IBonus sacrificeBonus = _bonuses[Bonus.ColorRocket];
+
+            sacrificeBonus.Activated += OnActivatedBonus;
         }
 
-        private void OnActivatedSacrificeBonus(IBonus sacrificeBonus)
+        private void OnActivatedBonus(IBonus bonus)
         {
-            sacrificeBonus.Activated -= OnActivatedSacrificeBonus;
+            bonus.Activated -= OnActivatedBonus;
             
             _tankDispatcher.Unblock();
             UnblockAllBonuses();

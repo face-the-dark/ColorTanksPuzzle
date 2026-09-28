@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Code.Cameras;
+using _Game.Code.Destroyers;
 using _Game.Code.Generators;
 using _Game.Code.Pixels;
 using _Game.Code.Players;
+using _Game.Code.Spawners;
 using _Game.Code.Tanks;
 using UnityEngine;
 using VContainer;
@@ -13,9 +15,11 @@ namespace _Game.Code.Bonuses
 {
     public class SacrificeBonus : IDisposable, IBonus
     {
-        private readonly TankSelector _tankSelector;
+        private readonly Selector _selector;
         private readonly CameraMover _cameraMover;
-        private readonly PixelArtGenerator _pixelArtGenerator;
+        private readonly PixelArtSpawner _pixelArtSpawner;
+        private readonly TankDestroyer _tankDestroyer;
+        private readonly PixelDestroyer _pixelDestroyer;
 
         private bool _isActivated;
 
@@ -28,18 +32,22 @@ namespace _Game.Code.Bonuses
         [Inject]
         public SacrificeBonus
         (
-            TankSelector tankSelector,
+            Selector selector,
             CameraMover cameraMover,
             TankDispatcher tankDispatcher,
-            PixelArtGenerator pixelArtGenerator
+            PixelArtSpawner pixelArtSpawner,
+            TankDestroyer tankDestroyer,
+            PixelDestroyer pixelDestroyer
         )
         {
-            _tankSelector = tankSelector ?? throw new ArgumentNullException(nameof(tankSelector));
+            _selector = selector ?? throw new ArgumentNullException(nameof(selector));
             _cameraMover = cameraMover ?? throw new ArgumentNullException(nameof(cameraMover));
-            _pixelArtGenerator = pixelArtGenerator ?? throw new ArgumentNullException(nameof(pixelArtGenerator));
+            _pixelArtSpawner = pixelArtSpawner ?? throw new ArgumentNullException(nameof(pixelArtSpawner));
+            _tankDestroyer = tankDestroyer ?? throw new ArgumentNullException(nameof(tankDestroyer));
+            _pixelDestroyer = pixelDestroyer ?? throw new ArgumentNullException(nameof(pixelDestroyer));
 
-            _tankSelector.TankSelected += Sacrifice;
-            _pixelArtGenerator.ArtGenerated += AddPixels;
+            _selector.TankSelected += Sacrifice;
+            _pixelArtSpawner.ArtGenerated += AddPixels;
         }
 
         private void AddPixels(List<Pixel> pixels)
@@ -54,15 +62,15 @@ namespace _Game.Code.Bonuses
 
         public void Dispose()
         {
-            _tankSelector.TankSelected -= Sacrifice;
-            _pixelArtGenerator.ArtGenerated -= AddPixels;
+            _selector.TankSelected -= Sacrifice;
+            _pixelArtSpawner.ArtGenerated -= AddPixels;
         }
 
         public void Activate()
         {
             if (_isActivated == false)
             {
-                _cameraMover.Unzoom();
+                _cameraMover.ZoomToTanks();
                 _isActivated = true;
             }
         }
@@ -84,17 +92,14 @@ namespace _Game.Code.Bonuses
                             
                             pixels.Remove(pixel);
                             
-                            pixel.MarkForDestruction();
-                            pixel.Die();
+                            _pixelDestroyer.Destroy(pixel);
                         }
-
-                        tank.Unblock();
-                        tank.RemoveFromWaitingAreaOrLane();
-                        tank.Die();
+                        
+                        _tankDestroyer.Destroy(tank);
                     }
                 }
                 
-                _cameraMover.Zoom();
+                _cameraMover.ZoomToStart();
                 _isActivated = false;
                 
                 Activated?.Invoke(this);

@@ -1,5 +1,5 @@
 ﻿using _Game.Code.Configurations.Levels;
-using _Game.Code.Infrastructure;
+using _Game.Code.Infrastructure.SceneManagment;
 using _Game.Code.Providers;
 using UnityEngine;
 using UnityEngine.UI;

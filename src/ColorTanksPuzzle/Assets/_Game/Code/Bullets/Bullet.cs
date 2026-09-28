@@ -1,5 +1,7 @@
-﻿using _Game.Code.Pixels;
+﻿using _Game.Code.Destroyers;
+using _Game.Code.Pixels;
 using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.Bullets
 {
@@ -8,8 +10,15 @@ namespace _Game.Code.Bullets
     {
         [SerializeField] private float _speed = 10f;
 
+        private PixelDestroyer _pixelDestroyer;
         private Rigidbody _rigidbody;
 
+        [Inject]
+        public void Construct(PixelDestroyer pixelDestroyer)
+        {
+            _pixelDestroyer = pixelDestroyer;
+        }
+        
         private void Awake() => 
             _rigidbody = GetComponent<Rigidbody>();
 
@@ -17,7 +26,7 @@ namespace _Game.Code.Bullets
         {
             if (collision.collider.TryGetComponent(out Pixel pixel))
             {
-                pixel.Die();
+                _pixelDestroyer.Destroy(pixel);
                 
                 Die();
             }

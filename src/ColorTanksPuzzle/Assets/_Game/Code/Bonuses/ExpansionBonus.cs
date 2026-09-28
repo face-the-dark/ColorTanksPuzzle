@@ -27,6 +27,8 @@ namespace _Game.Code.Bonuses
         {
             _waitingAreaCellSpawner.AddCell();
             _tankDispatcher.IncreaseMaxCellsCount();
+            
+            Activated?.Invoke(this);
         }
     }
 }

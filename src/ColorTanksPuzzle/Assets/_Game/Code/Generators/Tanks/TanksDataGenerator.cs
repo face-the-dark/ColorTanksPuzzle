@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Code.Data;
+using _Game.Code.Generators.Data;
+using _Game.Code.Spawners;
 using UnityEngine;
 using VContainer;
 
@@ -9,7 +10,7 @@ namespace _Game.Code.Generators.Tanks
 {
     public class TanksDataGenerator : IDisposable
     {
-        private readonly PixelArtGenerator _pixelArtGenerator;
+        private readonly PixelArtSpawner _pixelArtSpawner;
         private readonly TankHpGenerator _hpGenerator;
         private readonly TankOrderGenerator _orderGenerator;
         private readonly TankLaneDistributor _laneDistributor;
@@ -19,22 +20,22 @@ namespace _Game.Code.Generators.Tanks
         [Inject]
         public TanksDataGenerator
         (
-            PixelArtGenerator pixelArtGenerator,
+            PixelArtSpawner pixelArtSpawner,
             TankHpGenerator hpGenerator,
             TankOrderGenerator orderGenerator,
             TankLaneDistributor laneDistributor
         )
         {
-            _pixelArtGenerator = pixelArtGenerator;
+            _pixelArtSpawner = pixelArtSpawner;
             _hpGenerator = hpGenerator;
             _orderGenerator = orderGenerator;
             _laneDistributor = laneDistributor;
 
-            _pixelArtGenerator.PixelsDataGenerated += GenerateTanksData;
+            _pixelArtSpawner.PixelsDataGenerated += GenerateTanksData;
         }
 
         public void Dispose() =>
-            _pixelArtGenerator.PixelsDataGenerated -= GenerateTanksData;
+            _pixelArtSpawner.PixelsDataGenerated -= GenerateTanksData;
 
         private void GenerateTanksData(List<PixelData> pixelsData)
         {
