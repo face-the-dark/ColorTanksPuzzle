@@ -13,6 +13,7 @@ namespace _Game.Code.Destroyers
         private readonly PixelArtSpawner _pixelArtSpawner;
         
         private List<Pixel> _pixels;
+        private Dictionary<Color, List<Pixel>> _pixelsByColor;
 
         [Inject]
         public PixelDestroyer(PixelArtSpawner pixelArtSpawner)
@@ -22,8 +23,6 @@ namespace _Game.Code.Destroyers
             _pixelArtSpawner.ArtGenerated += OnArtGenerated;
         }
 
-        public event Action<Pixel> PixelDestroyed;
-
         public void Dispose()
         {
             _pixelArtSpawner.ArtGenerated -= OnArtGenerated;
@@ -32,29 +31,38 @@ namespace _Game.Code.Destroyers
         public void Destroy(Pixel pixel)
         {
             _pixels.Remove(pixel);
-            pixel.MarkForDestruction();
-            
-            PixelDestroyed?.Invoke(pixel);
+            _pixelsByColor[pixel.Color].Remove(pixel);
             
             pixel.Die();
         }
         
         public void DestroyAllByColor(Color color)
         {
-            _pixels.FindAll(x => x.Color.Equals(color)).ForEach(pixel =>
-            {
-                _pixels.Remove(pixel);
-                pixel.MarkForDestruction();
-            
-                PixelDestroyed?.Invoke(pixel);
-            
-                pixel.Die();
-            });
+            _pixels.FindAll(x => x.Color.Equals(color)).ForEach(Destroy);
+        }
+
+        public bool TryGetPixelsByColor(Color color, out List<Pixel> pixels)
+        {
+            return _pixelsByColor.TryGetValue(color, out pixels);
         }
 
         private void OnArtGenerated(List<Pixel> pixels)
         {
-            _pixels = pixels;   
+            _pixels = pixels;
+            
+            _pixelsByColor = pixels
+                .GroupBy(x => x.Color)
+                .ToDictionary(x => x.Key, x => x.ToList());
+
+            foreach (Pixel pixel in pixels) 
+                pixel.Died += OnDied;
+        }
+        
+        private void OnDied(Pixel pixel)
+        {
+            pixel.Died -= OnDied;
+
+            Destroy(pixel);
         }
     }
 }

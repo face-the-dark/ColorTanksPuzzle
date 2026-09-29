@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using _Game.Code.Cameras;
 using _Game.Code.ColorRocketComponents;
 using _Game.Code.Destroyers;
 using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Pixels;
 using _Game.Code.Players;
-using _Game.Code.Tanks;
 using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
@@ -20,9 +18,6 @@ namespace _Game.Code.Bonuses
         private readonly CameraMover _cameraMover;
         private readonly Selector _selector;
         private readonly ColorRocket _colorRocketPrefab;
-
-        private List<Pixel> _pixels;
-        private List<Tank> _tanks;
 
         private bool _isActivated;
 

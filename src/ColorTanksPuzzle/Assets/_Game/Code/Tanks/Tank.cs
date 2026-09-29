@@ -87,15 +87,11 @@ namespace _Game.Code.Tanks
         public void Unblock() =>
             _isBlocked = false;
 
-        public void FreezeMoving()
-        {
+        public void FreezeMoving() => 
             _tankMover.ZeroingSpeed();
-        }
 
-        public void UnfreezeMoving()
-        {
+        public void UnfreezeMoving() => 
             _tankMover.UnZeroingSpeed();
-        }  
 
         public void Die()
         {
@@ -105,6 +101,8 @@ namespace _Game.Code.Tanks
 
             MovingStopped?.Invoke(this);
             Died?.Invoke(this);
+            
+            Destroy(gameObject);
         }
 
         private void OnCurrentLengthPercentageIncreased(float currentLengthPercentage) =>

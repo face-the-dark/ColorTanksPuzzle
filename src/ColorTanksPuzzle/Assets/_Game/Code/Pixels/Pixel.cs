@@ -9,25 +9,22 @@ namespace _Game.Code.Pixels
         private Color _color;
         private bool _isWillBeDestroyed;
 
-        public event Action<Pixel> PixelWillBeDestroyed;
+        public event Action<Pixel> Died;
         
         public Color Color => _color;
         public bool IsWillBeDestroyed => _isWillBeDestroyed;
 
-        public void Initialize(PixelData pixelData) => 
+        public void Initialize(PixelData pixelData) =>
             _color = pixelData.Color;
 
-        public void MarkForDestruction()
-        {
+        public void MarkForDestruction() => 
             _isWillBeDestroyed = true;
-            
-            PixelWillBeDestroyed?.Invoke(this);
-        }
 
         public void Die()
         {
-            if (_isWillBeDestroyed)
-                Destroy(gameObject);
+            Died?.Invoke(this);
+            
+            Destroy(gameObject);
         }
     }
 }

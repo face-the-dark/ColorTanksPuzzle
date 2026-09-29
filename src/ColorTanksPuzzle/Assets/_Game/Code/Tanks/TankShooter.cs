@@ -24,7 +24,7 @@ namespace _Game.Code.Tanks
 
         public event Action Died;
         public event Action<int> HpChanged;
-        
+
         public int Hp => _hp;
         public Color Color => _color;
 
@@ -34,7 +34,7 @@ namespace _Game.Code.Tanks
             _hp = tankData.Hp;
         }
 
-        private void Start() => 
+        private void Start() =>
             HpChanged?.Invoke(_hp);
 
         public void StartShoot()
@@ -49,13 +49,13 @@ namespace _Game.Code.Tanks
             _isShooting = false;
             this.StopCurrentCoroutine(ref _shootCoroutine);
         }
-        
+
         private IEnumerator Shoot()
         {
             while (_isShooting)
             {
                 Ray ray = new Ray(_shootPoint.position, transform.forward);
-                
+
                 if (Physics.Raycast(ray, out RaycastHit hit, _shootMaxDistance, _pixelLayer))
                 {
                     if (hit.collider.TryGetComponent(out Pixel pixel))
@@ -64,15 +64,15 @@ namespace _Game.Code.Tanks
                         {
                             Vector3 bulletSpawnPosition = GetBulletSpawnPosition(pixel);
                             SpawnBullet(bulletSpawnPosition);
-                            
-                            pixel.MarkForDestruction();
+
                             _currentPixel = pixel;
+                            pixel.MarkForDestruction();
 
                             ReduceHp();
                         }
                     }
                 }
-                
+
                 yield return null;
             }
         }
@@ -94,12 +94,12 @@ namespace _Game.Code.Tanks
         {
             _hp--;
 
-            if (_hp <= 0) 
+            if (_hp <= 0)
                 Died?.Invoke();
-            
+
             HpChanged?.Invoke(_hp);
         }
-        
+
         private Vector3 GetBulletSpawnPosition(Pixel pixel)
         {
             if (pixel.TryGetComponent(out Collider colliderComponent))
@@ -113,7 +113,7 @@ namespace _Game.Code.Tanks
 
                 return axisOrigin + axisDirection * distance;
             }
-            
+
             return _shootPoint.position;
         }
     }

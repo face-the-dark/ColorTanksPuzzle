@@ -4,7 +4,6 @@ using _Game.Code.Spawners;
 using _Game.Code.Tanks;
 using UnityEngine;
 using VContainer;
-using Object = UnityEngine.Object;
 
 namespace _Game.Code.Destroyers
 {
@@ -13,8 +12,6 @@ namespace _Game.Code.Destroyers
         private readonly TankSpawner _tankSpawner;
         
         private List<Tank> _tanks;
-        
-        public event Action<Tank> TankDestroyed;
 
         [Inject]
         public TankDestroyer(TankSpawner tankSpawner)
@@ -36,31 +33,26 @@ namespace _Game.Code.Destroyers
             tank.Unblock();
             tank.RemoveFromWaitingAreaOrLane();
             tank.Die();
-            
-            TankDestroyed?.Invoke(tank);
-            
-            Object.Destroy(tank.gameObject);
         }
         
         public void DestroyAllByColor(Color color)
         {
-            _tanks.FindAll(x => x.Color == color).ForEach(tank =>
-            {
-                _tanks.Remove(tank);
-            
-                tank.Unblock();
-                tank.RemoveFromWaitingAreaOrLane();
-                tank.Die();
-            
-                TankDestroyed?.Invoke(tank);
-            
-                Object.Destroy(tank.gameObject);
-            });
+            _tanks.FindAll(x => x.Color == color).ForEach(Destroy);
         }
         
         private void OnTankSpawned(List<Tank> tanks)
         {
             _tanks = tanks;
+
+            foreach (Tank tank in tanks) 
+                tank.Died += OnDied;
+        }
+
+        private void OnDied(Tank tank)
+        {
+            tank.Died -= OnDied;
+            
+            Destroy(tank);
         }
     }
 }
