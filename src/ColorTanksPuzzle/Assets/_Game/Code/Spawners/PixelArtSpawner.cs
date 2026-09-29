@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using _Game.Code.Configurations.Levels;
 using _Game.Code.Configurations.Palettes;
-using _Game.Code.Data;
+using _Game.Code.Generators.Data;
 using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Pixels;
 using _Game.Code.Providers;
@@ -10,9 +10,9 @@ using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
 
-namespace _Game.Code.Generators
+namespace _Game.Code.Spawners
 {
-    public class PixelArtGenerator
+    public class PixelArtSpawner
     {
         private const int SquareLength = 20;
 
@@ -30,7 +30,7 @@ namespace _Game.Code.Generators
         public event Action<List<Pixel>> ArtGenerated;
 
         [Inject]
-        public PixelArtGenerator
+        public PixelArtSpawner
         (
             Transform pixelArtContainer,
             LevelConfigurationProvider levelConfigurationProvider,

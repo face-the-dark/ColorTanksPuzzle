@@ -40,6 +40,8 @@ namespace _Game.Code.Bonuses
                 _endTime = Time.time + _bonusesConfigurationProvider.BonusesConfiguration.FreezeSplineBonusTime;
                 
                 _tankDispatcher.FreezeTanksOnSpline();
+                
+                Activated?.Invoke(this);
             }
         }
     }

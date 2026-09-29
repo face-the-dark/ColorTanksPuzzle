@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Code.Pixels;
 using _Game.Code.Providers;
 using _Game.Code.Tanks;
 using UnityEngine;
@@ -6,16 +7,17 @@ using VContainer;
 
 namespace _Game.Code.Players
 {
-    public class TankSelector : IDisposable
+    public class Selector : IDisposable
     {
         private readonly Camera _camera;
         private readonly InputReader _inputReader;
         private readonly TankSettingsProvider _tankSettingsProvider;
 
         public event Action<Tank> TankSelected;
+        public event Action<Pixel> PixelSelected;
 
         [Inject]
-        public TankSelector(Camera camera, InputReader inputReader, TankSettingsProvider tankSettingsProvider)
+        public Selector(Camera camera, InputReader inputReader, TankSettingsProvider tankSettingsProvider)
         {
             _camera = camera ?? throw new ArgumentNullException(nameof(camera));
             _inputReader = inputReader ?? throw new ArgumentNullException(nameof(inputReader));
@@ -34,14 +36,16 @@ namespace _Game.Code.Players
         private void TrySelectUnmovingTank(Vector2 position)
         {
             Ray ray = _camera.ScreenPointToRay(position);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _tankSettingsProvider.TankSettings.TankLayer))
-            {
+            
+            RaycastHit hit;
+            
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _tankSettingsProvider.TankSettings.TankLayer))
                 if (hit.collider.TryGetComponent(out Tank tank) && tank.IsMoving == false)
-                {
                     TankSelected?.Invoke(tank);
-                }
-            }
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                if (hit.collider.TryGetComponent(out Pixel pixel))
+                    PixelSelected?.Invoke(pixel);
         }
     }
 }

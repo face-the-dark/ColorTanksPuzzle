@@ -5,5 +5,6 @@
         Expansion,
         FreezeSpline,
         Sacrifice,
+        ColorRocket
     }
 }

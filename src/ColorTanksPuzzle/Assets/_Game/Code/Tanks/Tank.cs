@@ -1,5 +1,5 @@
 using System;
-using _Game.Code.Data;
+using _Game.Code.Generators.Data;
 using _Game.Code.Spawners;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
@@ -66,7 +66,7 @@ namespace _Game.Code.Tanks
 
         public void RemoveFromWaitingAreaOrLane()
         {
-            if (_isFirstCirclePassed)
+            if (_isFirstCirclePassed && _isMoving == false)
                 _waitingArea.Remove(this);
             else
                 _lane.Remove(this);
@@ -87,15 +87,11 @@ namespace _Game.Code.Tanks
         public void Unblock() =>
             _isBlocked = false;
 
-        public void FreezeMoving()
-        {
+        public void FreezeMoving() => 
             _tankMover.ZeroingSpeed();
-        }
 
-        public void UnfreezeMoving()
-        {
+        public void UnfreezeMoving() => 
             _tankMover.UnZeroingSpeed();
-        }  
 
         public void Die()
         {
@@ -105,7 +101,7 @@ namespace _Game.Code.Tanks
 
             MovingStopped?.Invoke(this);
             Died?.Invoke(this);
-
+            
             Destroy(gameObject);
         }
 

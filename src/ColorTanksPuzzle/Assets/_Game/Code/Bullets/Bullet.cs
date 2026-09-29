@@ -9,7 +9,7 @@ namespace _Game.Code.Bullets
         [SerializeField] private float _speed = 10f;
 
         private Rigidbody _rigidbody;
-
+        
         private void Awake() => 
             _rigidbody = GetComponent<Rigidbody>();
 

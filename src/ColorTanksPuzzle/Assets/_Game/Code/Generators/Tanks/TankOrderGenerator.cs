@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Code.Configurations.Difficulty;
-using _Game.Code.Data;
+using _Game.Code.Generators.Data;
 using _Game.Code.Providers;
 using _Game.Code.Utilities;
 using VContainer;

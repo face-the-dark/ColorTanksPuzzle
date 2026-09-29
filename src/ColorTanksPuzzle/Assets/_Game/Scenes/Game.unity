@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e186618a5b7749e89b343cddb61e3acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.BonusButtons.SacrificeBonusButton
---- !u!1 &175000581
+--- !u!1 &141941059
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,47 +261,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 175000582}
-  - component: {fileID: 175000583}
+  - component: {fileID: 141941060}
+  - component: {fileID: 141941061}
   m_Layer: 0
-  m_Name: TankSpawner
+  m_Name: ZoomPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &175000582
+--- !u!4 &141941060
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175000581}
+  m_GameObject: {fileID: 141941059}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1734336498}
+  - {fileID: 472690259}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &175000583
+--- !u!114 &141941061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175000581}
+  m_GameObject: {fileID: 141941059}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8136e3e6c6bf47039c0af01323aa1abd, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bcdf805b5df4c7698e200c5191a7039, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.TankSpawner
-  _spline: {fileID: 1553780077}
-  _lanes:
-  - {fileID: 1404249963}
-  - {fileID: 826888163}
-  - {fileID: 1155352455}
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Cameras.ZoomPoints
+  _cameraTanksPoint: {fileID: 1734336498}
+  _cameraArtPoint: {fileID: 472690259}
 --- !u!1 &320367343
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +556,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
-  m_LocalPosition: {x: 0, y: 19, z: 0}
+  m_LocalPosition: {x: 0, y: 70, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1002,6 +1001,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 836881151}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &472690258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 472690259}
+  m_Layer: 0
+  m_Name: CameraArtPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &472690259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472690258}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 70, z: -15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 141941060}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &483331856
 GameObject:
@@ -2880,8 +2910,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1655969780}
+  - component: {fileID: 1655969781}
   m_Layer: 0
-  m_Name: SpawningLanes
+  m_Name: SpawningLanesContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2905,6 +2936,22 @@ Transform:
   - {fileID: 1155352454}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1655969781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655969779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c7c1337ead140c6a6667bd54898e29e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Spawners.SpawningLanesContainer
+  _spawningLanes:
+  - {fileID: 1404249963}
+  - {fileID: 826888163}
+  - {fileID: 1155352455}
 --- !u!1 &1664279725
 GameObject:
   m_ObjectHideFlags: 0
@@ -3083,7 +3130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1734336498}
   m_Layer: 0
-  m_Name: CameraSeparationPoint
+  m_Name: CameraTanksPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3097,12 +3144,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1734336497}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 19, z: -54}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 70, z: -54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 141941060}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1857952939
 GameObject:
@@ -3138,14 +3185,15 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _pixelArtContainer: {fileID: 843210120}
-  _tankSpawner: {fileID: 175000583}
   _waitingAreaSpawnBoundaries: {fileID: 391172780}
   _expansionBonusButton: {fileID: 1055238755}
   _freezeSplineBonusButton: {fileID: 1432756479}
   _sacrificeSplineBonusButton: {fileID: 101430156}
   _camera: {fileID: 330585545}
   _splineTanksCountView: {fileID: 483331860}
-  _cameraSeparationPoint: {fileID: 1734336498}
+  _spline: {fileID: 1553780077}
+  _spawningLanesContainer: {fileID: 1655969781}
+  _zoomPoints: {fileID: 141941061}
 --- !u!4 &1857952941
 Transform:
   m_ObjectHideFlags: 0
@@ -3172,8 +3220,7 @@ SceneRoots:
   - {fileID: 843210120}
   - {fileID: 391172779}
   - {fileID: 1655969780}
-  - {fileID: 175000582}
+  - {fileID: 141941060}
   - {fileID: 726481661}
   - {fileID: 490654056}
   - {fileID: 1650245175}
-  - {fileID: 1734336498}
