@@ -3,6 +3,7 @@ using _Game.Code.Cameras;
 using _Game.Code.Configurations;
 using _Game.Code.Destroyers;
 using _Game.Code.Generators.Tanks;
+using _Game.Code.PersistenceProgress;
 using _Game.Code.Players;
 using _Game.Code.Providers;
 using _Game.Code.Spawners;
@@ -26,21 +27,28 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
         [SerializeField] private ExpansionBonusButton _expansionBonusButton;
         [SerializeField] private FreezeSplineBonusButton _freezeSplineBonusButton;
         [SerializeField] private SacrificeBonusButton _sacrificeSplineBonusButton;
+        [SerializeField] private ColorRocketBonusButton _colorRocketSplineBonusButton;
         [SerializeField] private Camera _camera;
+        [SerializeField] private RectTransform _coinUiTarget;
         [SerializeField] private SplineTanksCountView _splineTanksCountView;
         [SerializeField] private SplineContainer _spline;
         [SerializeField] private SpawningLanesContainer _spawningLanesContainer;
         [SerializeField] private ZoomPoints _zoomPoints;
+        [SerializeField] private CoinsView _coinsView;
+        [SerializeField] private BuyingWindow _buyingWindow;
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(_expansionBonusButton);
             builder.RegisterComponent(_freezeSplineBonusButton);
             builder.RegisterComponent(_sacrificeSplineBonusButton);
+            builder.RegisterComponent(_colorRocketSplineBonusButton);
             builder.RegisterComponent(_splineTanksCountView);
             builder.RegisterComponent(_waitingAreaSpawnBoundaries);
             builder.RegisterComponent(_spawningLanesContainer);
             builder.RegisterComponent(_zoomPoints);
+            builder.RegisterComponent(_coinsView);
+            builder.RegisterComponent(_buyingWindow);
 
             builder.Register<DeterministicRandom>(Lifetime.Singleton);
             builder.Register<PixelArtSpawner>(Lifetime.Singleton)
@@ -57,6 +65,8 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.Register<BonusActivator>(Lifetime.Singleton);
             builder.Register<TankDestroyer>(Lifetime.Singleton);
             builder.Register<PixelDestroyer>(Lifetime.Singleton);
+            builder.Register<CoinsCounter>(Lifetime.Singleton);
+            builder.Register<BonusBuyer>(Lifetime.Singleton);
             builder.Register<CameraMover>(Lifetime.Singleton)
                 .WithParameter(_camera)
                 .WithParameter(_zoomPoints);
@@ -68,6 +78,9 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.Register<Selector>(Lifetime.Singleton)
                 .WithParameter(_camera);
             builder.Register<WaitingAreaCellSpawner>(Lifetime.Singleton);
+            builder.Register<CoinSpawner>(Lifetime.Singleton)
+                .WithParameter(_camera)
+                .WithParameter(_coinUiTarget);
             builder.Register<TankSpawner>(Lifetime.Singleton)
                 .WithParameter(_spline)
                 .WithParameter(_spawningLanesContainer);

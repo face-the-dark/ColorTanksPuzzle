@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using _Game.Code.Bullets;
+using _Game.Code.Destroyers;
 using _Game.Code.Extensions;
 using _Game.Code.Generators.Data;
 using _Game.Code.Pixels;
@@ -15,6 +16,8 @@ namespace _Game.Code.Tanks
         [SerializeField] private LayerMask _pixelLayer;
         [SerializeField] private Bullet _bulletPrefab;
 
+        PixelDestroyer _pixelDestroyer;
+        
         private Color _color;
         private int _hp;
 
@@ -28,10 +31,12 @@ namespace _Game.Code.Tanks
         public int Hp => _hp;
         public Color Color => _color;
 
-        public void Initialize(TankData tankData)
+        public void Initialize(TankData tankData, PixelDestroyer pixelDestroyer)
         {
             _color = tankData.Color;
             _hp = tankData.Hp;
+            
+            _pixelDestroyer = pixelDestroyer;
         }
 
         private void Start() =>
@@ -87,6 +92,7 @@ namespace _Game.Code.Tanks
         private void SpawnBullet(Vector3 bulletSpawnPosition)
         {
             Bullet bullet = Instantiate(_bulletPrefab, bulletSpawnPosition, Quaternion.identity);
+            bullet.Construct(_pixelDestroyer);
             bullet.AddForce(transform.forward);
         }
 

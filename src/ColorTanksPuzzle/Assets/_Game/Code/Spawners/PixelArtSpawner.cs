@@ -22,6 +22,7 @@ namespace _Game.Code.Spawners
         private readonly Pixel _pixelPrefab;
         private readonly Palette _palette;
         private readonly Transform _container;
+        private readonly CoinSpawner _coinSpawner;
         private readonly LevelConfiguration _levelConfiguration;
         private readonly List<PixelData> _pixelData = new();
         private readonly List<Pixel> _pixels = new();
@@ -34,13 +35,15 @@ namespace _Game.Code.Spawners
         (
             Transform pixelArtContainer,
             LevelConfigurationProvider levelConfigurationProvider,
-            LoadService loadService
+            LoadService loadService,
+            CoinSpawner coinSpawner
         )
         {
             _levelConfiguration = levelConfigurationProvider.LevelConfiguration
                                   ?? throw new ArgumentNullException(nameof(levelConfigurationProvider));
 
             _container = pixelArtContainer ?? throw new ArgumentNullException(nameof(pixelArtContainer));
+            _coinSpawner = coinSpawner ?? throw new ArgumentNullException(nameof(coinSpawner));
 
             _pixelPrefab = loadService.LoadPixel() ?? throw new ArgumentNullException(nameof(loadService));
             _palette = loadService.LoadPalette() ?? throw new ArgumentNullException(nameof(loadService));
@@ -68,7 +71,7 @@ namespace _Game.Code.Spawners
 
                     _pixels.Add(pixel);
                     PixelData pixelData = new PixelData(pixelColor, depth);
-                    pixel.Initialize(pixelData);
+                    pixel.Initialize(pixelData, _coinSpawner);
                     _pixelData.Add(pixelData);
                 }
             }

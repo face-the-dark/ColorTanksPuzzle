@@ -11,5 +11,6 @@
         public const string BulletPrefabPath = "Prefabs/Bullet";
         public const string ColorRocketPrefabPath = "Prefabs/ColorRocket";
         public const string WaitingAreaCellPrefabPath = "Prefabs/WaitingAreaCell";
+        public const string CoinPrefabPath = "Prefabs/Coin";
     }
 }

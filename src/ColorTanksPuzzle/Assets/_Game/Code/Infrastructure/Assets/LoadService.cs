@@ -2,6 +2,7 @@
 using System.Linq;
 using _Game.Code.Bonuses;
 using _Game.Code.Bullets;
+using _Game.Code.Coins;
 using _Game.Code.ColorRocketComponents;
 using _Game.Code.Configurations;
 using _Game.Code.Configurations.Bonuses;
@@ -44,5 +45,8 @@ namespace _Game.Code.Infrastructure.Assets
 
         public ColorRocket LoadColorRocketPrefab() => 
             Resources.Load<ColorRocket>(AssetPath.ColorRocketPrefabPath);
+
+        public Coin LoadCoinPrefab() => 
+            Resources.Load<Coin>(AssetPath.CoinPrefabPath);
     }
 }

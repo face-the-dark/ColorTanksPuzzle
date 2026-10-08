@@ -1,4 +1,5 @@
 using System;
+using _Game.Code.Destroyers;
 using _Game.Code.Generators.Data;
 using _Game.Code.Spawners;
 using _Game.Code.WaitingAreaComponents;
@@ -35,12 +36,13 @@ namespace _Game.Code.Tanks
             SplineContainer spline,
             TankData tankData,
             WaitingArea waitingArea,
-            SpawningLane spawningLane
+            SpawningLane spawningLane,
+            PixelDestroyer pixelDestroyer
         )
         {
             _tankMover.Initialize(spline);
             _tankRotator.Initialize(spline);
-            _tankShooter.Initialize(tankData);
+            _tankShooter.Initialize(tankData, pixelDestroyer);
             _tankDyer.Initialize(tankData);
 
             _waitingArea = waitingArea;
