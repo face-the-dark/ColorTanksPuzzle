@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace _Game.Code.Infrastructure.Assets
 {
-    public class LoadService
+    public class AssetLoadService
     {
         public List<DifficultyConfiguration> LoadDifficultyConfigurations() =>
             Resources
@@ -40,8 +40,8 @@ namespace _Game.Code.Infrastructure.Assets
         public BonusesConfiguration LoadBonusesConfiguration() => 
             Resources.Load<BonusesConfiguration>(AssetPath.BonusesConfigurationPath);
 
-        public TankSettings LoadTankSettings() => 
-            Resources.Load<TankSettings>(AssetPath.TankSettingsPath);
+        public TankConfiguration LoadTankConfiguration() => 
+            Resources.Load<TankConfiguration>(AssetPath.TankConfigurationPath);
 
         public ColorRocket LoadColorRocketPrefab() => 
             Resources.Load<ColorRocket>(AssetPath.ColorRocketPrefabPath);

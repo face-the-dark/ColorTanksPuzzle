@@ -7,6 +7,7 @@ namespace _Game.Code.PersistenceProgress
         public void SavePlayerData(PlayerData playerData)
         {
             PlayerPrefs.SetString("PlayerData", JsonUtility.ToJson(playerData));
+            PlayerPrefs.Save();
         }
 
         public PlayerData LoadPlayerData()

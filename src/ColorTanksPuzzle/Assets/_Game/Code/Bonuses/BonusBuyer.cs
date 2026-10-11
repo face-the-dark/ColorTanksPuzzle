@@ -16,16 +16,16 @@ namespace _Game.Code.Bonuses
         public BonusBuyer
         (
             PlayerDataService playerDataService,
-            LoadService loadService
+            AssetLoadService assetLoadService
         )
         {
             _playerDataService = playerDataService
                                             ?? throw new ArgumentNullException(nameof(playerDataService));
 
-            if (loadService == null)
-                throw new ArgumentNullException(nameof(loadService));
+            if (assetLoadService == null)
+                throw new ArgumentNullException(nameof(assetLoadService));
 
-            _bonusesConfiguration = loadService.LoadBonusesConfiguration();
+            _bonusesConfiguration = assetLoadService.LoadBonusesConfiguration();
         }
 
         public void Buy(Bonus bonus)

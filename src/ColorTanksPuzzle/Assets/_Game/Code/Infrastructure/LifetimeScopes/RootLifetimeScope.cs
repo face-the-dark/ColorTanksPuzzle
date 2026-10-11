@@ -11,7 +11,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<LoadService>(Lifetime.Singleton);
+            builder.Register<AssetLoadService>(Lifetime.Singleton);
             builder.Register<DifficultyConfigurationProvider>(Lifetime.Singleton);
             builder.Register<LevelConfigurationProvider>(Lifetime.Singleton);
             builder.Register<SceneLoader>(Lifetime.Singleton);

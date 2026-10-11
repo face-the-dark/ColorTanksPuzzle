@@ -40,21 +40,17 @@ namespace _Game.Code.Destroyers
             
             pixel.Die();
             
+            _coinsCounter.IncreaseMoney();
+            
             if (_pixels.Count == 0) 
                 AllPixelsDestroyed?.Invoke();
-            
-            _coinsCounter.IncreaseMoney();
         }
         
-        public void DestroyAllByColor(Color color)
-        {
+        public void DestroyAllByColor(Color color) => 
             _pixels.FindAll(x => x.Color.Equals(color)).ForEach(Destroy);
-        }
 
-        public bool TryGetPixelsByColor(Color color, out List<Pixel> pixels)
-        {
-            return _pixelsByColor.TryGetValue(color, out pixels);
-        }
+        public bool TryGetPixelsByColor(Color color, out List<Pixel> pixels) => 
+            _pixelsByColor.TryGetValue(color, out pixels);
 
         private void OnArtGenerated(List<Pixel> pixels)
         {

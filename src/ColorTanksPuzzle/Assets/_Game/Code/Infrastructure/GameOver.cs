@@ -2,6 +2,7 @@
 using _Game.Code.Destroyers;
 using _Game.Code.PersistenceProgress;
 using _Game.Code.WaitingAreaComponents;
+using UnityEngine;
 using VContainer;
 
 namespace _Game.Code.Infrastructure
@@ -10,17 +11,17 @@ namespace _Game.Code.Infrastructure
     {
         private readonly PixelDestroyer _pixelDestroyer;
         private readonly WaitingArea _waitingArea;
-        private readonly ISaveLoadService _saveLoadService;
+        private readonly PlayerDataService _playerDataService;
 
         public event Action GameWon;
         public event Action GameLost;
 
         [Inject]
-        public GameOver(PixelDestroyer pixelDestroyer, WaitingArea waitingArea, ISaveLoadService saveLoadService)
+        public GameOver(PixelDestroyer pixelDestroyer, WaitingArea waitingArea, PlayerDataService playerDataService)
         {
             _pixelDestroyer = pixelDestroyer ?? throw new ArgumentNullException(nameof(pixelDestroyer));
             _waitingArea = waitingArea ?? throw new ArgumentNullException(nameof(waitingArea));
-            _saveLoadService = saveLoadService ?? throw new ArgumentNullException(nameof(saveLoadService));
+            _playerDataService = playerDataService ?? throw new ArgumentNullException(nameof(playerDataService));
 
             _pixelDestroyer.AllPixelsDestroyed += Win;
             _waitingArea.Overflowed += Lose;
@@ -34,11 +35,16 @@ namespace _Game.Code.Infrastructure
 
         private void Win()
         {
+            Debug.Log("Win");
+            
+            _playerDataService.SavePlayerData();
+            
             GameWon?.Invoke();
         }
 
         private void Lose()
         {
+            Debug.Log("Lose");
             GameLost?.Invoke();
         }
     }

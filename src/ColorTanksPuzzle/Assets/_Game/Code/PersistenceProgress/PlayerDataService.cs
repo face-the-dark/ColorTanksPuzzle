@@ -6,22 +6,35 @@ namespace _Game.Code.PersistenceProgress
 {
     public class PlayerDataService
     {
+        private readonly ISaveLoadService _saveLoadService;
+        
         private readonly PlayerData _playerData;
 
         [Inject]
         public PlayerDataService(ISaveLoadService saveLoadService)
         {
-            if (saveLoadService == null)
-                throw new ArgumentNullException(nameof(saveLoadService));
-            
+            _saveLoadService = saveLoadService ?? throw new ArgumentNullException(nameof(saveLoadService));
+
             _playerData = saveLoadService.LoadPlayerData();
         }
-        
+
+        public void InitializeMoney() => 
+            MoneyChanged?.Invoke(_playerData.Money);
+
+        public void InitializeBonusesCounts()
+        {
+            foreach (Bonus bonus in Enum.GetValues(typeof(Bonus))) 
+                BonusCountChanged?.Invoke(bonus, GetBonusCount(bonus).Value);
+        }
+
         public event Action<int> MoneyChanged;
         public event Action<Bonus, int> BonusCountChanged;
 
         public void IncreaseMoney(int amount)
         {
+            if (amount <= 0)
+                throw new InvalidOperationException();
+            
             _playerData.Money += amount;
             
             MoneyChanged?.Invoke(_playerData.Money);
@@ -29,9 +42,12 @@ namespace _Game.Code.PersistenceProgress
 
         public void DeductMoney(int amount)
         {
-            _playerData.Money -= amount;
+            if (amount > 0 && amount <= _playerData.Money)
+            {
+                _playerData.Money -= amount;
             
-            MoneyChanged?.Invoke(_playerData.Money);
+                MoneyChanged?.Invoke(_playerData.Money);
+            }
         }
 
         public void IncreaseBonusCount(Bonus bonus, int count)
@@ -70,5 +86,8 @@ namespace _Game.Code.PersistenceProgress
 
         private BonusCount GetBonusCount(Bonus bonus) =>
             _playerData.BonusesCounts.Find(x => x.Bonus == bonus);
+
+        public void SavePlayerData() => 
+            _saveLoadService.SavePlayerData(_playerData);
     }
 }

@@ -5,7 +5,7 @@
         public const string DifficultyConfigurationPath = "Configurations/Difficulty";
         public const string BonusesConfigurationPath = "Configurations/Bonuses/BonusesConfiguration";
         public const string PalettePath = "Configurations/Palettes/DefaultPalette";
-        public const string TankSettingsPath = "Configurations/Tanks/TankSettings";
+        public const string TankConfigurationPath = "Configurations/Tanks/TankConfiguration";
         public const string PixelPrefabPath = "Prefabs/Pixel";
         public const string TankPrefabPath = "Prefabs/Tank";
         public const string BulletPrefabPath = "Prefabs/Bullet";

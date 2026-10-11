@@ -76,19 +76,22 @@ namespace _Game.Code.Bonuses
             }
             else if (_isAllBonusesBlocked == false)
             {
-                _playerDataService.DecreaseBonusCount(bonus, 1);
-                
                 _bonuses.TryGetValue(bonus, out IBonus activeBonus);
 
                 if (activeBonus == null)
                     throw new InvalidOperationException(nameof(activeBonus));
 
-                activeBonus.Activated += OnActivatedBonus;
+                if (activeBonus.CanActivate)
+                {
+                    _playerDataService.DecreaseBonusCount(bonus, 1);
+                
+                    activeBonus.Activated += OnActivatedBonus;
 
-                _tankDispatcher.Block();
-                BlockAllBonuses();
+                    _tankDispatcher.Block();
+                    BlockAllBonuses();
 
-                activeBonus.Activate();
+                    activeBonus.Activate();
+                }
             }
         }
 

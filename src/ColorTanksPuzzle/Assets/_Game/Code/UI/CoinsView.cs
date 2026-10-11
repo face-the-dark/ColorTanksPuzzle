@@ -1,4 +1,5 @@
-﻿using _Game.Code.PersistenceProgress;
+﻿using System;
+using _Game.Code.PersistenceProgress;
 using TMPro;
 using UnityEngine;
 using VContainer;
@@ -24,6 +25,9 @@ namespace _Game.Code.UI
 
         private void OnDisable() => 
             _playerDataService.MoneyChanged -= UpdateText;
+
+        private void Start() => 
+            _playerDataService.InitializeMoney();
 
         private void UpdateText(int amount) => 
             _moneyText.text = amount.ToString();

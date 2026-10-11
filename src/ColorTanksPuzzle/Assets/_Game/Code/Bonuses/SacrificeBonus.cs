@@ -43,6 +43,7 @@ namespace _Game.Code.Bonuses
         public event Action<IBonus> Activated;
         
         public Bonus Bonus => Bonus.Sacrifice;
+        public bool CanActivate => _isActivated == false;
 
         public void Dispose()
         {

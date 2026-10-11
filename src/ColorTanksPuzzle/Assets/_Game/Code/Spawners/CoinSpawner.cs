@@ -14,15 +14,15 @@ namespace _Game.Code.Spawners
         private readonly Coin _coinPrefab;
 
         [Inject]
-        public CoinSpawner(LoadService loadService, Camera camera, RectTransform coinUiTarget)
+        public CoinSpawner(AssetLoadService assetLoadService, Camera camera, RectTransform coinUiTarget)
         {
-            if (loadService == null)
-                throw new ArgumentNullException(nameof(loadService));
+            if (assetLoadService == null)
+                throw new ArgumentNullException(nameof(assetLoadService));
 
             _camera = camera;
             _coinUiTarget = coinUiTarget;
 
-            _coinPrefab = loadService.LoadCoinPrefab();
+            _coinPrefab = assetLoadService.LoadCoinPrefab();
         }
 
         public void Spawn(Vector3 at)

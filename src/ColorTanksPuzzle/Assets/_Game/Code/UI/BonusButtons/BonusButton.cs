@@ -43,6 +43,11 @@ namespace _Game.Code.UI.BonusButtons
             _playerDataService.BonusCountChanged -= UpdateBonusCountText;
         }
 
+        private void Start()
+        {
+            _playerDataService.InitializeBonusesCounts();
+        }
+
         private void OnButtonClick() => 
             _bonusActivator.ActivateBonus(Bonus);
 

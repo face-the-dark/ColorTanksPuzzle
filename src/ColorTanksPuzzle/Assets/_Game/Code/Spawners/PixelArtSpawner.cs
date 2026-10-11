@@ -35,7 +35,7 @@ namespace _Game.Code.Spawners
         (
             Transform pixelArtContainer,
             LevelConfigurationProvider levelConfigurationProvider,
-            LoadService loadService,
+            AssetLoadService assetLoadService,
             CoinSpawner coinSpawner
         )
         {
@@ -45,8 +45,8 @@ namespace _Game.Code.Spawners
             _container = pixelArtContainer ?? throw new ArgumentNullException(nameof(pixelArtContainer));
             _coinSpawner = coinSpawner ?? throw new ArgumentNullException(nameof(coinSpawner));
 
-            _pixelPrefab = loadService.LoadPixel() ?? throw new ArgumentNullException(nameof(loadService));
-            _palette = loadService.LoadPalette() ?? throw new ArgumentNullException(nameof(loadService));
+            _pixelPrefab = assetLoadService.LoadPixel() ?? throw new ArgumentNullException(nameof(assetLoadService));
+            _palette = assetLoadService.LoadPalette() ?? throw new ArgumentNullException(nameof(assetLoadService));
         }
 
         public void Generate()

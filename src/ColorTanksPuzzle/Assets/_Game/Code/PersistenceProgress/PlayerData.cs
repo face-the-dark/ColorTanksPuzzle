@@ -26,7 +26,7 @@ namespace _Game.Code.PersistenceProgress
             BonusesCounts = bonusesCounts;
         }
 
-        public int Money { get; set; }
-        public List<BonusCount> BonusesCounts { get; set; }
+        public int Money;
+        public List<BonusCount> BonusesCounts;
     }
 }

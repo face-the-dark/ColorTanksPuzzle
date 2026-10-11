@@ -5,6 +5,7 @@ using _Game.Code.Destroyers;
 using _Game.Code.Generators.Data;
 using _Game.Code.Generators.Tanks;
 using _Game.Code.Infrastructure.Assets;
+using _Game.Code.Providers;
 using _Game.Code.Tanks;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace _Game.Code.Spawners
         private readonly TanksDataGenerator _tanksDataGenerator;
         private readonly WaitingArea _waitingArea;
         private readonly PixelDestroyer _pixelDestroyer;
+        private readonly TankConfigurationProvider _tankConfigurationProvider;
+        private readonly Reload _reload;
         private readonly Tank _tankPrefab;
 
         public event Action<List<Tank>> TanksSpawned;
@@ -33,8 +36,10 @@ namespace _Game.Code.Spawners
             SpawningLanesContainer spawningLanesContainer,
             TanksDataGenerator tanksDataGenerator,
             WaitingArea waitingArea,
-            LoadService loadService,
-            PixelDestroyer pixelDestroyer
+            AssetLoadService assetLoadService,
+            PixelDestroyer pixelDestroyer,
+            TankConfigurationProvider tankConfigurationProvider,
+            Reload reload
         )
         {
             _spline = spline;
@@ -42,8 +47,10 @@ namespace _Game.Code.Spawners
             _tanksDataGenerator = tanksDataGenerator;
             _waitingArea = waitingArea;
             _pixelDestroyer = pixelDestroyer;
+            _tankConfigurationProvider = tankConfigurationProvider;
+            _reload = reload;
 
-            _tankPrefab = loadService.LoadTank();
+            _tankPrefab = assetLoadService.LoadTank();
 
             _tanksDataGenerator.DataGenerated += OnDataGenerated;
         }
@@ -88,7 +95,7 @@ namespace _Game.Code.Spawners
             lane.Add(tank);
             _spawnedTanks.Add(tank);
 
-            tank.Initialize(_spline, tankData, _waitingArea, lane, _pixelDestroyer);
+            tank.Initialize(_spline, tankData, _waitingArea, lane, _pixelDestroyer, _tankConfigurationProvider, _reload);
         }
     }
 }

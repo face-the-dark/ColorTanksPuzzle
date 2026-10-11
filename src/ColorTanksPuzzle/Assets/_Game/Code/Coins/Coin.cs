@@ -24,6 +24,7 @@ namespace _Game.Code.Coins
         {
             this.StopCurrentCoroutine(ref _flyCoroutine);
             _flyCoroutine = StartCoroutine(Fly(coinUiTarget));
+            transform.LookAt(_camera.transform);
         }
 
         private IEnumerator Fly(RectTransform coinUiTarget)

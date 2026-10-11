@@ -32,6 +32,7 @@ namespace _Game.Code.Bonuses
         public event Action<IBonus> Activated;
         
         public Bonus Bonus => Bonus.FreezeSpline;
+        public bool CanActivate => IsActive == false;
 
         public void Activate()
         {

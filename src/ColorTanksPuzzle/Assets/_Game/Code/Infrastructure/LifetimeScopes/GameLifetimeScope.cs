@@ -8,6 +8,7 @@ using _Game.Code.Players;
 using _Game.Code.Providers;
 using _Game.Code.Spawners;
 using _Game.Code.SplineModifiers;
+using _Game.Code.Tanks;
 using _Game.Code.UI;
 using _Game.Code.UI.BonusButtons;
 using _Game.Code.Utilities;
@@ -67,12 +68,14 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.Register<PixelDestroyer>(Lifetime.Singleton);
             builder.Register<CoinsCounter>(Lifetime.Singleton);
             builder.Register<BonusBuyer>(Lifetime.Singleton);
+            builder.Register<GameOver>(Lifetime.Singleton);
+            builder.Register<Reload>(Lifetime.Singleton);
             builder.Register<CameraMover>(Lifetime.Singleton)
                 .WithParameter(_camera)
                 .WithParameter(_zoomPoints);
 
             builder.Register<BonusesConfigurationProvider>(Lifetime.Singleton);
-            builder.Register<TankSettingsProvider>(Lifetime.Singleton);
+            builder.Register<TankConfigurationProvider>(Lifetime.Singleton);
             
             builder.Register<TankDispatcher>(Lifetime.Singleton);
             builder.Register<Selector>(Lifetime.Singleton)
@@ -91,6 +94,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.Register<IBonus, ColorRocketBonus>(Lifetime.Singleton);
             
             builder.RegisterBuildCallback(container => { container.Resolve<LastCircleFinalizer>(); });
+            builder.RegisterBuildCallback(container => { container.Resolve<GameOver>(); });
 
             builder.RegisterEntryPoint<GameEntryPoint>();
         }

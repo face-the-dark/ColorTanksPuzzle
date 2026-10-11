@@ -5,6 +5,7 @@ using _Game.Code.Destroyers;
 using _Game.Code.Extensions;
 using _Game.Code.Generators.Data;
 using _Game.Code.Pixels;
+using _Game.Code.Providers;
 using UnityEngine;
 
 namespace _Game.Code.Tanks
@@ -16,8 +17,9 @@ namespace _Game.Code.Tanks
         [SerializeField] private LayerMask _pixelLayer;
         [SerializeField] private Bullet _bulletPrefab;
 
-        PixelDestroyer _pixelDestroyer;
-        
+        private PixelDestroyer _pixelDestroyer;
+        private Reload _reload;
+
         private Color _color;
         private int _hp;
 
@@ -31,12 +33,18 @@ namespace _Game.Code.Tanks
         public int Hp => _hp;
         public Color Color => _color;
 
-        public void Initialize(TankData tankData, PixelDestroyer pixelDestroyer)
+        public void Initialize
+        (
+            TankData tankData,
+            PixelDestroyer pixelDestroyer,
+            Reload reload
+        )
         {
             _color = tankData.Color;
             _hp = tankData.Hp;
-            
+
             _pixelDestroyer = pixelDestroyer;
+            _reload = reload;
         }
 
         private void Start() =>
@@ -65,15 +73,15 @@ namespace _Game.Code.Tanks
                 {
                     if (hit.collider.TryGetComponent(out Pixel pixel))
                     {
-                        if (CanDestroyPixel(pixel))
+                        if (CanDestroyPixel(pixel) && _reload.CanShoot)
                         {
-                            Vector3 bulletSpawnPosition = GetBulletSpawnPosition(pixel);
-                            SpawnBullet(bulletSpawnPosition);
+                            Bullet bullet = SpawnBullet(pixel);
 
                             _currentPixel = pixel;
-                            pixel.MarkForDestruction();
+                            pixel.MarkForDestruction(bullet);
 
                             ReduceHp();
+                            _reload.StartReload();
                         }
                     }
                 }
@@ -86,14 +94,18 @@ namespace _Game.Code.Tanks
         {
             return pixel.Color == _color
                    && pixel.Equals(_currentPixel) == false
-                   && pixel.IsWillBeDestroyed == false;
+                   && pixel.IsWillBeDestroyed == false
+                   && pixel.DestructionBullet is null;
         }
 
-        private void SpawnBullet(Vector3 bulletSpawnPosition)
+        private Bullet SpawnBullet(Pixel pixel)
         {
+            Vector3 bulletSpawnPosition = GetBulletSpawnPosition(pixel);
             Bullet bullet = Instantiate(_bulletPrefab, bulletSpawnPosition, Quaternion.identity);
             bullet.Construct(_pixelDestroyer);
-            bullet.AddForce(transform.forward);
+            bullet.StartFly(pixel.transform.position);
+            
+            return bullet;
         }
 
         private void ReduceHp()

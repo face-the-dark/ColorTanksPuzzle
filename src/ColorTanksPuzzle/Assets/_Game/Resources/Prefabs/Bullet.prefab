@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5215237086496773828}
   - component: {fileID: 8514955628563539368}
   - component: {fileID: 7486220383373606024}
-  - component: {fileID: 6900518182096851116}
+  - component: {fileID: 2095625522356724352}
   - component: {fileID: 648858509853279321}
   m_Layer: 7
   m_Name: Bullet
@@ -114,7 +114,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &6900518182096851116
+--- !u!54 &2095625522356724352
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,10 +136,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &648858509853279321
 MonoBehaviour:
@@ -153,4 +153,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181739ccd4bd46b08c86fc43daa8b6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Bullet
-  _speed: 30
+  _speed: 20
