@@ -1,5 +1,7 @@
 using System;
+using _Game.Code.Destroyers;
 using _Game.Code.Generators.Data;
+using _Game.Code.Providers;
 using _Game.Code.Spawners;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
@@ -35,12 +37,15 @@ namespace _Game.Code.Tanks
             SplineContainer spline,
             TankData tankData,
             WaitingArea waitingArea,
-            SpawningLane spawningLane
+            SpawningLane spawningLane,
+            PixelDestroyer pixelDestroyer,
+            TankConfigurationProvider tankConfigurationProvider,
+            Reload reload
         )
         {
-            _tankMover.Initialize(spline);
+            _tankMover.Initialize(spline, tankConfigurationProvider, reload);
             _tankRotator.Initialize(spline);
-            _tankShooter.Initialize(tankData);
+            _tankShooter.Initialize(tankData, pixelDestroyer, reload);
             _tankDyer.Initialize(tankData);
 
             _waitingArea = waitingArea;
@@ -62,6 +67,11 @@ namespace _Game.Code.Tanks
             _tankShooter.StartShoot();
 
             _isMoving = true;
+        }
+
+        private void OnCurrentDistancePassed(float distance)
+        {
+            
         }
 
         public void RemoveFromWaitingAreaOrLane()

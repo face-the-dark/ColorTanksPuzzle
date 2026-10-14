@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Code.Destroyers;
 using _Game.Code.Generators.Data;
 using _Game.Code.Generators.Tanks;
 using _Game.Code.Infrastructure.Assets;
+using _Game.Code.Providers;
 using _Game.Code.Tanks;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
@@ -20,27 +22,43 @@ namespace _Game.Code.Spawners
         private readonly List<Tank> _spawnedTanks = new();
         private readonly TanksDataGenerator _tanksDataGenerator;
         private readonly WaitingArea _waitingArea;
+        private readonly PixelDestroyer _pixelDestroyer;
+        private readonly TankConfigurationProvider _tankConfigurationProvider;
+        private readonly Reload _reload;
         private readonly Tank _tankPrefab;
-        
+
         public event Action<List<Tank>> TanksSpawned;
 
         [Inject]
-        public TankSpawner(SplineContainer spline, SpawningLanesContainer spawningLanesContainer, TanksDataGenerator tanksDataGenerator, WaitingArea waitingArea, LoadService loadService)
+        public TankSpawner
+        (
+            SplineContainer spline,
+            SpawningLanesContainer spawningLanesContainer,
+            TanksDataGenerator tanksDataGenerator,
+            WaitingArea waitingArea,
+            AssetLoadService assetLoadService,
+            PixelDestroyer pixelDestroyer,
+            TankConfigurationProvider tankConfigurationProvider,
+            Reload reload
+        )
         {
             _spline = spline;
             _spawningLanes = spawningLanesContainer.SpawningLanes;
             _tanksDataGenerator = tanksDataGenerator;
             _waitingArea = waitingArea;
-            
-            _tankPrefab = loadService.LoadTank();
-            
+            _pixelDestroyer = pixelDestroyer;
+            _tankConfigurationProvider = tankConfigurationProvider;
+            _reload = reload;
+
+            _tankPrefab = assetLoadService.LoadTank();
+
             _tanksDataGenerator.DataGenerated += OnDataGenerated;
         }
 
-        public void Dispose() => 
+        public void Dispose() =>
             _tanksDataGenerator.DataGenerated -= OnDataGenerated;
 
-        private void OnDataGenerated(List<TankData> tanksData) => 
+        private void OnDataGenerated(List<TankData> tanksData) =>
             SpawnTanks(tanksData);
 
         private void SpawnTanks(List<TankData> tanksData)
@@ -49,7 +67,7 @@ namespace _Game.Code.Spawners
             {
                 IEnumerable<TankData> tankDatas = tanksData
                     .Where(x => x.LaneIndex == i);
-                
+
                 foreach (TankData tankData in tankDatas)
                 {
                     SpawningLane lane = _spawningLanes[i];
@@ -60,7 +78,7 @@ namespace _Game.Code.Spawners
 
             TanksSpawned?.Invoke(_spawnedTanks);
 
-            foreach (SpawningLane spawningLane in _spawningLanes) 
+            foreach (SpawningLane spawningLane in _spawningLanes)
                 spawningLane.UnblockFirstTank();
         }
 
@@ -73,11 +91,11 @@ namespace _Game.Code.Spawners
                 Quaternion.identity,
                 lane.transform
             );
-            
+
             lane.Add(tank);
             _spawnedTanks.Add(tank);
-            
-            tank.Initialize(_spline, tankData, _waitingArea, lane);
+
+            tank.Initialize(_spline, tankData, _waitingArea, lane, _pixelDestroyer, _tankConfigurationProvider, _reload);
         }
     }
 }

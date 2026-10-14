@@ -1,5 +1,5 @@
-﻿using _Game.Code.Generators;
-using _Game.Code.Spawners;
+﻿using _Game.Code.Spawners;
+using VContainer;
 using VContainer.Unity;
 
 namespace _Game.Code.Infrastructure
@@ -9,6 +9,7 @@ namespace _Game.Code.Infrastructure
         private readonly PixelArtSpawner _pixelArtSpawner;
         private readonly WaitingAreaCellSpawner _waitingAreaCellSpawner;
 
+        [Inject]
         public GameEntryPoint(PixelArtSpawner pixelArtSpawner, WaitingAreaCellSpawner waitingAreaCellSpawner)
         {
             _pixelArtSpawner = pixelArtSpawner;

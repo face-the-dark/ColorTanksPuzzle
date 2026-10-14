@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Code.PersistenceProgress;
 using _Game.Code.Pixels;
 using _Game.Code.Spawners;
 using UnityEngine;
@@ -11,14 +12,18 @@ namespace _Game.Code.Destroyers
     public class PixelDestroyer : IDisposable
     {
         private readonly PixelArtSpawner _pixelArtSpawner;
-        
+        private readonly CoinsCounter _coinsCounter;
+
         private List<Pixel> _pixels;
         private Dictionary<Color, List<Pixel>> _pixelsByColor;
+        
+        public event Action AllPixelsDestroyed;
 
         [Inject]
-        public PixelDestroyer(PixelArtSpawner pixelArtSpawner)
+        public PixelDestroyer(PixelArtSpawner pixelArtSpawner, CoinsCounter coinsCounter)
         {
             _pixelArtSpawner = pixelArtSpawner ??  throw new ArgumentNullException(nameof(pixelArtSpawner));
+            _coinsCounter = coinsCounter ?? throw new ArgumentNullException(nameof(coinsCounter));
 
             _pixelArtSpawner.ArtGenerated += OnArtGenerated;
         }
@@ -34,17 +39,18 @@ namespace _Game.Code.Destroyers
             _pixelsByColor[pixel.Color].Remove(pixel);
             
             pixel.Die();
+            
+            _coinsCounter.IncreaseMoney();
+            
+            if (_pixels.Count == 0) 
+                AllPixelsDestroyed?.Invoke();
         }
         
-        public void DestroyAllByColor(Color color)
-        {
+        public void DestroyAllByColor(Color color) => 
             _pixels.FindAll(x => x.Color.Equals(color)).ForEach(Destroy);
-        }
 
-        public bool TryGetPixelsByColor(Color color, out List<Pixel> pixels)
-        {
-            return _pixelsByColor.TryGetValue(color, out pixels);
-        }
+        public bool TryGetPixelsByColor(Color color, out List<Pixel> pixels) => 
+            _pixelsByColor.TryGetValue(color, out pixels);
 
         private void OnArtGenerated(List<Pixel> pixels)
         {
@@ -53,16 +59,6 @@ namespace _Game.Code.Destroyers
             _pixelsByColor = pixels
                 .GroupBy(x => x.Color)
                 .ToDictionary(x => x.Key, x => x.ToList());
-
-            foreach (Pixel pixel in pixels) 
-                pixel.Died += OnDied;
-        }
-        
-        private void OnDied(Pixel pixel)
-        {
-            pixel.Died -= OnDied;
-
-            Destroy(pixel);
         }
     }
 }

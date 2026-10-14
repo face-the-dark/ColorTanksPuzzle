@@ -7,6 +7,7 @@ namespace _Game.Code.Bonuses
         event Action<IBonus> Activated;
         
         Bonus Bonus { get; }
+        bool CanActivate { get; }
         void Activate();
     }
 }

@@ -31,7 +31,7 @@ namespace _Game.Code.Spawners
         public WaitingAreaCellSpawner
         (
             WaitingAreaSpawnBoundaries waitingAreaSpawnBoundaries,
-            LoadService loadService,
+            AssetLoadService assetLoadService,
             DifficultyConfigurationProvider difficultyConfigurationProvider,
             LevelConfigurationProvider levelConfigurationProvider
         )
@@ -42,10 +42,10 @@ namespace _Game.Code.Spawners
             _levelConfigurationProvider = levelConfigurationProvider ??
                                           throw new ArgumentNullException(nameof(levelConfigurationProvider));
 
-            if (loadService == null)
-                throw new ArgumentNullException(nameof(loadService));
+            if (assetLoadService == null)
+                throw new ArgumentNullException(nameof(assetLoadService));
 
-            _waitingAreaCellPrefab = loadService.LoadWaitingAreaCell();
+            _waitingAreaCellPrefab = assetLoadService.LoadWaitingAreaCell();
         }
 
         public event Action<List<WaitingAreaCell>> CellsSpawned;

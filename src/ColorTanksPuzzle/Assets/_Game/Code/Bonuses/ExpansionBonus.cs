@@ -22,6 +22,7 @@ namespace _Game.Code.Bonuses
         public event Action<IBonus> Activated;
         
         public Bonus Bonus => Bonus.Expansion;
+        public bool CanActivate => true;
 
         public void Activate()
         {

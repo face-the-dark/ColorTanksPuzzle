@@ -11,19 +11,19 @@ namespace _Game.Code.Players
     {
         private readonly Camera _camera;
         private readonly InputReader _inputReader;
-        private readonly TankSettingsProvider _tankSettingsProvider;
+        private readonly TankConfigurationProvider _tankConfigurationProvider;
 
         public event Action<Tank> TankSelected;
         public event Action<Pixel> PixelSelected;
 
         [Inject]
-        public Selector(Camera camera, InputReader inputReader, TankSettingsProvider tankSettingsProvider)
+        public Selector(Camera camera, InputReader inputReader, TankConfigurationProvider tankConfigurationProvider)
         {
             _camera = camera ?? throw new ArgumentNullException(nameof(camera));
             _inputReader = inputReader ?? throw new ArgumentNullException(nameof(inputReader));
 
-            _tankSettingsProvider =
-                tankSettingsProvider ?? throw new ArgumentNullException(nameof(tankSettingsProvider));
+            _tankConfigurationProvider =
+                tankConfigurationProvider ?? throw new ArgumentNullException(nameof(tankConfigurationProvider));
 
             _inputReader.Clicked += TrySelectUnmovingTank;
         }
@@ -39,7 +39,7 @@ namespace _Game.Code.Players
             
             RaycastHit hit;
             
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _tankSettingsProvider.TankSettings.TankLayer))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _tankConfigurationProvider.TankConfiguration.TankLayer))
                 if (hit.collider.TryGetComponent(out Tank tank) && tank.IsMoving == false)
                     TankSelected?.Invoke(tank);
 

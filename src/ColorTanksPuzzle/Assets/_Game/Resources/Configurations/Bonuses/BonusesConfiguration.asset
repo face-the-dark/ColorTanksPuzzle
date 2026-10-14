@@ -13,3 +13,16 @@ MonoBehaviour:
   m_Name: BonusesConfiguration
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Configurations.Bonuses.BonusesConfiguration
   _freezeSplineBonusTime: 3
+  _bonusesPurchaseConfigurations:
+  - _bonus: 0
+    _count: 3
+    _cost: 100
+  - _bonus: 1
+    _count: 6
+    _cost: 150
+  - _bonus: 2
+    _count: 3
+    _cost: 100
+  - _bonus: 3
+    _count: 1
+    _cost: 200

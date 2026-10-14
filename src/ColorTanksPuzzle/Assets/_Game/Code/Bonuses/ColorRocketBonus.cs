@@ -28,7 +28,7 @@ namespace _Game.Code.Bonuses
             TankDestroyer tankDestroyer,
             CameraMover cameraMover,
             Selector selector,
-            LoadService loadService
+            AssetLoadService assetLoadService
         )
         {
             _pixelDestroyer = pixelDestroyer ?? throw new ArgumentNullException(nameof(pixelDestroyer));
@@ -36,7 +36,7 @@ namespace _Game.Code.Bonuses
             _cameraMover = cameraMover ?? throw new ArgumentNullException(nameof(cameraMover));
             _selector = selector ?? throw new ArgumentNullException(nameof(selector));
 
-            _colorRocketPrefab = loadService.LoadColorRocketPrefab();
+            _colorRocketPrefab = assetLoadService.LoadColorRocketPrefab();
 
             _selector.PixelSelected += LaunchRocket;
         }
@@ -44,6 +44,7 @@ namespace _Game.Code.Bonuses
         public event Action<IBonus> Activated;
 
         public Bonus Bonus => Bonus.ColorRocket;
+        public bool CanActivate => _isActivated == false; 
 
         public void Dispose() => 
             _selector.PixelSelected -= LaunchRocket;
