@@ -37,6 +37,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
         [SerializeField] private ZoomPoints _zoomPoints;
         [SerializeField] private CoinsView _coinsView;
         [SerializeField] private BuyingWindow _buyingWindow;
+        [SerializeField] private LevelLabel _levelLabel;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -95,6 +96,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             
             builder.RegisterBuildCallback(container => { container.Resolve<LastCircleFinalizer>(); });
             builder.RegisterBuildCallback(container => { container.Resolve<GameOver>(); });
+            builder.RegisterBuildCallback(container => { container.Inject(_levelLabel); });
 
             builder.RegisterEntryPoint<GameEntryPoint>();
         }
