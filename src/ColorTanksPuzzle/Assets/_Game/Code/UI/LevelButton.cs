@@ -1,6 +1,9 @@
-﻿using _Game.Code.Configurations.Levels;
+﻿using System;
+using _Game.Code.Configurations.Levels;
+using _Game.Code.PersistenceProgress;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace _Game.Code.UI
 {
@@ -14,6 +17,14 @@ namespace _Game.Code.UI
 
         private Button _button;
 
+        private PlayerDataService _playerDataService;
+        
+        [Inject]
+        public void Construct(PlayerDataService playerDataService)
+        {
+            _playerDataService = playerDataService ?? throw new ArgumentNullException(nameof(playerDataService));
+        }
+        
         private void Awake()
         {
             _button = GetComponent<Button>();
@@ -21,7 +32,14 @@ namespace _Game.Code.UI
 
         private void OnEnable()
         {
-            _button.onClick.AddListener(ChooseDifficulty);
+            if (_playerDataService.IsLevelPassed(_easyLevelConfiguration.Id))
+            {
+                _button.interactable = false;
+            }
+            else
+            {
+                _button.onClick.AddListener(ChooseDifficulty);
+            }
         }
 
         private void OnDisable()

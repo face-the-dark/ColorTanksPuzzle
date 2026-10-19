@@ -8,8 +8,9 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
 {
     public class MenuLifetimeScope : LifetimeScope
     {
-        [SerializeField] private List<DifficultyButton> _levelButtons;
+        [SerializeField] private List<DifficultyButton> _difficultyButtons;
         [SerializeField] private CoinsView _coinsView;
+        [SerializeField] private List<LevelButton> _levelButtons;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -17,7 +18,10 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             
             builder.RegisterBuildCallback(container =>
             {
-                foreach (DifficultyButton button in _levelButtons)
+                foreach (DifficultyButton button in _difficultyButtons)
+                    container.Inject(button);
+                
+                foreach (LevelButton button in _levelButtons)
                     container.Inject(button);
             });
         }

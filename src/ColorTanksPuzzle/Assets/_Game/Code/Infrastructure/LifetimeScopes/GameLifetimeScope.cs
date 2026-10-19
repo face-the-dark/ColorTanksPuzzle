@@ -1,5 +1,6 @@
 ﻿using _Game.Code.Bonuses;
 using _Game.Code.Cameras;
+using _Game.Code.Coins;
 using _Game.Code.Configurations;
 using _Game.Code.Destroyers;
 using _Game.Code.Generators.Tanks;
@@ -11,6 +12,7 @@ using _Game.Code.SplineModifiers;
 using _Game.Code.Tanks;
 using _Game.Code.UI;
 using _Game.Code.UI.BonusButtons;
+using _Game.Code.UI.GameOverScreens;
 using _Game.Code.Utilities;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
@@ -38,6 +40,9 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
         [SerializeField] private CoinsView _coinsView;
         [SerializeField] private BuyingWindow _buyingWindow;
         [SerializeField] private LevelLabel _levelLabel;
+        [SerializeField] private GameOverWindow _gameOverWindow;
+        [SerializeField] private WinWindow _winWindow;
+        [SerializeField] private LoseWindow _loseWindow;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -96,7 +101,13 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             
             builder.RegisterBuildCallback(container => { container.Resolve<LastCircleFinalizer>(); });
             builder.RegisterBuildCallback(container => { container.Resolve<GameOver>(); });
-            builder.RegisterBuildCallback(container => { container.Inject(_levelLabel); });
+            builder.RegisterBuildCallback(container =>
+            {
+                container.Inject(_levelLabel);
+                container.Inject(_gameOverWindow);
+                container.Inject(_winWindow);
+                container.Inject(_loseWindow);
+            });
 
             builder.RegisterEntryPoint<GameEntryPoint>();
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Code.Bonuses;
+using _Game.Code.Configurations.Difficulty;
 
 namespace _Game.Code.PersistenceProgress
 {
@@ -18,6 +19,8 @@ namespace _Game.Code.PersistenceProgress
                 new(Bonus.Sacrifice, 0),
                 new(Bonus.ColorRocket, 0)
             };
+            
+            PassedLevels = new List<PassedLevel>();
         }
 
         public PlayerData(int money, List<BonusCount> bonusesCounts)
@@ -27,6 +30,14 @@ namespace _Game.Code.PersistenceProgress
         }
 
         public int Money;
-        public List<BonusCount> BonusesCounts;
+        public List<BonusCount> BonusesCounts = new();
+        public List<PassedLevel> PassedLevels = new();
+    }
+
+    [Serializable]
+    public class PassedLevel
+    {
+        public int Id;
+        public List<DifficultyMode> PassedDifficulties = new();
     }
 }

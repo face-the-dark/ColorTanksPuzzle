@@ -30,8 +30,16 @@ namespace _Game.Code.Bonuses
 
         public void Buy(Bonus bonus)
         {
-            IncreaseBonusCount(bonus);
-            DeductMoney(bonus);
+            if (TryDeductMoney(bonus)) 
+                IncreaseBonusCount(bonus);
+        }
+
+        private bool TryDeductMoney(Bonus bonus)
+        {
+            BonusPurchaseConfiguration bonusPurchaseConfiguration =
+                _bonusesConfiguration.GetBonusPurchaseConfiguration(bonus);
+
+            return _playerDataService.TryDeductMoney(bonusPurchaseConfiguration.Cost);
         }
 
         private void IncreaseBonusCount(Bonus bonus)
@@ -39,14 +47,6 @@ namespace _Game.Code.Bonuses
             int count = _bonusesConfiguration.GetBonusPurchaseConfiguration(bonus).Count;
             
             _playerDataService.IncreaseBonusCount(bonus, count);
-        }
-
-        private void DeductMoney(Bonus bonus)
-        {
-            BonusPurchaseConfiguration bonusPurchaseConfiguration =
-                _bonusesConfiguration.GetBonusPurchaseConfiguration(bonus);
-
-            _playerDataService.DeductMoney(bonusPurchaseConfiguration.Cost);
         }
     }
 }

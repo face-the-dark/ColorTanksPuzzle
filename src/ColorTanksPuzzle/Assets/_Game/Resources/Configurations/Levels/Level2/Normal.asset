@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Configurations.LevelSettings
   _id: 2
-  _picture: {fileID: 2800000, guid: 2f31ac1302ff0b84fa2e1d5ba99df276, type: 3}
+  _picture: {fileID: 2800000, guid: 87f193721a9fdae45a5ff987ad4acbf7, type: 3}
   _difficultyMode: 1
   _seed: 12345
