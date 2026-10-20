@@ -9,18 +9,20 @@ namespace _Game.Code.PersistenceProgress
     {
         private readonly ISaveLoadService _saveLoadService;
 
-        private readonly PlayerData _playerData;
+        private PlayerData _currentPlayerData;
+        private PlayerData _previousPlayerData;
 
         [Inject]
         public PlayerDataService(ISaveLoadService saveLoadService)
         {
             _saveLoadService = saveLoadService ?? throw new ArgumentNullException(nameof(saveLoadService));
 
-            _playerData = saveLoadService.LoadPlayerData();
-        }
+            _previousPlayerData = saveLoadService.LoadPlayerData();
+            _currentPlayerData = _previousPlayerData.Clone();
+        } 
 
         public void InitializeMoney() =>
-            MoneyChanged?.Invoke(_playerData.Money);
+            MoneyChanged?.Invoke(_currentPlayerData.Money);
 
         public void InitializeBonusesCounts()
         {
@@ -36,18 +38,18 @@ namespace _Game.Code.PersistenceProgress
             if (amount <= 0)
                 throw new InvalidOperationException();
 
-            _playerData.Money += amount;
+            _currentPlayerData.Money += amount;
 
-            MoneyChanged?.Invoke(_playerData.Money);
+            MoneyChanged?.Invoke(_currentPlayerData.Money);
         }
 
         public bool TryDeductMoney(int amount)
         {
-            if (amount > 0 && amount <= _playerData.Money)
+            if (amount > 0 && amount <= _currentPlayerData.Money)
             {
-                _playerData.Money -= amount;
+                _currentPlayerData.Money -= amount;
 
-                MoneyChanged?.Invoke(_playerData.Money);
+                MoneyChanged?.Invoke(_currentPlayerData.Money);
 
                 return true;
             }
@@ -91,7 +93,7 @@ namespace _Game.Code.PersistenceProgress
 
         public void MarkLevelPassed(int levelId, DifficultyMode difficulty)
         {
-            PassedLevel level = _playerData.PassedLevels.Find(x => x.Id == levelId);
+            PassedLevel level = _currentPlayerData.PassedLevels.Find(x => x.Id == levelId);
 
             if (level == null)
             {
@@ -99,7 +101,7 @@ namespace _Game.Code.PersistenceProgress
                 {
                     Id = levelId
                 };
-                _playerData.PassedLevels.Add(level);
+                _currentPlayerData.PassedLevels.Add(level);
             }
 
             level.PassedDifficulties.Add(difficulty);
@@ -107,15 +109,9 @@ namespace _Game.Code.PersistenceProgress
             SavePlayerData();
         }
 
-        private BonusCount GetBonusCount(Bonus bonus) =>
-            _playerData.BonusesCounts.Find(x => x.Bonus == bonus);
-
-        private void SavePlayerData() =>
-            _saveLoadService.SavePlayerData(_playerData);
-
         public bool IsLevelPassed(int levelId)
         {
-            return _playerData.PassedLevels.Find
+            return _currentPlayerData.PassedLevels.Find
             (x =>
                 x.Id == levelId
                 && x.PassedDifficulties.Contains(DifficultyMode.Easy)
@@ -123,5 +119,21 @@ namespace _Game.Code.PersistenceProgress
                 && x.PassedDifficulties.Contains(DifficultyMode.Hard)
             ) != null;
         }
+
+        public void Reset()
+        {
+            _currentPlayerData = _previousPlayerData.Clone();
+            
+            MoneyChanged?.Invoke(_currentPlayerData.Money);
+            
+            foreach (Bonus bonus in Enum.GetValues(typeof(Bonus)))
+                BonusCountChanged?.Invoke(bonus, GetBonusCount(bonus).Value);
+        }
+
+        private BonusCount GetBonusCount(Bonus bonus) =>
+            _currentPlayerData.BonusesCounts.Find(x => x.Bonus == bonus);
+
+        private void SavePlayerData() =>
+            _saveLoadService.SavePlayerData(_currentPlayerData);
     }
 }

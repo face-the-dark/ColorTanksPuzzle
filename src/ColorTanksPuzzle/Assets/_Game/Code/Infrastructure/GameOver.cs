@@ -30,7 +30,8 @@ namespace _Game.Code.Infrastructure
             _pixelDestroyer = pixelDestroyer ?? throw new ArgumentNullException(nameof(pixelDestroyer));
             _waitingArea = waitingArea ?? throw new ArgumentNullException(nameof(waitingArea));
             _playerDataService = playerDataService ?? throw new ArgumentNullException(nameof(playerDataService));
-            _levelConfigurationProvider = levelConfigurationProvider;
+            _levelConfigurationProvider = levelConfigurationProvider 
+                                          ?? throw new ArgumentNullException(nameof(levelConfigurationProvider));
 
             _pixelDestroyer.AllPixelsDestroyed += Win;
             _waitingArea.Overflowed += Lose;
@@ -54,6 +55,7 @@ namespace _Game.Code.Infrastructure
 
         private void Lose()
         {
+            _playerDataService.Reset();
             GameLost?.Invoke();
         }
     }

@@ -11,27 +11,38 @@ namespace _Game.Code.PersistenceProgress
         public PlayerData()
         {
             Money = 0;
-            
-            BonusesCounts = new List<BonusCount> 
+
+            BonusesCounts = new List<BonusCount>
             {
                 new(Bonus.Expansion, 0),
                 new(Bonus.FreezeSpline, 0),
                 new(Bonus.Sacrifice, 0),
                 new(Bonus.ColorRocket, 0)
             };
-            
+
             PassedLevels = new List<PassedLevel>();
         }
 
-        public PlayerData(int money, List<BonusCount> bonusesCounts)
+        public PlayerData(int money, List<BonusCount> bonusesCounts,  List<PassedLevel> passedLevels)
         {
             Money = money;
             BonusesCounts = bonusesCounts;
+            PassedLevels = passedLevels;
         }
 
         public int Money;
-        public List<BonusCount> BonusesCounts = new();
-        public List<PassedLevel> PassedLevels = new();
+        public List<BonusCount> BonusesCounts;
+        public List<PassedLevel> PassedLevels;
+
+        public PlayerData Clone()
+        {
+            return new PlayerData
+            {
+                Money = Money,
+                BonusesCounts = BonusesCounts,
+                PassedLevels = PassedLevels
+            };
+        }
     }
 
     [Serializable]

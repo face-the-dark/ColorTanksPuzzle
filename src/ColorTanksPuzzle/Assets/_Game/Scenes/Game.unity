@@ -410,7 +410,7 @@ RectTransform:
   m_Children:
   - {fileID: 487042205}
   - {fileID: 1495164991}
-  m_Father: {fileID: 1420690722}
+  m_Father: {fileID: 490654056}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -838,7 +838,7 @@ RectTransform:
   m_Children:
   - {fileID: 672949158}
   - {fileID: 1823301629}
-  m_Father: {fileID: 1420690722}
+  m_Father: {fileID: 490654056}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2515,7 +2515,8 @@ RectTransform:
   - {fileID: 293352687}
   - {fileID: 1112066070}
   - {fileID: 1575453534}
-  - {fileID: 1420690722}
+  - {fileID: 197351405}
+  - {fileID: 42006507}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5094,58 +5095,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417367790}
   m_CullTransparentMesh: 1
---- !u!1 &1420690721
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1420690722}
-  - component: {fileID: 1420690723}
-  m_Layer: 5
-  m_Name: GameOverWindow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1420690722
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1420690721}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 197351405}
-  - {fileID: 42006507}
-  m_Father: {fileID: 490654056}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1420690723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1420690721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dbdb5644f534b79ac922267c37acefd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.GameOverWindow
-  _winWindow: {fileID: 197351408}
-  _loseWindow: {fileID: 42006510}
 --- !u!1 &1427079865
 GameObject:
   m_ObjectHideFlags: 0
@@ -7405,7 +7354,7 @@ MonoBehaviour:
   _coinsView: {fileID: 196513865}
   _buyingWindow: {fileID: 1575453535}
   _levelLabel: {fileID: 1112066073}
-  _gameOverWindow: {fileID: 1420690723}
+  _gameOverWindow: {fileID: 0}
   _winWindow: {fileID: 197351408}
   _loseWindow: {fileID: 42006510}
 --- !u!4 &1857952941

@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Code.Infrastructure;
 using _Game.Code.Infrastructure.SceneManagment;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +16,15 @@ namespace _Game.Code.UI.GameOverScreens
         private Canvas _canvas;
 
         private SceneLoader _sceneLoader;
+        private GameOver _gameOver;
         
         [Inject]
-        public void Construct(SceneLoader sceneLoader)
+        public void Construct(SceneLoader sceneLoader, GameOver gameOver)
         {
             _sceneLoader = sceneLoader ?? throw new ArgumentNullException(nameof(sceneLoader));
+            _gameOver = gameOver ?? throw new ArgumentNullException(nameof(gameOver));
+            
+            _gameOver.GameLost += Open;
         }
         
         private void Awake()
@@ -29,8 +34,10 @@ namespace _Game.Code.UI.GameOverScreens
             _canvas.enabled = false;
         }
 
-        public void Open()
+        private void Open()
         {
+            _gameOver.GameLost -= Open;
+            
             _canvas.enabled = true;
             
             _tryAgainButton.onClick.AddListener(ReloadGame);

@@ -40,7 +40,6 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
         [SerializeField] private CoinsView _coinsView;
         [SerializeField] private BuyingWindow _buyingWindow;
         [SerializeField] private LevelLabel _levelLabel;
-        [SerializeField] private GameOverWindow _gameOverWindow;
         [SerializeField] private WinWindow _winWindow;
         [SerializeField] private LoseWindow _loseWindow;
 
@@ -104,7 +103,6 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.RegisterBuildCallback(container =>
             {
                 container.Inject(_levelLabel);
-                container.Inject(_gameOverWindow);
                 container.Inject(_winWindow);
                 container.Inject(_loseWindow);
             });
