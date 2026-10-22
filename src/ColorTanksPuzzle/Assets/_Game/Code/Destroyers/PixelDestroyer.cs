@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Code.Coins;
 using _Game.Code.PersistenceProgress;
 using _Game.Code.Pixels;
 using _Game.Code.Spawners;

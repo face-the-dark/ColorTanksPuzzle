@@ -1,7 +1,8 @@
 ﻿using System;
+using _Game.Code.PersistenceProgress;
 using VContainer;
 
-namespace _Game.Code.PersistenceProgress
+namespace _Game.Code.Coins
 {
     public class CoinsCounter
     {

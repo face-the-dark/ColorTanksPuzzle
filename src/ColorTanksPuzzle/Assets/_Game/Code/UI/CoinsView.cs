@@ -1,5 +1,4 @@
-﻿using System;
-using _Game.Code.PersistenceProgress;
+﻿using _Game.Code.PersistenceProgress;
 using TMPro;
 using UnityEngine;
 using VContainer;

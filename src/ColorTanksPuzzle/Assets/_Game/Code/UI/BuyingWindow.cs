@@ -5,13 +5,9 @@ using VContainer;
 
 namespace _Game.Code.UI
 {
-    [RequireComponent(typeof(Canvas))]
-    public class BuyingWindow : MonoBehaviour
+    public class BuyingWindow : UserInterfaceWindow
     {
         [SerializeField] private Button _buyButton;
-        [SerializeField] private Button _closeButton;
-        
-        private Canvas _canvas;
 
         private BonusBuyer _bonusBuyer;
         
@@ -21,32 +17,20 @@ namespace _Game.Code.UI
         public void Construct(BonusBuyer bonusBuyer) => 
             _bonusBuyer = bonusBuyer;
 
-        private void Awake()
-        {
-            _canvas = GetComponent<Canvas>();
-            
-            Close();
-        }
-
-        private void OnEnable() => 
-            _closeButton.onClick.AddListener(Close);
-
-        private void OnDisable() => 
-            _closeButton.onClick.RemoveListener(Close);
-
         public void Open(Bonus bonus)
         {
-            _bonus = bonus;
+            Open();
             
-            _canvas.enabled = true;
+            _bonus = bonus;
+        }
 
+        protected override void OnOpen()
+        {
             _buyButton.onClick.AddListener(Buy);
         }
 
-        private void Close()
+        protected override void OnClose()
         {
-            _canvas.enabled = false;
-            
             _buyButton.onClick.RemoveListener(Buy);
         }
 
