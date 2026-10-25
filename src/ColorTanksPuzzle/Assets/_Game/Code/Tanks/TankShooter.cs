@@ -67,7 +67,7 @@ namespace _Game.Code.Tanks
         {
             while (_isShooting)
             {
-                Ray ray = new Ray(_shootPoint.position, transform.forward);
+                Ray ray = new Ray(_shootPoint.position, _shootPoint.forward);
 
                 if (Physics.Raycast(ray, out RaycastHit hit, _shootMaxDistance, _pixelLayer))
                 {

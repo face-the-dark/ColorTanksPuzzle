@@ -74,7 +74,6 @@ namespace _Game.Code.Tanks
                 CurveSample curveSample = _spline.GetSampleAtDistance(_currentSplineRate);
 
                 transform.position = curveSample.location;
-                transform.rotation = curveSample.Rotation;
 
                 _reload.UpdateDistance(curveSample.distanceInCurve);
 
