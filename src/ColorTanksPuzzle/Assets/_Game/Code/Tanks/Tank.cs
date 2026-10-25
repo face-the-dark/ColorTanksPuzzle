@@ -4,8 +4,8 @@ using _Game.Code.Generators.Data;
 using _Game.Code.Providers;
 using _Game.Code.Spawners;
 using _Game.Code.WaitingAreaComponents;
+using SplineMesh;
 using UnityEngine;
-using UnityEngine.Splines;
 
 namespace _Game.Code.Tanks
 {
@@ -34,7 +34,7 @@ namespace _Game.Code.Tanks
 
         public void Initialize
         (
-            SplineContainer spline,
+            Spline spline,
             TankData tankData,
             WaitingArea waitingArea,
             SpawningLane spawningLane,

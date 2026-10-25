@@ -8,8 +8,8 @@ using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Providers;
 using _Game.Code.Tanks;
 using _Game.Code.WaitingAreaComponents;
+using SplineMesh;
 using UnityEngine;
-using UnityEngine.Splines;
 using VContainer;
 using Object = UnityEngine.Object;
 
@@ -17,7 +17,7 @@ namespace _Game.Code.Spawners
 {
     public class TankSpawner : IDisposable
     {
-        private readonly SplineContainer _spline;
+        private readonly Spline _spline;
         private readonly IReadOnlyList<SpawningLane> _spawningLanes;
         private readonly List<Tank> _spawnedTanks = new();
         private readonly TanksDataGenerator _tanksDataGenerator;
@@ -32,7 +32,7 @@ namespace _Game.Code.Spawners
         [Inject]
         public TankSpawner
         (
-            SplineContainer spline,
+            Spline spline,
             SpawningLanesContainer spawningLanesContainer,
             TanksDataGenerator tanksDataGenerator,
             WaitingArea waitingArea,

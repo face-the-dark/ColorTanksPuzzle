@@ -9,9 +9,9 @@ namespace _Game.Code.UI
 {
     public class LevelLabel : MonoBehaviour
     {
-        [SerializeField] private Color _colorForEasyDifficulty;
-        [SerializeField] private Color _colorForNormalDifficulty;
-        [SerializeField] private Color _colorForHardDifficulty;
+        [SerializeField] private Sprite _spriteForEasyDifficulty;
+        [SerializeField] private Sprite _spriteForNormalDifficulty;
+        [SerializeField] private Sprite _spriteForHardDifficulty;
 
         [SerializeField] private Image _background;
         [SerializeField] private TextMeshProUGUI _text;
@@ -28,27 +28,28 @@ namespace _Game.Code.UI
         {
             int levelId = _levelConfigurationProvider.LevelConfiguration.Id;
 
-            _background.color = ChooseColorByDifficulty();
+            _background.sprite = ChooseColorByDifficulty();
             _text.text = $"LEVEL {levelId}";
         }
 
-        private Color ChooseColorByDifficulty()
+        private Sprite ChooseColorByDifficulty()
         {
             DifficultyMode difficultyMode = _levelConfigurationProvider.LevelConfiguration.DifficultyMode;
             
             switch (difficultyMode)
             {
                 case DifficultyMode.Easy:
-                    return _colorForEasyDifficulty;
+                    return _spriteForEasyDifficulty;
                 
                 case DifficultyMode.Normal:
-                    return _colorForNormalDifficulty;
+                    return _spriteForNormalDifficulty;
                 
                 case DifficultyMode.Hard:
-                    return _colorForHardDifficulty;
+                    return _spriteForHardDifficulty;
+                
+                default:
+                    return null;
             }
-            
-            return Color.white;
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using _Game.Code.Extensions;
+using SplineMesh;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Splines;
 
 namespace _Game.Code.Tanks
 {
@@ -11,13 +11,13 @@ namespace _Game.Code.Tanks
         [SerializeField] private Transform _hull;
         [SerializeField] private Transform _turret;
 
-        private SplineContainer _spline;
+        private Spline _spline;
 
         private float _currentLengthPercentage;
         private bool _isRotating;
         private Coroutine _rotateCoroutine;
 
-        public void Initialize(SplineContainer spline) => 
+        public void Initialize(Spline spline) => 
             _spline = spline;
 
         public void StartRotate()
@@ -42,7 +42,8 @@ namespace _Game.Code.Tanks
         {
             while (_isRotating)
             {
-                float3 localTangent = _spline.EvaluateTangent(_currentLengthPercentage);
+                _currentLengthPercentage = Mathf.Min(_currentLengthPercentage, _spline.Length);
+                float3 localTangent = _spline.GetSampleAtDistance(_currentLengthPercentage).tangent;
                 Vector3 forwardWorldDirection = _spline.transform.TransformDirection(localTangent).normalized;
 
                 RotateHull(forwardWorldDirection);
@@ -68,7 +69,7 @@ namespace _Game.Code.Tanks
         {
             if (forwardWorldDirection != Vector3.zero)
             {
-                float3 localUpVector = _spline.EvaluateUpVector(_currentLengthPercentage);
+                float3 localUpVector = _spline.GetSampleAtDistance(_currentLengthPercentage).up;
                 Vector3 worldUpDirection = _spline.transform.TransformDirection(localUpVector).normalized;
                 Vector3 worldLeftDirection = Vector3.Cross(forwardWorldDirection, worldUpDirection);
 
