@@ -4,7 +4,6 @@ using _Game.Code.Coins;
 using _Game.Code.Configurations;
 using _Game.Code.Destroyers;
 using _Game.Code.Generators.Tanks;
-using _Game.Code.PersistenceProgress;
 using _Game.Code.Players;
 using _Game.Code.Providers;
 using _Game.Code.Spawners;
@@ -15,8 +14,8 @@ using _Game.Code.UI.BonusButtons;
 using _Game.Code.UI.GameOverScreens;
 using _Game.Code.Utilities;
 using _Game.Code.WaitingAreaComponents;
+using SplineMesh;
 using UnityEngine;
-using UnityEngine.Splines;
 using VContainer;
 using VContainer.Unity;
 
@@ -34,7 +33,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
         [SerializeField] private Camera _camera;
         [SerializeField] private RectTransform _coinUiTarget;
         [SerializeField] private SplineTanksCountView _splineTanksCountView;
-        [SerializeField] private SplineContainer _spline;
+        [SerializeField] private Spline _spline;
         [SerializeField] private SpawningLanesContainer _spawningLanesContainer;
         [SerializeField] private ZoomPoints _zoomPoints;
         [SerializeField] private CoinsView _coinsView;

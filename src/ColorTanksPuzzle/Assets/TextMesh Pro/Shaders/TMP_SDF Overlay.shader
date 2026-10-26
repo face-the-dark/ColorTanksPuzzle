@@ -1,4 +1,4 @@
-Shader "TextMesHpro/Distance Field Overlay" {
+Shader "TextMeshPro/Distance Field Overlay" {
 
 Properties {
 	_FaceTex			("Face Texture", 2D) = "white" {}
@@ -321,6 +321,6 @@ SubShader {
 	}
 }
 
-Fallback "TextMesHpro/Mobile/Distance Field"
+Fallback "TextMeshPro/Mobile/Distance Field"
 CustomEditor "TMPro.EditorUtilities.TMP_SDFShaderGUI"
 }

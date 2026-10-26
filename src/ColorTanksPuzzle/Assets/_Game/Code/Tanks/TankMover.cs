@@ -2,30 +2,28 @@
 using System.Collections;
 using _Game.Code.Extensions;
 using _Game.Code.Providers;
+using SplineMesh;
 using UnityEngine;
-using UnityEngine.Splines;
 
 namespace _Game.Code.Tanks
 {
     public class TankMover : MonoBehaviour
     {
-        private const float MaxSplineLengthPercentage = 1f;
-
         private float _speed;
         private float _speedModifier;
 
-        private SplineContainer _spline;
+        private Spline _spline;
         private TankConfigurationProvider _tankConfigurationProvider;
         private Reload _reload;
 
         private float _currentSpeed;
-        private float _currentLengthPercentage;
+        private float _currentSplineRate;
         private Coroutine _moveCoroutine;
 
         public event Action<float> CurrentLengthPercentageIncreased;
         public event Action CirclePassed;
 
-        public void Initialize(SplineContainer spline, TankConfigurationProvider tankConfigurationProvider, Reload reload)
+        public void Initialize(Spline spline, TankConfigurationProvider tankConfigurationProvider, Reload reload)
         {
             _spline = spline;
             _tankConfigurationProvider = tankConfigurationProvider;
@@ -37,7 +35,7 @@ namespace _Game.Code.Tanks
 
         public void StartMove()
         {
-            _currentLengthPercentage = 0f;
+            _currentSplineRate = 0f;
 
             this.StopCurrentCoroutine(ref _moveCoroutine);
             _moveCoroutine = StartCoroutine(Move());
@@ -47,7 +45,7 @@ namespace _Game.Code.Tanks
             this.StopCurrentCoroutine(ref _moveCoroutine);
 
         public void IncreaseSpeed() =>
-            _speed /= _speedModifier;
+            _speed *= _speedModifier;
 
         public void ZeroingSpeed()
         {
@@ -66,29 +64,18 @@ namespace _Game.Code.Tanks
 
         private IEnumerator Move()
         {
-            while (_currentLengthPercentage < MaxSplineLengthPercentage)
+            while (_currentSplineRate < _spline.Length)
             {
-                float speed;
+                _currentSplineRate += _speed * Time.deltaTime;
+                _currentSplineRate = Mathf.Min(_currentSplineRate, _spline.Length);
 
-                if (_speed == 0f)
-                    speed = 0f;
-                else
-                    speed = 1f / _speed;
+                CurrentLengthPercentageIncreased?.Invoke(_currentSplineRate);
 
-                _currentLengthPercentage += speed * Time.deltaTime;
+                CurveSample curveSample = _spline.GetSampleAtDistance(_currentSplineRate);
 
-                CurrentLengthPercentageIncreased?.Invoke(_currentLengthPercentage);
+                transform.position = curveSample.location;
 
-                transform.position = _spline.EvaluatePosition(_currentLengthPercentage);
-                
-                float distance = _spline.Spline.ConvertIndexUnit
-                (
-                    _currentLengthPercentage,
-                    PathIndexUnit.Normalized,
-                    PathIndexUnit.Distance
-                );
-                
-                _reload.UpdateDistance(distance);
+                _reload.UpdateDistance(curveSample.distanceInCurve);
 
                 yield return null;
             }

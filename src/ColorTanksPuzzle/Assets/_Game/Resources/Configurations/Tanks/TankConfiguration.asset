@@ -15,5 +15,5 @@ MonoBehaviour:
   _tankLayer:
     serializedVersion: 2
     m_Bits: 256
-  _tankSpeed: 5
+  _tankSpeed: 20
   _speedModifier: 2
