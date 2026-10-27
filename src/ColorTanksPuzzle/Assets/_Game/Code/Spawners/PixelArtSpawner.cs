@@ -23,9 +23,11 @@ namespace _Game.Code.Spawners
         private readonly Palette _palette;
         private readonly Transform _container;
         private readonly CoinSpawner _coinSpawner;
-        private readonly LevelConfiguration _levelConfiguration;
+        private readonly LevelConfigurationProvider _levelConfigurationProvider;
         private readonly List<PixelData> _pixelData = new();
         private readonly List<Pixel> _pixels = new();
+
+        private LevelConfiguration _levelConfiguration;
 
         public event Action<List<PixelData>> PixelsDataGenerated;
         public event Action<List<Pixel>> ArtGenerated;
@@ -39,8 +41,8 @@ namespace _Game.Code.Spawners
             CoinSpawner coinSpawner
         )
         {
-            _levelConfiguration = levelConfigurationProvider.LevelConfiguration
-                                  ?? throw new ArgumentNullException(nameof(levelConfigurationProvider));
+            _levelConfigurationProvider = levelConfigurationProvider
+                                          ?? throw new ArgumentNullException(nameof(levelConfigurationProvider));
 
             _container = pixelArtContainer ?? throw new ArgumentNullException(nameof(pixelArtContainer));
             _coinSpawner = coinSpawner ?? throw new ArgumentNullException(nameof(coinSpawner));
@@ -51,6 +53,8 @@ namespace _Game.Code.Spawners
 
         public void Generate()
         {
+            _levelConfiguration = _levelConfigurationProvider.LevelConfiguration;
+
             Texture2D resizedTexture = ResizeTexture();
 
             float xOffset = (SquareLength - Offset) / Divisor - _container.position.x;

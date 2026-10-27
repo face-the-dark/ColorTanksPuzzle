@@ -8,11 +8,11 @@ namespace _Game.Code.Configurations.Bonuses
     public class BonusesConfiguration : ScriptableObject
     {
         [SerializeField] private float _freezeSplineBonusTime;
-        [SerializeField] private List<BonusPurchaseConfiguration> _bonusesPurchaseConfigurations;
+        [SerializeField] private List<BonusConfiguration> _bonusesConfigurations;
         
         public float FreezeSplineBonusTime => _freezeSplineBonusTime;
 
-        public BonusPurchaseConfiguration GetBonusPurchaseConfiguration(Bonus bonus) => 
-            _bonusesPurchaseConfigurations.Find(x => x.Bonus == bonus);
+        public BonusConfiguration GetBonusConfiguration(Bonus bonus) => 
+            _bonusesConfigurations.Find(x => x.Bonus == bonus);
     }
 }

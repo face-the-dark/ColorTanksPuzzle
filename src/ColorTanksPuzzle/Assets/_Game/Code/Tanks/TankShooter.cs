@@ -103,7 +103,7 @@ namespace _Game.Code.Tanks
             Vector3 bulletSpawnPosition = GetBulletSpawnPosition(pixel);
             Bullet bullet = Instantiate(_bulletPrefab, bulletSpawnPosition, Quaternion.identity);
             bullet.Construct(_pixelDestroyer);
-            bullet.StartFly(pixel.transform.position);
+            bullet.StartFly(pixel.transform.position, _color);
             
             return bullet;
         }

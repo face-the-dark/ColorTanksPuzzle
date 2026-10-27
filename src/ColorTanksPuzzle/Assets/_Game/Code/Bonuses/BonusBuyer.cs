@@ -36,15 +36,15 @@ namespace _Game.Code.Bonuses
 
         private bool TryDeductMoney(Bonus bonus)
         {
-            BonusPurchaseConfiguration bonusPurchaseConfiguration =
-                _bonusesConfiguration.GetBonusPurchaseConfiguration(bonus);
+            BonusConfiguration bonusConfiguration =
+                _bonusesConfiguration.GetBonusConfiguration(bonus);
 
-            return _playerDataService.TryDeductMoney(bonusPurchaseConfiguration.Cost);
+            return _playerDataService.TryDeductMoney(bonusConfiguration.Cost);
         }
 
         private void IncreaseBonusCount(Bonus bonus)
         {
-            int count = _bonusesConfiguration.GetBonusPurchaseConfiguration(bonus).Count;
+            int count = _bonusesConfiguration.GetBonusConfiguration(bonus).Count;
             
             _playerDataService.IncreaseBonusCount(bonus, count);
         }

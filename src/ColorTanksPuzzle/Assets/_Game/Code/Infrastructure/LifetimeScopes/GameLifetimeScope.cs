@@ -41,6 +41,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
         [SerializeField] private LevelLabel _levelLabel;
         [SerializeField] private WinWindow _winWindow;
         [SerializeField] private LoseWindow _loseWindow;
+        [SerializeField] private GameRunner _gameRunner;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -54,6 +55,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.RegisterComponent(_zoomPoints);
             builder.RegisterComponent(_coinsView);
             builder.RegisterComponent(_buyingWindow);
+            builder.RegisterComponent(_gameRunner);
 
             builder.Register<DeterministicRandom>(Lifetime.Singleton);
             builder.Register<PixelArtSpawner>(Lifetime.Singleton)
