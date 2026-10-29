@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Game.Code.Spawners;
 using _Game.Code.Tanks;
 using UnityEngine;
@@ -37,7 +38,7 @@ namespace _Game.Code.Destroyers
         
         public void DestroyAllByColor(Color color)
         {
-            _tanks.FindAll(x => x.Color == color).ForEach(Destroy);
+            _tanks.FindAll(x => x.Color == color && x.IsMoving == false).ForEach(Destroy);
         }
         
         private void OnTankSpawned(List<Tank> tanks)

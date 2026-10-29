@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6585038201744103026}
   - component: {fileID: 1927760093929916749}
   - component: {fileID: 188995020134474561}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TankTracksRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610771828252194368}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 9001008512749269667}
   - component: {fileID: 6829584897543064650}
   - component: {fileID: 1831786737743340922}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 1437812725191980447}
   - component: {fileID: 6102474683279645899}
   - component: {fileID: 997639126468149429}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TankTurret.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292776484045473698}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 3344775292402970437}
   - component: {fileID: 857185947541222371}
   - component: {fileID: 1406971020910882468}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TankChassis.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3660230451540258503}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 3076826626387018627}
   - component: {fileID: 5975150674518527012}
   - component: {fileID: 5238198640352398439}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -673,8 +673,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 20
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0a900d37bcc00ab4e9cd09f04d81d00d, type: 2}
-  m_sharedMaterial: {fileID: 2734103363946228360, guid: 0a900d37bcc00ab4e9cd09f04d81d00d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b2bc94fec222eb544937861e649c84a6, type: 2}
+  m_sharedMaterial: {fileID: 2734103363946228360, guid: b2bc94fec222eb544937861e649c84a6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -755,7 +755,7 @@ GameObject:
   - component: {fileID: 5931263565817784116}
   - component: {fileID: 6735054963810034124}
   - component: {fileID: 6602049947216606975}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TankTracksLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +793,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8239853687920278125}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0

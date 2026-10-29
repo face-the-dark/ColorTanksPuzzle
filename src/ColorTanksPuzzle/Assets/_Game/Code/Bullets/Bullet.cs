@@ -6,10 +6,13 @@ using UnityEngine;
 
 namespace _Game.Code.Bullets
 {
+    [RequireComponent(typeof(BulletDyer))]
     public class Bullet : MonoBehaviour
     {
         [SerializeField] private float _speed = 20f;
-
+        
+        private BulletDyer _bulletDyer;
+        
         private PixelDestroyer _pixelDestroyer;
 
         private Coroutine _flyCoroutine;
@@ -17,6 +20,11 @@ namespace _Game.Code.Bullets
 
         public void Construct(PixelDestroyer pixelDestroyer) =>
             _pixelDestroyer = pixelDestroyer;
+
+        private void Awake()
+        {
+            _bulletDyer = GetComponent<BulletDyer>();
+        }
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -33,14 +41,18 @@ namespace _Game.Code.Bullets
             }
         }
 
-        public void StartFly(Vector3 targetPosition)
+        public void StartFly(Vector3 targetPosition, Color color)
         {
             this.StopCurrentCoroutine(ref _flyCoroutine);
             _flyCoroutine = StartCoroutine(Fly(targetPosition));
+            
+            _bulletDyer.ApplyColor(color);
         }
 
         private IEnumerator Fly(Vector3 targetPosition)
         {
+            transform.rotation = Quaternion.LookRotation(targetPosition - transform.position);
+            
             _isFlying = true;
             
             while (_isFlying)

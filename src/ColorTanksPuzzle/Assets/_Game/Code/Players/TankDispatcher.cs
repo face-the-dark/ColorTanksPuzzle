@@ -39,8 +39,6 @@ namespace _Game.Code.Players
             _selector = selector ?? throw new ArgumentNullException(nameof(selector));
 
             _selector.TankSelected += Dispatch;
-
-            Initialize();
         }
 
         public void Dispose()
@@ -69,7 +67,7 @@ namespace _Game.Code.Players
         public void Unblock() => 
             _isBlocked = false;
 
-        private void Initialize()
+        public void Initialize()
         {
             _maxTanksCountOnSpline = _levelConfigurationProvider.GetDifficultyConfiguration().StartMaxTanksCount;
 
