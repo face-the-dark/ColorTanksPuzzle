@@ -8,7 +8,6 @@ using _Game.Code.Players;
 using _Game.Code.Providers;
 using _Game.Code.Spawners;
 using _Game.Code.SplineModifiers;
-using _Game.Code.Tanks;
 using _Game.Code.UI;
 using _Game.Code.UI.BonusButtons;
 using _Game.Code.UI.GameOverScreens;
@@ -75,7 +74,6 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.Register<CoinsCounter>(Lifetime.Singleton);
             builder.Register<BonusBuyer>(Lifetime.Singleton);
             builder.Register<GameOver>(Lifetime.Singleton);
-            builder.Register<Reload>(Lifetime.Singleton);
             builder.Register<CameraMover>(Lifetime.Singleton)
                 .WithParameter(_camera)
                 .WithParameter(_zoomPoints);

@@ -39,13 +39,12 @@ namespace _Game.Code.Tanks
             WaitingArea waitingArea,
             SpawningLane spawningLane,
             PixelDestroyer pixelDestroyer,
-            TankConfigurationProvider tankConfigurationProvider,
-            Reload reload
+            TankConfigurationProvider tankConfigurationProvider
         )
         {
-            _tankMover.Initialize(spline, tankConfigurationProvider, reload);
+            _tankMover.Initialize(spline, tankConfigurationProvider);
             _tankRotator.Initialize(spline);
-            _tankShooter.Initialize(tankData, pixelDestroyer, reload);
+            _tankShooter.Initialize(tankData, pixelDestroyer);
             _tankDyer.Initialize(tankData);
 
             _waitingArea = waitingArea;

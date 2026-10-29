@@ -14,7 +14,6 @@ namespace _Game.Code.Tanks
 
         private Spline _spline;
         private TankConfigurationProvider _tankConfigurationProvider;
-        private Reload _reload;
 
         private float _currentSpeed;
         private float _currentSplineRate;
@@ -23,11 +22,10 @@ namespace _Game.Code.Tanks
         public event Action<float> CurrentLengthPercentageIncreased;
         public event Action CirclePassed;
 
-        public void Initialize(Spline spline, TankConfigurationProvider tankConfigurationProvider, Reload reload)
+        public void Initialize(Spline spline, TankConfigurationProvider tankConfigurationProvider)
         {
             _spline = spline;
             _tankConfigurationProvider = tankConfigurationProvider;
-            _reload = reload;
 
             _speed = _tankConfigurationProvider.TankConfiguration.TankSpeed;
             _speedModifier = _tankConfigurationProvider.TankConfiguration.SpeedModifier;
@@ -74,8 +72,6 @@ namespace _Game.Code.Tanks
                 CurveSample curveSample = _spline.GetSampleAtDistance(_currentSplineRate);
 
                 transform.position = curveSample.location;
-
-                _reload.UpdateDistance(curveSample.distanceInCurve);
 
                 yield return null;
             }

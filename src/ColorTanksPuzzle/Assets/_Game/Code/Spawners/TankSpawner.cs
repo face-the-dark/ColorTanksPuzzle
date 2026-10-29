@@ -24,7 +24,6 @@ namespace _Game.Code.Spawners
         private readonly WaitingArea _waitingArea;
         private readonly PixelDestroyer _pixelDestroyer;
         private readonly TankConfigurationProvider _tankConfigurationProvider;
-        private readonly Reload _reload;
         private readonly Tank _tankPrefab;
 
         public event Action<List<Tank>> TanksSpawned;
@@ -38,9 +37,7 @@ namespace _Game.Code.Spawners
             WaitingArea waitingArea,
             AssetLoadService assetLoadService,
             PixelDestroyer pixelDestroyer,
-            TankConfigurationProvider tankConfigurationProvider,
-            Reload reload
-        )
+            TankConfigurationProvider tankConfigurationProvider)
         {
             _spline = spline;
             _spawningLanes = spawningLanesContainer.SpawningLanes;
@@ -48,7 +45,6 @@ namespace _Game.Code.Spawners
             _waitingArea = waitingArea;
             _pixelDestroyer = pixelDestroyer;
             _tankConfigurationProvider = tankConfigurationProvider;
-            _reload = reload;
 
             _tankPrefab = assetLoadService.LoadTank();
 
@@ -95,7 +91,7 @@ namespace _Game.Code.Spawners
             lane.Add(tank);
             _spawnedTanks.Add(tank);
 
-            tank.Initialize(_spline, tankData, _waitingArea, lane, _pixelDestroyer, _tankConfigurationProvider, _reload);
+            tank.Initialize(_spline, tankData, _waitingArea, lane, _pixelDestroyer, _tankConfigurationProvider);
         }
     }
 }

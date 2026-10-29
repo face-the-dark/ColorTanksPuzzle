@@ -5,7 +5,6 @@ using _Game.Code.Destroyers;
 using _Game.Code.Extensions;
 using _Game.Code.Generators.Data;
 using _Game.Code.Pixels;
-using _Game.Code.Providers;
 using UnityEngine;
 
 namespace _Game.Code.Tanks
@@ -13,12 +12,12 @@ namespace _Game.Code.Tanks
     public class TankShooter : MonoBehaviour
     {
         [SerializeField] private Transform _shootPoint;
-        [SerializeField] private float _shootMaxDistance = 20f;
+        [SerializeField] private float _shootMaxDistance = 30f;
         [SerializeField] private LayerMask _pixelLayer;
         [SerializeField] private Bullet _bulletPrefab;
+        [SerializeField] private float _fireRate = 1f;
 
         private PixelDestroyer _pixelDestroyer;
-        private Reload _reload;
 
         private Color _color;
         private int _hp;
@@ -26,25 +25,26 @@ namespace _Game.Code.Tanks
         private Coroutine _shootCoroutine;
         private Pixel _currentPixel;
         private bool _isShooting;
+        private float _reloadTime;
 
         public event Action Died;
         public event Action<int> HpChanged;
+        public event Action Shot;
 
         public int Hp => _hp;
         public Color Color => _color;
+        public float FireRate => 1 / _fireRate;
 
         public void Initialize
         (
             TankData tankData,
-            PixelDestroyer pixelDestroyer,
-            Reload reload
+            PixelDestroyer pixelDestroyer
         )
         {
             _color = tankData.Color;
             _hp = tankData.Hp;
 
             _pixelDestroyer = pixelDestroyer;
-            _reload = reload;
         }
 
         private void Start() =>
@@ -73,7 +73,7 @@ namespace _Game.Code.Tanks
                 {
                     if (hit.collider.TryGetComponent(out Pixel pixel))
                     {
-                        if (CanDestroyPixel(pixel) && _reload.CanShoot)
+                        if (CanDestroyPixel(pixel) && IsReloaded())
                         {
                             Bullet bullet = SpawnBullet(pixel);
 
@@ -81,7 +81,9 @@ namespace _Game.Code.Tanks
                             pixel.MarkForDestruction(bullet);
 
                             ReduceHp();
-                            _reload.StartReload();
+                            Reload();
+
+                            Shot?.Invoke();
                         }
                     }
                 }
@@ -104,7 +106,7 @@ namespace _Game.Code.Tanks
             Bullet bullet = Instantiate(_bulletPrefab, bulletSpawnPosition, Quaternion.identity);
             bullet.Construct(_pixelDestroyer);
             bullet.StartFly(pixel.transform.position, _color);
-            
+
             return bullet;
         }
 
@@ -133,6 +135,16 @@ namespace _Game.Code.Tanks
             }
 
             return _shootPoint.position;
+        }
+
+        private void Reload()
+        {
+            _reloadTime = Time.time + FireRate;
+        }
+
+        private bool IsReloaded()
+        {
+            return Time.time >= _reloadTime;
         }
     }
 }

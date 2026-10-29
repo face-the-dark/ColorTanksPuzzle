@@ -446,11 +446,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2961718925980060974}
   - component: {fileID: 6541911760401163405}
+  - component: {fileID: 5672362112579606347}
   - component: {fileID: 3446851137628028536}
   - component: {fileID: 5071630348431066589}
   - component: {fileID: 9204070678284714604}
   - component: {fileID: 4943949501064425123}
   - component: {fileID: 600859958125622287}
+  - component: {fileID: 8951658886726705312}
   m_Layer: 8
   m_Name: Tank
   m_TagString: Untagged
@@ -497,6 +499,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!95 &5672362112579606347
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884587981952729076}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2afc3360a0ca10e45bdc43aa3c6cecbc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3446851137628028536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +599,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _bulletPrefab: {fileID: 648858509853279321, guid: c5bd1a1e96b49464cbae5705094096a4, type: 3}
+  _fireRate: 20
+--- !u!114 &8951658886726705312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884587981952729076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c014091a9f6c4a958ea72757586dfc91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Tanks.TankAnimator
+  _shootClip: {fileID: 7400000, guid: 7433e09fe16ada2429ff66b624f6c73a, type: 2}
 --- !u!1 &4059252456867480845
 GameObject:
   m_ObjectHideFlags: 0
