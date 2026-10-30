@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Code.Spawners;
-using _Game.Code.Tanks;
+using _Game.Code.TankComponents;
 using VContainer;
 
 namespace _Game.Code.SplineModifiers

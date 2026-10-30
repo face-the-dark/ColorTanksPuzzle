@@ -6,7 +6,7 @@ using _Game.Code.Generators.Data;
 using _Game.Code.Generators.Tanks;
 using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Providers;
-using _Game.Code.Tanks;
+using _Game.Code.TankComponents;
 using _Game.Code.WaitingAreaComponents;
 using SplineMesh;
 using UnityEngine;

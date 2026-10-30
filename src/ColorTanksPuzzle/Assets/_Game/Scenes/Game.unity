@@ -389,13 +389,14 @@ GameObject:
   - component: {fileID: 42006509}
   - component: {fileID: 42006508}
   - component: {fileID: 42006510}
+  - component: {fileID: 42006511}
   m_Layer: 5
   m_Name: LoseWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &42006507
 RectTransform:
   m_ObjectHideFlags: 0
@@ -469,8 +470,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec0ddf37d40d4b6488bf7de17ffdc577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.LoseWindow
+  CloseButton: {fileID: 1688313826}
+  _rootCanvas: {fileID: 0}
   _tryAgainButton: {fileID: 33490397}
-  _closeButton: {fileID: 1688313826}
+--- !u!114 &42006511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42006506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695511a538ce43578c8ea107babad214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.WindowAnimator
+  _targetWindowAnimator: {fileID: 1495164994}
 --- !u!1 &101430151
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,13 +682,14 @@ GameObject:
   - component: {fileID: 197351407}
   - component: {fileID: 197351406}
   - component: {fileID: 197351408}
+  - component: {fileID: 197351409}
   m_Layer: 5
   m_Name: WinWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &197351405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -747,7 +763,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3606d05eca97410b96c760fd17807a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.WinWindow
+  CloseButton: {fileID: 0}
+  _rootCanvas: {fileID: 0}
   _continueButton: {fileID: 1954770403}
+--- !u!114 &197351409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197351404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695511a538ce43578c8ea107babad214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.WindowAnimator
+  _targetWindowAnimator: {fileID: 1823301632}
 --- !u!1 &201711444
 GameObject:
   m_ObjectHideFlags: 0
@@ -2833,10 +2864,10 @@ RectTransform:
   - {fileID: 532469560}
   m_Father: {fileID: 1005690153}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 165}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 125, y: -127.5}
+  m_SizeDelta: {x: 250, y: 165}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &529167420
 MonoBehaviour:
@@ -4419,7 +4450,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1118074838}
   - component: {fileID: 1118074840}
+  - component: {fileID: 1118074843}
+  - component: {fileID: 1118074845}
   - component: {fileID: 1118074839}
+  - component: {fileID: 1118074841}
+  - component: {fileID: 1118074842}
+  - component: {fileID: 1118074844}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -4487,6 +4523,100 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1118074837}
   m_CullTransparentMesh: 1
+--- !u!95 &1118074841
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118074837}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dffc1ef57c4ff4b4385979facd877e12, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1118074842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118074837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebdad6755a5e4f18970681103fa6d4e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.BuyingWindow
+  CloseButton: {fileID: 1551928497}
+  _rootCanvas: {fileID: 1575453533}
+  _buyButton: {fileID: 1411393133}
+  _bonusIcon: {fileID: 1589559324}
+  _bonusCountText: {fileID: 201711446}
+  _bonusNameText: {fileID: 304817803}
+  _bonusPriceText: {fileID: 523124557}
+--- !u!223 &1118074843
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118074837}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &1118074844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118074837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695511a538ce43578c8ea107babad214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.WindowAnimator
+  _targetWindowAnimator: {fileID: 1118074841}
+--- !u!114 &1118074845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118074837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1120542250
 GameObject:
   m_ObjectHideFlags: 0
@@ -5645,6 +5775,7 @@ GameObject:
   - component: {fileID: 1495164991}
   - component: {fileID: 1495164993}
   - component: {fileID: 1495164992}
+  - component: {fileID: 1495164994}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -5713,6 +5844,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1495164990}
   m_CullTransparentMesh: 1
+--- !u!95 &1495164994
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495164990}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dffc1ef57c4ff4b4385979facd877e12, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1502670209
 GameObject:
   m_ObjectHideFlags: 0
@@ -6438,7 +6591,6 @@ GameObject:
   - component: {fileID: 1575453534}
   - component: {fileID: 1575453533}
   - component: {fileID: 1575453531}
-  - component: {fileID: 1575453535}
   m_Layer: 5
   m_Name: BuyingWindow
   m_TagString: Untagged
@@ -6507,24 +6659,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1575453535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575453530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebdad6755a5e4f18970681103fa6d4e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.BuyingWindow
-  _closeButton: {fileID: 1551928497}
-  _buyButton: {fileID: 1411393133}
-  _bonusIcon: {fileID: 1589559324}
-  _bonusCountText: {fileID: 201711446}
-  _bonusNameText: {fileID: 304817803}
-  _bonusPriceText: {fileID: 523124557}
 --- !u!1 &1589559322
 GameObject:
   m_ObjectHideFlags: 0
@@ -7530,6 +7664,7 @@ GameObject:
   - component: {fileID: 1823301629}
   - component: {fileID: 1823301631}
   - component: {fileID: 1823301630}
+  - component: {fileID: 1823301632}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -7597,6 +7732,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823301628}
   m_CullTransparentMesh: 1
+--- !u!95 &1823301632
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823301628}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dffc1ef57c4ff4b4385979facd877e12, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1826090676
 GameObject:
   m_ObjectHideFlags: 0
@@ -7629,10 +7786,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1005690153}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 35}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 125, y: -17.5}
+  m_SizeDelta: {x: 250, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1826090678
 MonoBehaviour:
@@ -7780,7 +7937,7 @@ MonoBehaviour:
   _spawningLanesContainer: {fileID: 1655969781}
   _zoomPoints: {fileID: 141941061}
   _coinsView: {fileID: 990246004}
-  _buyingWindow: {fileID: 1575453535}
+  _buyingWindow: {fileID: 1118074842}
   _levelLabel: {fileID: 1112066073}
   _winWindow: {fileID: 197351408}
   _loseWindow: {fileID: 42006510}

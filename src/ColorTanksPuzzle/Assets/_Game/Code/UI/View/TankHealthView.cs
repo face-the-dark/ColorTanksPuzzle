@@ -1,8 +1,8 @@
-﻿using _Game.Code.Tanks;
+﻿using _Game.Code.TankComponents;
 using TMPro;
 using UnityEngine;
 
-namespace _Game.Code.UI
+namespace _Game.Code.UI.View
 {
     public class TankHealthView : MonoBehaviour
     {

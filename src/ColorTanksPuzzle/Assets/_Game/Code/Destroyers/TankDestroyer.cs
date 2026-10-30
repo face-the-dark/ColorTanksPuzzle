@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Code.Spawners;
-using _Game.Code.Tanks;
+using _Game.Code.TankComponents;
 using UnityEngine;
 using VContainer;
 

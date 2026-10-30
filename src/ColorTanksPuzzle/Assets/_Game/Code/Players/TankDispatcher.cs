@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Code.Providers;
-using _Game.Code.Tanks;
+using _Game.Code.TankComponents;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;

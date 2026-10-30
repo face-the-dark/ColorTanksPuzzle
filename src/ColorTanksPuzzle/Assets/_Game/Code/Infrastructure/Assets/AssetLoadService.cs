@@ -9,7 +9,7 @@ using _Game.Code.Configurations.Bonuses;
 using _Game.Code.Configurations.Difficulty;
 using _Game.Code.Configurations.Palettes;
 using _Game.Code.Pixels;
-using _Game.Code.Tanks;
+using _Game.Code.TankComponents;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
 

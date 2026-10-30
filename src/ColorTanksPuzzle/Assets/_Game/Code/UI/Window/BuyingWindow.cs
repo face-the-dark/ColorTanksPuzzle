@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
-namespace _Game.Code.UI
+namespace _Game.Code.UI.Window
 {
     public class BuyingWindow : UserInterfaceWindow
     {

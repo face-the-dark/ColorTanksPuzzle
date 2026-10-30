@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace _Game.Code.UI
+namespace _Game.Code.UI.Window
 {
     public class DifficultyWindow : UserInterfaceWindow
     {

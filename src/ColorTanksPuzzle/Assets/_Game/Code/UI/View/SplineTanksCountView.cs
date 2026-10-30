@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using VContainer;
 
-namespace _Game.Code.UI
+namespace _Game.Code.UI.View
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class SplineTanksCountView : MonoBehaviour

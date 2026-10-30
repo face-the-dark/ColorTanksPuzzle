@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Code.Spawners;
-using _Game.Code.Tanks;
+using _Game.Code.TankComponents;
 using VContainer;
 
 namespace _Game.Code.WaitingAreaComponents
@@ -42,7 +42,6 @@ namespace _Game.Code.WaitingAreaComponents
             }
             else
             {
-                _freeCellsCount--;
                 WaitingAreaCell waitingAreaCell = GetFreeCell();
                 waitingAreaCell.TakeOver(tank);
             }
@@ -55,8 +54,7 @@ namespace _Game.Code.WaitingAreaComponents
 
             if (_freeCellsCount > _waitingAreaCells.Count)
                 throw new IndexOutOfRangeException();
-
-            _freeCellsCount++;
+            
             WaitingAreaCell waitingAreaCell = GetTakenCell(tank);
             waitingAreaCell.Release();
         }
@@ -67,6 +65,8 @@ namespace _Game.Code.WaitingAreaComponents
 
             if (waitingAreaCell is null)
                 throw new ArgumentNullException(nameof(waitingAreaCell));
+            
+            _freeCellsCount--;
 
             return waitingAreaCell;
         }
@@ -77,6 +77,8 @@ namespace _Game.Code.WaitingAreaComponents
 
             if (waitingAreaCell is null)
                 throw new ArgumentNullException(nameof(waitingAreaCell));
+            
+            _freeCellsCount++;
 
             return waitingAreaCell;
         }

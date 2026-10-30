@@ -5,14 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
-namespace _Game.Code.UI.GameOverScreens
+namespace _Game.Code.UI.Window.GameOverScreens
 {
-    [RequireComponent(typeof(Canvas))]
-    public class WinWindow : MonoBehaviour
+    public class WinWindow : UserInterfaceWindow
     {
         [SerializeField] private Button _continueButton;
-        
-        private Canvas _canvas;
 
         private SceneLoader _sceneLoader;
         private GameOver _gameOver;
@@ -25,26 +22,21 @@ namespace _Game.Code.UI.GameOverScreens
 
             _gameOver.GameWon += Open;
         }
-        
-        private void Awake()
-        {
-            _canvas = GetComponent<Canvas>();
-            
-            _canvas.enabled = false;
-        }
 
-        private void Open()
+        protected override void OnOpen()
         {
             _gameOver.GameWon -= Open;
             
-            _canvas.enabled = true;
-            
             _continueButton.onClick.AddListener(BackToMenu);
         }
-        
+
+        protected override void OnClose()
+        {
+        }
+
         private void BackToMenu()
         {
-            _canvas.enabled = false;
+            Close();
             
             _continueButton.onClick.RemoveListener(BackToMenu);
 

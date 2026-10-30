@@ -4,6 +4,7 @@ using System.Linq;
 using _Game.Code.PersistenceProgress;
 using _Game.Code.Players;
 using _Game.Code.UI;
+using _Game.Code.UI.Window;
 using VContainer;
 
 namespace _Game.Code.Bonuses

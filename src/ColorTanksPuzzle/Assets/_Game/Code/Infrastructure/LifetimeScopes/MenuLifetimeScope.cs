@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Game.Code.UI;
+using _Game.Code.UI.View;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

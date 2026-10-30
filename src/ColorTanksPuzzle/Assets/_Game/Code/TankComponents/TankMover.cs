@@ -5,7 +5,7 @@ using _Game.Code.Providers;
 using SplineMesh;
 using UnityEngine;
 
-namespace _Game.Code.Tanks
+namespace _Game.Code.TankComponents
 {
     public class TankMover : MonoBehaviour
     {

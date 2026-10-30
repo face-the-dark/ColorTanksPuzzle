@@ -6,7 +6,7 @@ using _Game.Code.Destroyers;
 using _Game.Code.Pixels;
 using _Game.Code.Players;
 using _Game.Code.Spawners;
-using _Game.Code.Tanks;
+using _Game.Code.TankComponents;
 using UnityEngine;
 using VContainer;
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Game.Code.Tanks
+namespace _Game.Code.TankComponents
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(TankShooter))]

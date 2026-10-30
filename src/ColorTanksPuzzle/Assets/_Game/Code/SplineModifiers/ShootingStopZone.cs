@@ -1,4 +1,4 @@
-﻿using _Game.Code.Tanks;
+﻿using _Game.Code.TankComponents;
 using UnityEngine;
 
 namespace _Game.Code.SplineModifiers

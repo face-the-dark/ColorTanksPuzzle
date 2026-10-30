@@ -7,7 +7,7 @@ using _Game.Code.WaitingAreaComponents;
 using SplineMesh;
 using UnityEngine;
 
-namespace _Game.Code.Tanks
+namespace _Game.Code.TankComponents
 {
     public class Tank : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using _Game.Code.Generators.Data;
 using UnityEngine;
 
-namespace _Game.Code.Tanks
+namespace _Game.Code.TankComponents
 {
     public class TankDyer : MonoBehaviour
     {

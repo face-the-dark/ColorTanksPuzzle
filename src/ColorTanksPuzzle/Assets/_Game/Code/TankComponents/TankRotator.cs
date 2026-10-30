@@ -4,7 +4,7 @@ using SplineMesh;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace _Game.Code.Tanks
+namespace _Game.Code.TankComponents
 {
     public class TankRotator : MonoBehaviour
     {
