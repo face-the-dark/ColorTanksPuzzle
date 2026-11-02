@@ -41,7 +41,7 @@ namespace _Game.Code.UI.Window
             BonusConfiguration bonusConfiguration = _bonusesConfiguration.GetBonusConfiguration(bonus);
 
             _bonusIcon.sprite = bonusConfiguration.Icon;
-            _bonusCountText.text = bonusConfiguration.Count.ToString();
+            _bonusCountText.text = $"x{bonusConfiguration.Count.ToString()}";
             _bonusNameText.text = bonusConfiguration.Name;
             _bonusPriceText.text = bonusConfiguration.Cost.ToString();
 

@@ -1,9 +1,13 @@
 using System;
+using System.Linq;
 using _Game.Code.Destroyers;
 using _Game.Code.Generators.Data;
 using _Game.Code.Providers;
 using _Game.Code.Spawners;
 using _Game.Code.WaitingAreaComponents;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using SplineMesh;
 using UnityEngine;
 
@@ -16,6 +20,7 @@ namespace _Game.Code.TankComponents
         [SerializeField] private TankShooter _tankShooter;
         [SerializeField] private TankDyer _tankDyer;
 
+        private Spline _spline;
         private WaitingArea _waitingArea;
         private SpawningLane _lane;
 
@@ -23,6 +28,7 @@ namespace _Game.Code.TankComponents
         private bool _isMoving;
         private bool _isLoopMoving;
         private bool _isBlocked = true;
+        private Sequence _moveTweenerCore;
 
         public bool IsMoving => _isMoving;
         public bool IsBlocked => _isBlocked;
@@ -42,6 +48,7 @@ namespace _Game.Code.TankComponents
             TankConfigurationProvider tankConfigurationProvider
         )
         {
+            _spline = spline;
             _tankMover.Initialize(spline, tankConfigurationProvider);
             _tankRotator.Initialize(spline);
             _tankShooter.Initialize(tankData, pixelDestroyer);
@@ -55,8 +62,19 @@ namespace _Game.Code.TankComponents
 
         public void MoveToSpline()
         {
-            if (_isMoving == false) 
+            if (_isMoving == false)
                 RemoveFromWaitingAreaOrLane();
+
+            _moveTweenerCore = transform
+                .DOJump(_spline.nodes.First().Position, 20f, 1, 0.5f)
+                .SetEase(Ease.Linear);
+
+            _moveTweenerCore.onComplete += StartMove;
+        }
+
+        private void StartMove()
+        {
+            _moveTweenerCore.onComplete -= StartMove;
 
             _tankMover.CurrentLengthPercentageIncreased += OnCurrentLengthPercentageIncreased;
             _tankMover.CirclePassed += OnCirclePassed;
@@ -66,11 +84,6 @@ namespace _Game.Code.TankComponents
             _tankShooter.StartShoot();
 
             _isMoving = true;
-        }
-
-        private void OnCurrentDistancePassed(float distance)
-        {
-            
         }
 
         public void RemoveFromWaitingAreaOrLane()
@@ -96,10 +109,10 @@ namespace _Game.Code.TankComponents
         public void Unblock() =>
             _isBlocked = false;
 
-        public void FreezeMoving() => 
+        public void FreezeMoving() =>
             _tankMover.ZeroingSpeed();
 
-        public void UnfreezeMoving() => 
+        public void UnfreezeMoving() =>
             _tankMover.UnZeroingSpeed();
 
         public void Die()
@@ -110,7 +123,7 @@ namespace _Game.Code.TankComponents
 
             MovingStopped?.Invoke(this);
             Died?.Invoke(this);
-            
+
             Destroy(gameObject);
         }
 
@@ -121,7 +134,7 @@ namespace _Game.Code.TankComponents
         {
             _tankMover.CurrentLengthPercentageIncreased -= OnCurrentLengthPercentageIncreased;
             _tankMover.CirclePassed -= OnCirclePassed;
-            
+
             if (_isLoopMoving)
             {
                 MoveToSpline();

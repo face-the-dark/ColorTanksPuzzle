@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
 using _Game.Code.TankComponents;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Game.Code.Spawners
 {
     public class SpawningLane : MonoBehaviour
     {
-        [SerializeField] private float _positionOffsetZ = 4f;
+        private const float MoveDuration = 0.5f;
+        
+        [SerializeField] private float _positionOffsetZ = 5f;
 
         private readonly List<Tank> _tanks = new();
 
         private float _currentPositionOffsetZ;
+        private Sequence _moveSequence;
 
         public void Add(Tank tank)
         {
@@ -30,16 +34,9 @@ namespace _Game.Code.Spawners
         {
             if (_tanks.Contains(tank) && tank.IsBlocked == false)
             {
-                int tankIndex = _tanks.IndexOf(tank);
+                MoveTanksInLane(tank);
                 
-                for (int i = _tanks.Count - 1; i > tankIndex; i--)
-                {
-                    _tanks[i].transform.position = _tanks[i - 1].transform.position;
-                }
-
                 _tanks.Remove(tank);
-
-                UnblockFirstTank();
             }
         }
 
@@ -47,6 +44,30 @@ namespace _Game.Code.Spawners
         {
             if (_tanks.Count > 0)
                 _tanks[0].Unblock();
+        }
+
+        private void MoveTanksInLane(Tank tank)
+        {
+            int tankIndex = _tanks.IndexOf(tank);
+
+            _moveSequence = DOTween.Sequence();
+            
+            for (int i = _tanks.Count - 1; i > tankIndex; i--)
+            {
+                Transform currentTank = _tanks[i].transform;
+                Vector3 nextTankPosition = _tanks[i - 1].transform.position;
+
+                _moveSequence.Join(currentTank.DOMove(nextTankPosition, MoveDuration).SetEase(Ease.Linear));
+            }
+
+            _moveSequence.onComplete += OnMoveSequenceComplete;
+        }
+
+        private void OnMoveSequenceComplete()
+        {
+            _moveSequence.onComplete -= OnMoveSequenceComplete;
+            
+            UnblockFirstTank();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Code.TankComponents;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Game.Code.WaitingAreaComponents
@@ -22,7 +23,9 @@ namespace _Game.Code.WaitingAreaComponents
             _isFree = false;
             _takenTank = tank;
             
-            tank.transform.position = _point.position;
+            tank.transform
+                .DOJump(_point.position, 20f, 1, 0.5f)
+                .SetEase(Ease.Linear);
         }
 
         public void Release()
