@@ -108,7 +108,7 @@ namespace _Game.Code.Spawners
 
         private Color ApplyColor(Pixel pixel, Color originalColor)
         {
-            Renderer rendererComponent = pixel.GetComponent<Renderer>();
+            Renderer rendererComponent = pixel.Renderer;
 
             if (rendererComponent == null)
                 throw new ArgumentNullException(nameof(rendererComponent));

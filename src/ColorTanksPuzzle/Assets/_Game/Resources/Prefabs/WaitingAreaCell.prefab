@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1262833563897421599}
   - component: {fileID: 1262833563898387935}
   m_Layer: 0
-  m_Name: Helipad
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fe45be4ed17b56849afc17904e9a1028, type: 2}

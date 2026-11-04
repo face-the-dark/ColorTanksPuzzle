@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.54901963, g: 0.6666667, b: 0.8392157, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1356208814}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1829,7 +1829,7 @@ GameObject:
   - component: {fileID: 410087040}
   - component: {fileID: 410087042}
   m_Layer: 0
-  m_Name: Directional Light
+  m_Name: Directional Light Weak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1845,14 +1845,14 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 2
+  m_Color: {r: 0.7882353, g: 0.8627451, b: 0.9607843, a: 1}
+  m_Intensity: 0.8
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1884,7 +1884,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
@@ -1908,13 +1908,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.11697776, y: 0.8830222, z: -0.32139376, w: 0.32139382}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 140, z: 0}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1935,7 +1935,7 @@ MonoBehaviour:
   m_SoftShadowQuality: 1
   m_RenderingLayersMask:
     serializedVersion: 0
-    m_Bits: 1
+    m_Bits: 2
   m_ShadowRenderingLayersMask:
     serializedVersion: 0
     m_Bits: 1
@@ -5023,6 +5023,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1295841682}
   m_CullTransparentMesh: 1
+--- !u!1 &1314028468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1314028470}
+  - component: {fileID: 1314028469}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1314028469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314028468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 0aa13ab80239ac541973b9983e2d838e, type: 2}
+--- !u!4 &1314028470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314028468}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1315889641
 GameObject:
   m_ObjectHideFlags: 0
@@ -5249,6 +5298,133 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347897847}
   m_CullTransparentMesh: 1
+--- !u!1 &1356208812
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1356208815}
+  - component: {fileID: 1356208814}
+  - component: {fileID: 1356208813}
+  m_Layer: 0
+  m_Name: Directional Light Strong
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1356208813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356208812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 1
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 4
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
+--- !u!108 &1356208814
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356208812}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 1
+  m_Color: {r: 1, g: 0.9137255, b: 0.78039217, a: 1}
+  m_Intensity: 1.8
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 10, y: 10}
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 4
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 5000
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!4 &1356208815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356208812}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.39713123, y: -0.30997548, z: 0.14454393, w: 0.8516508}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: -40, z: 0}
 --- !u!1 &1404249961
 GameObject:
   m_ObjectHideFlags: 0
@@ -5916,7 +6092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.42352942, g: 0.44705883, b: 0.4392157, a: 1}
+  m_Color: {r: 0.16470589, g: 0.22745098, b: 0.41960785, a: 0.76862746}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6018,7 +6194,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1503185764}
   m_Enabled: 1
-  m_CastShadows: 0
+  m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -6032,7 +6208,7 @@ MeshRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 810b373fa75c7aa48a624b080e12baf7, type: 2}
@@ -8705,6 +8881,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6835451094446512011, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8779,10 +8959,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2795691393423191335, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398416429121490294, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5667592991127444289, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810013933677017816, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6292448848609538358, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858414351059205425, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956994175414496409, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035280262089914490, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7493270801465684003, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -3025179133607064014, guid: 699a3bcfb11461045a9ef6b14cd6796c, type: 3}
+    - target: {fileID: 8152980055228862182, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462176872221330029, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822411349225094258, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028369450618247782, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210291536069541911, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211753650905292405, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8857,6 +9093,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6835451094446512011, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8875,6 +9115,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 667113811196344769, guid: aadae7b6ca0911047bef31a86746ff54, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2567313747005808552, guid: aadae7b6ca0911047bef31a86746ff54, type: 3}
       propertyPath: m_Name
       value: MoonRocks03 (1)
@@ -8931,6 +9175,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4733127753686224133, guid: aadae7b6ca0911047bef31a86746ff54, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8981,6 +9229,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4562937972021235095}
     m_Modifications:
+    - target: {fileID: 2227751034840253896, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4298595825708516224, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7027711660923260186, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -9055,6 +9311,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 2260482932587449883, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3638431682146129279, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
       propertyPath: m_Name
       value: MoonRocks01
@@ -9111,6 +9371,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4434037488478502433, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9129,6 +9393,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 2260482932587449883, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3638431682146129279, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
       propertyPath: m_Name
       value: MoonRocks01 (2)
@@ -9184,6 +9452,10 @@ PrefabInstance:
     - target: {fileID: 3638431682146552159, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4434037488478502433, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9259,6 +9531,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9277,6 +9553,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1885923872517139621}
     m_Modifications:
+    - target: {fileID: 3147354019567151161, guid: d11b37d20b0811043a8f64fbda789281, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3545650575387928568, guid: d11b37d20b0811043a8f64fbda789281, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8467039632825789396, guid: d11b37d20b0811043a8f64fbda789281, type: 3}
       propertyPath: m_Name
       value: Flag (1)
@@ -9351,6 +9635,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 6356956601497337849, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6356956601499263289, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
       propertyPath: m_Name
       value: MoonCrater01 (7)
@@ -9481,6 +9769,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9499,6 +9791,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 2260482932587449883, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3638431682146129279, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
       propertyPath: m_Name
       value: MoonRocks01 (1)
@@ -9555,6 +9851,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4434037488478502433, guid: ce96e2fc477f7794ebd036d7a5c2363c, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9573,6 +9873,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4562937972021235095}
     m_Modifications:
+    - target: {fileID: 2227751034840253896, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4298595825708516224, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7027711660923260186, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -9647,6 +9955,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 6356956601497337849, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6356956601499263289, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
       propertyPath: m_Name
       value: MoonCrater01 (6)
@@ -9721,6 +10033,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4562937972021235095}
     m_Modifications:
+    - target: {fileID: 2227751034840253896, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4298595825708516224, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7027711660923260186, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -9851,6 +10171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9886,6 +10210,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 207848876818626800, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1344678185394176927, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -10048,10 +10376,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2795691393423191335, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398416429121490294, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5667592991127444289, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810013933677017816, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6292448848609538358, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858414351059205425, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956994175414496409, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035280262089914490, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7493270801465684003, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -3025179133607064014, guid: 699a3bcfb11461045a9ef6b14cd6796c, type: 3}
+    - target: {fileID: 8152980055228862182, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462176872221330029, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822411349225094258, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028369450618247782, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210291536069541911, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211753650905292405, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10070,9 +10454,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5452403334983902564}
     m_Modifications:
+    - target: {fileID: 500522715723659708, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2321741168876107785, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912216547088311783, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3227149125675049825, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4533796353048354167, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4740127580655337902, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6087005955884149171, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
       propertyPath: m_Name
       value: MoonRocket
+      objectReference: {fileID: 0}
+    - target: {fileID: 6212237019813682243, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6859742021739426569, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
       propertyPath: m_LocalScale.x
@@ -10126,6 +10538,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7852114971150896219, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8267549241272873126, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4280481081182902768, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
@@ -10145,6 +10565,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 695870334358961065, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1963554337395939575, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -10200,6 +10624,10 @@ PrefabInstance:
     - target: {fileID: 1963554337396229335, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
       propertyPath: m_Name
       value: MoonRocks02 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8812578847450473245, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10275,6 +10703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10293,6 +10725,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 3585402314571441078, guid: 5d811aac03d9cbb408cb977d34667b55, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6048922359412759887, guid: 5d811aac03d9cbb408cb977d34667b55, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8512942653867856287, guid: 5d811aac03d9cbb408cb977d34667b55, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -10349,6 +10789,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MoonColumn01
       objectReference: {fileID: 0}
+    - target: {fileID: 8949180626936439138, guid: 5d811aac03d9cbb408cb977d34667b55, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10390,6 +10834,74 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3003881612593755242}
     m_Modifications:
+    - target: {fileID: 88551610938201103, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 611974915785000780, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 754934892697390321, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137131496301181304, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290592411445099153, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496611739046502402, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526593110869385206, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535356835391650960, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455177455237570840, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750173775626718718, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3013871862074158730, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316971485531227773, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652993455844995422, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537135055947007472, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613115016602838146, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698608928791239034, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784684662967487276, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4965055568650722009, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -10442,9 +10954,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5218286194903100663, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5451035081696134251, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5741169333677064291, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
       propertyPath: m_Name
       value: MoonBuilding03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358419206570428061, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037290601470615318, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671539592442679151, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8650986405298431820, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10481,6 +11017,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 695870334358961065, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1963554337395939575, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -10537,6 +11077,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MoonRocks02
       objectReference: {fileID: 0}
+    - target: {fileID: 8812578847450473245, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10555,6 +11099,74 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3003881612593755242}
     m_Modifications:
+    - target: {fileID: 88551610938201103, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 611974915785000780, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 754934892697390321, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137131496301181304, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290592411445099153, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496611739046502402, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526593110869385206, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535356835391650960, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455177455237570840, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750173775626718718, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3013871862074158730, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316971485531227773, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652993455844995422, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537135055947007472, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613115016602838146, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698608928791239034, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784684662967487276, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4965055568650722009, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -10607,9 +11219,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5218286194903100663, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5451035081696134251, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5741169333677064291, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
       propertyPath: m_Name
       value: MoonBuilding03 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358419206570428061, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037290601470615318, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671539592442679151, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8650986405298431820, guid: cb153ec5f8a131144afb74c62144be48, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10629,6 +11265,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 6356956601497337849, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6356956601499263289, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
       propertyPath: m_Name
       value: MoonCrater01 (3)
@@ -10703,6 +11343,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 256937160648703582, guid: 21f7f5b9362221f428a7ab9b977b50d5, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1710830573789817559, guid: 21f7f5b9362221f428a7ab9b977b50d5, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1848386787335523184, guid: 21f7f5b9362221f428a7ab9b977b50d5, type: 3}
       propertyPath: m_Name
       value: MoonColumn02
@@ -10826,6 +11474,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 6356956601497337849, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6356956601499263289, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
       propertyPath: m_Name
       value: MoonCrater01 (5)
@@ -10900,6 +11552,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 6356956601497337849, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6356956601499263289, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
       propertyPath: m_Name
       value: MoonCrater01 (8)
@@ -11030,6 +11686,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 104.254
       objectReference: {fileID: 0}
+    - target: {fileID: 6835451094446512011, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11048,6 +11708,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4562937972021235095}
     m_Modifications:
+    - target: {fileID: 2227751034840253896, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4298595825708516224, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7027711660923260186, guid: eddc386b78378314ebcfd239ea32d548, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -11178,6 +11846,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11240,6 +11912,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 207848876818626800, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1344678185394176927, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -11314,6 +11990,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1885923872517139621}
     m_Modifications:
+    - target: {fileID: 3147354019567151161, guid: d11b37d20b0811043a8f64fbda789281, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3545650575387928568, guid: d11b37d20b0811043a8f64fbda789281, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8467039632825789396, guid: d11b37d20b0811043a8f64fbda789281, type: 3}
       propertyPath: m_Name
       value: Flag (2)
@@ -11444,6 +12128,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MoonDunes01
       objectReference: {fileID: 0}
+    - target: {fileID: 6933790380524413306, guid: 9240ee9d657c21144804860b0f397ed3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11518,10 +12206,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2795691393423191335, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398416429121490294, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5667592991127444289, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810013933677017816, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6292448848609538358, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858414351059205425, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956994175414496409, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035280262089914490, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7493270801465684003, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -3025179133607064014, guid: 699a3bcfb11461045a9ef6b14cd6796c, type: 3}
+    - target: {fileID: 8152980055228862182, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462176872221330029, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822411349225094258, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028369450618247782, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210291536069541911, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211753650905292405, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11595,6 +12339,10 @@ PrefabInstance:
     - target: {fileID: 7557910819475535665, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
       propertyPath: m_Name
       value: CratorsMoon01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11670,6 +12418,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -36.781
       objectReference: {fileID: 0}
+    - target: {fileID: 6835451094446512011, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11704,6 +12456,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 207848876818626800, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1344678185394176927, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -11778,6 +12534,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 6356956601497337849, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6356956601499263289, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
       propertyPath: m_Name
       value: MoonCrater01 (1)
@@ -11908,6 +12668,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MoonDunes02
       objectReference: {fileID: 0}
+    - target: {fileID: 5401289716022389706, guid: 3f751e07837b5044a850c6d98551cb10, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11982,6 +12746,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -36.781
       objectReference: {fileID: 0}
+    - target: {fileID: 6835451094446512011, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12023,6 +12791,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3003881612593755242}
     m_Modifications:
+    - target: {fileID: 931872203478116623, guid: 5ee5d1785300d414b9745cb7d5a03602, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3716925674631487265, guid: 5ee5d1785300d414b9745cb7d5a03602, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -12079,6 +12851,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MoonRadarSphere
       objectReference: {fileID: 0}
+    - target: {fileID: 5920407942994643851, guid: 5ee5d1785300d414b9745cb7d5a03602, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577556750831361074, guid: 5ee5d1785300d414b9745cb7d5a03602, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12097,6 +12877,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 695870334358961065, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1963554337395939575, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -12153,6 +12937,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MoonRocks02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8812578847450473245, guid: a4bd3b4517757d64d83d78fd49392faa, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12187,6 +12975,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 6356956601497337849, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6356956601499263289, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
       propertyPath: m_Name
       value: MoonCrater01 (4)
@@ -12317,6 +13109,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12335,6 +13131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 207848876818626800, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1344678185394176927, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -12465,6 +13265,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -36.781
       objectReference: {fileID: 0}
+    - target: {fileID: 6835451094446512011, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12539,6 +13343,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12557,6 +13365,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 207848876818626800, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1344678185394176927, guid: e7e954f32d742de42a21683ec74e1029, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -12687,6 +13499,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6835451094446512011, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12760,6 +13576,10 @@ PrefabInstance:
     - target: {fileID: 5663076769538108644, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6835451094446512011, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12836,6 +13656,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4172775246205162861, guid: d90ea149be1e49d49bdb723591b075d0, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4172775246205162861, guid: d90ea149be1e49d49bdb723591b075d0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 8367f9b46ce974d4c95a7245e49fd235, type: 2}
@@ -12857,6 +13681,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 6356956601497337849, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6356956601499263289, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
       propertyPath: m_Name
       value: MoonCrater01 (2)
@@ -12987,6 +13815,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -36.781
       objectReference: {fileID: 0}
+    - target: {fileID: 6835451094446512011, guid: da5e9bbde29823247a8ba5d7a21c9e19, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13077,6 +13909,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13095,6 +13931,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4575693672211634802}
     m_Modifications:
+    - target: {fileID: 667113811196344769, guid: aadae7b6ca0911047bef31a86746ff54, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2567313747005808552, guid: aadae7b6ca0911047bef31a86746ff54, type: 3}
       propertyPath: m_Name
       value: MoonRocks03
@@ -13151,6 +13991,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4733127753686224133, guid: aadae7b6ca0911047bef31a86746ff54, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13169,6 +14013,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3003881612593755242}
     m_Modifications:
+    - target: {fileID: 1042765450071055329, guid: e3a8fb3711b4cdd45b5a2f7834fe3740, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1042765450073310497, guid: e3a8fb3711b4cdd45b5a2f7834fe3740, type: 3}
       propertyPath: m_Name
       value: MoonConcrete
@@ -13299,6 +14147,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13317,6 +14169,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3938045679626603815}
     m_Modifications:
+    - target: {fileID: 6356956601497337849, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6356956601499263289, guid: 1bc9aad59a33e2540b1452b2d156accb, type: 3}
       propertyPath: m_Name
       value: MoonCrater01
@@ -13447,6 +14303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratorsMoon01 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8350777244893058788, guid: 0925c23a430e8964aa090a5fabe502c3, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13537,10 +14397,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2795691393423191335, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398416429121490294, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5667592991127444289, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810013933677017816, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6292448848609538358, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858414351059205425, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956994175414496409, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035280262089914490, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7493270801465684003, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -3025179133607064014, guid: 699a3bcfb11461045a9ef6b14cd6796c, type: 3}
+    - target: {fileID: 8152980055228862182, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462176872221330029, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822411349225094258, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028369450618247782, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210291536069541911, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211753650905292405, guid: 2e10120b4a814d44c8ef5246087bbb98, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13573,7 +14489,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 330585546}
   - {fileID: 410087041}
+  - {fileID: 1356208815}
   - {fileID: 1650245175}
+  - {fileID: 1314028470}
   - {fileID: 1857952941}
   - {fileID: 1553780078}
   - {fileID: 843210120}

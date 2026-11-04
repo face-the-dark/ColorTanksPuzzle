@@ -2,15 +2,9 @@
 
 namespace _Game.Code.Bullets
 {
-    [RequireComponent(typeof(Renderer))]
     public class BulletDyer : MonoBehaviour
     {
-        private Renderer _renderer;
-        
-        private void Awake()
-        {
-            _renderer = GetComponent<Renderer>();
-        }
+        [SerializeField] private Renderer _renderer;
 
         public void ApplyColor(Color color)
         {

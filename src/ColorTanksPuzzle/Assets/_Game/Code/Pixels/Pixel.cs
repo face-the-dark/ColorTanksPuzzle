@@ -1,5 +1,4 @@
-﻿using System;
-using _Game.Code.Bullets;
+﻿using _Game.Code.Bullets;
 using _Game.Code.Generators.Data;
 using _Game.Code.Spawners;
 using UnityEngine;
@@ -9,6 +8,8 @@ namespace _Game.Code.Pixels
     [RequireComponent(typeof(PixelAnimator))]
     public class Pixel : MonoBehaviour
     {
+        [SerializeField] private Renderer _renderer;
+        
         private PixelAnimator _pixelAnimator;
         
         private Color _color;
@@ -17,6 +18,7 @@ namespace _Game.Code.Pixels
         private bool _isWillBeDestroyed;
         private Bullet _destructionBullet;
 
+        public Renderer Renderer => _renderer;
         public Color Color => _color;
         public bool IsWillBeDestroyed => _isWillBeDestroyed;
         public Bullet DestructionBullet => _destructionBullet;
