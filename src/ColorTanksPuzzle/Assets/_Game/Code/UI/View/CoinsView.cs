@@ -26,7 +26,7 @@ namespace _Game.Code.UI.View
             _playerDataService.MoneyChanged -= UpdateText;
 
         private void Start() => 
-            _playerDataService.InitializeMoney();
+            _playerDataService.Initialize();
 
         private void UpdateText(int amount) => 
             _moneyText.text = amount.ToString();

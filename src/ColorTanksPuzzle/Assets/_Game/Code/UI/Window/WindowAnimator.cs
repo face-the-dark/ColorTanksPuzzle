@@ -8,6 +8,7 @@ namespace _Game.Code.UI.Window
         private static readonly int CloseKey = Animator.StringToHash("Close");
 
         [SerializeField] private Animator _targetWindowAnimator;
+        [SerializeField] private WindowEvent _windowEvent;
         
         private UserInterfaceWindow _userInterfaceWindow;
 
@@ -20,21 +21,26 @@ namespace _Game.Code.UI.Window
         {
             _userInterfaceWindow.Opened += OnOpened;
             _userInterfaceWindow.Closed += OnClosed;
+            _windowEvent.CloseAnimationCompleted += OnCloseAnimationCompleted;
         }
 
         private void OnDisable()
         {
             _userInterfaceWindow.Opened -= OnOpened;
             _userInterfaceWindow.Closed -= OnClosed;
+            _windowEvent.CloseAnimationCompleted -= OnCloseAnimationCompleted;
         }
 
         public void OnCloseAnimationCompleted()
         {
-            _userInterfaceWindow.DisableCanvas();
+            _userInterfaceWindow.DisableCanvases();
         }
 
-        private void OnOpened() => 
+        private void OnOpened()
+        {
+            _userInterfaceWindow.EnableCanvases();
             _targetWindowAnimator.SetTrigger(OpenKey);
+        }
 
         private void OnClosed() => 
             _targetWindowAnimator.SetTrigger(CloseKey);

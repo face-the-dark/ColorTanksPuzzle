@@ -2,6 +2,7 @@
 {
     public enum Bonus
     {
+        None,
         Expansion,
         FreezeSpline,
         Sacrifice,

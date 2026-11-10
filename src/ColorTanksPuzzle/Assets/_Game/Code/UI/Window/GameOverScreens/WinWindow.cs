@@ -10,7 +10,7 @@ namespace _Game.Code.UI.Window.GameOverScreens
     public class WinWindow : UserInterfaceWindow
     {
         [SerializeField] private Button _continueButton;
-
+        
         private SceneLoader _sceneLoader;
         private GameOver _gameOver;
         
@@ -23,20 +23,18 @@ namespace _Game.Code.UI.Window.GameOverScreens
             _gameOver.GameWon += Open;
         }
 
-        protected override void OnOpen()
+        private void Open()
         {
             _gameOver.GameWon -= Open;
+
+            InvokeOpen();
             
             _continueButton.onClick.AddListener(BackToMenu);
         }
 
-        protected override void OnClose()
-        {
-        }
-
         private void BackToMenu()
         {
-            Close();
+            InvokeClose();
             
             _continueButton.onClick.RemoveListener(BackToMenu);
 

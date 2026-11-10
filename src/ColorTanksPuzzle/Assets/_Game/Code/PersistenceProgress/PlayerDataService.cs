@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Game.Code.Bonuses;
 using _Game.Code.Configurations.Difficulty;
 using VContainer;
@@ -21,15 +22,21 @@ namespace _Game.Code.PersistenceProgress
             _currentPlayerData = _previousPlayerData.Clone();
         } 
 
-        public void InitializeMoney() =>
-            MoneyChanged?.Invoke(_currentPlayerData.Money);
-
-        public void InitializeBonusesCounts()
+        public void Initialize()
         {
+            MoneyChanged?.Invoke(_currentPlayerData.Money);
+            
             foreach (Bonus bonus in Enum.GetValues(typeof(Bonus)))
-                BonusCountChanged?.Invoke(bonus, GetBonusCount(bonus).Value);
+            {
+                BonusCount bonusCount = GetBonusCount(bonus);
+                
+                if (bonusCount == null)
+                    _currentPlayerData.BonusesCounts.Add(new BonusCount(bonus, 0));
+                
+                BonusCountChanged?.Invoke(bonus, bonusCount.Value);
+            }
         }
-
+        
         public event Action<int> MoneyChanged;
         public event Action<Bonus, int> BonusCountChanged;
 
@@ -130,8 +137,12 @@ namespace _Game.Code.PersistenceProgress
                 BonusCountChanged?.Invoke(bonus, GetBonusCount(bonus).Value);
         }
 
-        private BonusCount GetBonusCount(Bonus bonus) =>
-            _currentPlayerData.BonusesCounts.Find(x => x.Bonus == bonus);
+        private BonusCount GetBonusCount(Bonus bonus)
+        {
+            List<BonusCount> bonusesCounts = _currentPlayerData.BonusesCounts;
+
+            return bonusesCounts.Find(x => x.Bonus == bonus);
+        }
 
         private void SavePlayerData() =>
             _saveLoadService.SavePlayerData(_currentPlayerData);

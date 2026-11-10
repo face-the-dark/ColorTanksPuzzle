@@ -9,6 +9,7 @@ namespace _Game.Code.UI.Window.GameOverScreens
 {
     public class LoseWindow : UserInterfaceWindow
     {
+        [SerializeField] private Button _menuButton;
         [SerializeField] private Button _tryAgainButton;
 
         private SceneLoader _sceneLoader;
@@ -23,34 +24,32 @@ namespace _Game.Code.UI.Window.GameOverScreens
             _gameOver.GameLost += Open;
         }
 
-        protected override void OnOpen()
+        private void Open()
         {
             _gameOver.GameLost -= Open;
             
+            InvokeOpen();
+            
+            _menuButton.onClick.AddListener(BackToMenu);
             _tryAgainButton.onClick.AddListener(ReloadGame);
-            CloseButton.onClick.AddListener(BackToMenu);
-        }
-
-        protected override void OnClose()
-        {
         }
 
         private void ReloadGame()
         {
-            Close();
-
+            InvokeClose();
+            
+            _menuButton.onClick.RemoveListener(BackToMenu);
             _tryAgainButton.onClick.RemoveListener(ReloadGame);
-            CloseButton.onClick.RemoveListener(BackToMenu);
 
             _sceneLoader.LoadGameScene();
         }
 
         private void BackToMenu()
         {
-            Close();
-
+            InvokeClose();
+            
+            _menuButton.onClick.RemoveListener(BackToMenu);
             _tryAgainButton.onClick.RemoveListener(ReloadGame);
-            CloseButton.onClick.RemoveListener(BackToMenu);
 
             _sceneLoader.LoadMenuScene();
         }

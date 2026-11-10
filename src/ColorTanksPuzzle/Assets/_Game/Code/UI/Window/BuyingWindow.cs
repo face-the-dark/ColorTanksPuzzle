@@ -12,6 +12,7 @@ namespace _Game.Code.UI.Window
     public class BuyingWindow : UserInterfaceWindow
     {
         [SerializeField] private Button _buyButton;
+        [SerializeField] private Button _closeButton;
         [SerializeField] private Image _bonusIcon;
         [SerializeField] private TextMeshProUGUI _bonusCountText;
         [SerializeField] private TextMeshProUGUI _bonusNameText;
@@ -27,42 +28,52 @@ namespace _Game.Code.UI.Window
         public void Construct(BonusBuyer bonusBuyer, AssetLoadService assetLoadService)
         {
             _bonusBuyer = bonusBuyer ?? throw new ArgumentNullException(nameof(bonusBuyer));
-            
+
             if (assetLoadService == null)
                 throw new ArgumentNullException(nameof(assetLoadService));
-            
+
             _bonusesConfiguration = assetLoadService.LoadBonusesConfiguration();
         }
 
         public void Open(Bonus bonus)
         {
-            Open();
-
-            BonusConfiguration bonusConfiguration = _bonusesConfiguration.GetBonusConfiguration(bonus);
-
-            _bonusIcon.sprite = bonusConfiguration.Icon;
-            _bonusCountText.text = $"x{bonusConfiguration.Count.ToString()}";
-            _bonusNameText.text = bonusConfiguration.Name;
-            _bonusPriceText.text = bonusConfiguration.Cost.ToString();
-
+            _closeButton.onClick.AddListener(Close);
+            
+            InvokeOpen();
+            
             _bonus = bonus;
-        }
-
-        protected override void OnOpen()
-        {
+            
+            UpdateWindow();
             _buyButton.onClick.AddListener(Buy);
         }
 
-        protected override void OnClose()
+        private void Close()
         {
+            _closeButton.onClick.RemoveListener(Close);
+            
+            InvokeClose();
+            
+            _bonus = Bonus.None;
             _buyButton.onClick.RemoveListener(Buy);
+        }
+
+        private void UpdateWindow()
+        {
+            BonusConfiguration bonusConfiguration = _bonusesConfiguration.GetBonusConfiguration(_bonus);
+
+            if (bonusConfiguration != null)
+            {
+                _bonusIcon.sprite = bonusConfiguration.Icon;
+                _bonusCountText.text = $"x{bonusConfiguration.Count.ToString()}";
+                _bonusNameText.text = bonusConfiguration.Name;
+                _bonusPriceText.text = bonusConfiguration.Cost.ToString();
+            }
         }
 
         private void Buy()
         {
-            _bonusBuyer.Buy(_bonus);
-
-            Close();
+            if (_bonusBuyer.TryBuy(_bonus)) 
+                Close();
         }
     }
 }

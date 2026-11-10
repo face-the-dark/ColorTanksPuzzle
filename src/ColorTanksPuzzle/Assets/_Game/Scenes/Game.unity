@@ -396,7 +396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &42006507
 RectTransform:
   m_ObjectHideFlags: 0
@@ -470,8 +470,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec0ddf37d40d4b6488bf7de17ffdc577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.LoseWindow
-  CloseButton: {fileID: 1688313826}
-  _rootCanvas: {fileID: 0}
+  _windowCanvas: {fileID: 1495164996}
+  _rootCanvas: {fileID: 42006509}
+  _menuButton: {fileID: 1688313826}
   _tryAgainButton: {fileID: 33490397}
 --- !u!114 &42006511
 MonoBehaviour:
@@ -486,6 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.WindowAnimator
   _targetWindowAnimator: {fileID: 1495164994}
+  _windowEvent: {fileID: 1495164997}
 --- !u!1 &101430151
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,15 +683,15 @@ GameObject:
   - component: {fileID: 197351405}
   - component: {fileID: 197351407}
   - component: {fileID: 197351406}
-  - component: {fileID: 197351408}
   - component: {fileID: 197351409}
+  - component: {fileID: 197351408}
   m_Layer: 5
   m_Name: WinWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &197351405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -760,12 +762,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 197351404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3606d05eca97410b96c760fd17807a10, type: 3}
+  m_Script: {fileID: 11500000, guid: 695511a538ce43578c8ea107babad214, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.WinWindow
-  CloseButton: {fileID: 0}
-  _rootCanvas: {fileID: 0}
-  _continueButton: {fileID: 1954770403}
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.WindowAnimator
+  _targetWindowAnimator: {fileID: 1823301632}
+  _windowEvent: {fileID: 1823301635}
 --- !u!114 &197351409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,10 +776,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 197351404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 695511a538ce43578c8ea107babad214, type: 3}
+  m_Script: {fileID: 11500000, guid: 3606d05eca97410b96c760fd17807a10, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.WindowAnimator
-  _targetWindowAnimator: {fileID: 1823301632}
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.GameOverScreens.WinWindow
+  _windowCanvas: {fileID: 1823301634}
+  _rootCanvas: {fileID: 197351407}
+  _continueButton: {fileID: 1954770403}
 --- !u!1 &201711444
 GameObject:
   m_ObjectHideFlags: 0
@@ -2864,10 +2867,10 @@ RectTransform:
   - {fileID: 532469560}
   m_Father: {fileID: 1005690153}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125, y: -127.5}
-  m_SizeDelta: {x: 250, y: 165}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 165}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &529167420
 MonoBehaviour:
@@ -4454,8 +4457,7 @@ GameObject:
   - component: {fileID: 1118074845}
   - component: {fileID: 1118074839}
   - component: {fileID: 1118074841}
-  - component: {fileID: 1118074842}
-  - component: {fileID: 1118074844}
+  - component: {fileID: 1118074846}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -4545,25 +4547,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1118074842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118074837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebdad6755a5e4f18970681103fa6d4e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.BuyingWindow
-  CloseButton: {fileID: 1551928497}
-  _rootCanvas: {fileID: 1575453533}
-  _buyButton: {fileID: 1411393133}
-  _bonusIcon: {fileID: 1589559324}
-  _bonusCountText: {fileID: 201711446}
-  _bonusNameText: {fileID: 304817803}
-  _bonusPriceText: {fileID: 523124557}
 --- !u!223 &1118074843
 Canvas:
   m_ObjectHideFlags: 0
@@ -4587,19 +4570,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1118074844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118074837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 695511a538ce43578c8ea107babad214, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.WindowAnimator
-  _targetWindowAnimator: {fileID: 1118074841}
 --- !u!114 &1118074845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4617,6 +4587,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1118074846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118074837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad672de42bc4ca09ca6eac8c744e760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.WindowEvent
 --- !u!1 &1120542250
 GameObject:
   m_ObjectHideFlags: 0
@@ -5950,8 +5932,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1495164991}
   - component: {fileID: 1495164993}
+  - component: {fileID: 1495164996}
+  - component: {fileID: 1495164995}
   - component: {fileID: 1495164992}
   - component: {fileID: 1495164994}
+  - component: {fileID: 1495164997}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -6042,6 +6027,58 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1495164995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495164990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!223 &1495164996
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495164990}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &1495164997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495164990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad672de42bc4ca09ca6eac8c744e760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.WindowEvent
 --- !u!1 &1502670209
 GameObject:
   m_ObjectHideFlags: 0
@@ -6767,6 +6804,8 @@ GameObject:
   - component: {fileID: 1575453534}
   - component: {fileID: 1575453533}
   - component: {fileID: 1575453531}
+  - component: {fileID: 1575453535}
+  - component: {fileID: 1575453536}
   m_Layer: 5
   m_Name: BuyingWindow
   m_TagString: Untagged
@@ -6835,6 +6874,40 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1575453535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575453530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebdad6755a5e4f18970681103fa6d4e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.BuyingWindow
+  _windowCanvas: {fileID: 1118074843}
+  _rootCanvas: {fileID: 1575453533}
+  _buyButton: {fileID: 1411393133}
+  _closeButton: {fileID: 1551928497}
+  _bonusIcon: {fileID: 1589559324}
+  _bonusCountText: {fileID: 201711446}
+  _bonusNameText: {fileID: 304817803}
+  _bonusPriceText: {fileID: 523124557}
+--- !u!114 &1575453536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575453530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695511a538ce43578c8ea107babad214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.WindowAnimator
+  _targetWindowAnimator: {fileID: 1118074841}
+  _windowEvent: {fileID: 1118074846}
 --- !u!1 &1589559322
 GameObject:
   m_ObjectHideFlags: 0
@@ -7839,8 +7912,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1823301629}
   - component: {fileID: 1823301631}
+  - component: {fileID: 1823301634}
+  - component: {fileID: 1823301633}
   - component: {fileID: 1823301630}
   - component: {fileID: 1823301632}
+  - component: {fileID: 1823301635}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -7930,6 +8006,58 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1823301633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823301628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!223 &1823301634
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823301628}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &1823301635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823301628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad672de42bc4ca09ca6eac8c744e760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.WindowEvent
 --- !u!1 &1826090676
 GameObject:
   m_ObjectHideFlags: 0
@@ -7962,10 +8090,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1005690153}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125, y: -17.5}
-  m_SizeDelta: {x: 250, y: 35}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1826090678
 MonoBehaviour:
@@ -8113,9 +8241,9 @@ MonoBehaviour:
   _spawningLanesContainer: {fileID: 1655969781}
   _zoomPoints: {fileID: 141941061}
   _coinsView: {fileID: 990246004}
-  _buyingWindow: {fileID: 1118074842}
+  _buyingWindow: {fileID: 1575453535}
   _levelLabel: {fileID: 1112066073}
-  _winWindow: {fileID: 197351408}
+  _winWindow: {fileID: 197351409}
   _loseWindow: {fileID: 42006510}
   _gameRunner: {fileID: 1990759706}
 --- !u!4 &1857952941

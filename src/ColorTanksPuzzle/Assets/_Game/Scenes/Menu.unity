@@ -1355,7 +1355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244779a7c48048aca3ce5d1869b64235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.LevelButton
-  _difficultyWindow: {fileID: 1145632949}
+  _difficultyWindow: {fileID: 1145632951}
   _easyLevelConfiguration: {fileID: 11400000, guid: 67dd57c2eb0034240bb1b8c9f05003d0, type: 2}
   _normalLevelConfiguration: {fileID: 11400000, guid: 716805952d04bff47b3bbe3341d55ea4, type: 2}
   _hardLevelConfiguration: {fileID: 11400000, guid: 10046c45e434f714385050b73e164724, type: 2}
@@ -1369,7 +1369,11 @@ GameObject:
   m_Component:
   - component: {fileID: 849983893}
   - component: {fileID: 849983895}
+  - component: {fileID: 849983898}
+  - component: {fileID: 849983897}
   - component: {fileID: 849983894}
+  - component: {fileID: 849983899}
+  - component: {fileID: 849983900}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -1439,6 +1443,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849983892}
   m_CullTransparentMesh: 1
+--- !u!114 &849983897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849983892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!223 &849983898
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849983892}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!95 &849983899
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849983892}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dffc1ef57c4ff4b4385979facd877e12, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &849983900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849983892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad672de42bc4ca09ca6eac8c744e760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.WindowEvent
 --- !u!1 &881454254
 GameObject:
   m_ObjectHideFlags: 0
@@ -2261,7 +2339,8 @@ GameObject:
   - component: {fileID: 1145632947}
   - component: {fileID: 1145632948}
   - component: {fileID: 1145632950}
-  - component: {fileID: 1145632949}
+  - component: {fileID: 1145632951}
+  - component: {fileID: 1145632952}
   m_Layer: 5
   m_Name: DifficultyWindow
   m_TagString: Untagged
@@ -2321,23 +2400,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
---- !u!114 &1145632949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1145632944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4e4f7e8e02946658c66af6f2fac8f12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.DifficultyWindow
-  _closeButton: {fileID: 941365862}
-  _levelName: {fileID: 1934711733}
-  _easyDifficultyButton: {fileID: 929733449}
-  _mediumDifficultyButton: {fileID: 1833032075}
-  _hardDifficultyButton: {fileID: 1449110669}
 --- !u!114 &1145632950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2355,6 +2417,39 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1145632951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145632944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e4f7e8e02946658c66af6f2fac8f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.DifficultyWindow
+  _windowCanvas: {fileID: 849983898}
+  _rootCanvas: {fileID: 1145632948}
+  _levelName: {fileID: 1934711733}
+  _easyDifficultyButton: {fileID: 929733449}
+  _mediumDifficultyButton: {fileID: 1833032075}
+  _hardDifficultyButton: {fileID: 1449110669}
+  _closeButton: {fileID: 941365862}
+--- !u!114 &1145632952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145632944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695511a538ce43578c8ea107babad214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.Window.WindowAnimator
+  _targetWindowAnimator: {fileID: 849983899}
+  _windowEvent: {fileID: 849983900}
 --- !u!1 &1216518246
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,7 +2675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244779a7c48048aca3ce5d1869b64235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.LevelButton
-  _difficultyWindow: {fileID: 1145632949}
+  _difficultyWindow: {fileID: 1145632951}
   _easyLevelConfiguration: {fileID: 11400000, guid: 3f9070979cb59764c87384efd0703484, type: 2}
   _normalLevelConfiguration: {fileID: 11400000, guid: 5c784c28923592647b101914970249ab, type: 2}
   _hardLevelConfiguration: {fileID: 11400000, guid: 1a21bd55dde049e48828fcbfee09560d, type: 2}

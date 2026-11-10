@@ -1,6 +1,7 @@
 ﻿using _Game.Code.Configurations.Levels;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace _Game.Code.UI.Window
 {
@@ -10,11 +11,12 @@ namespace _Game.Code.UI.Window
         [SerializeField] private DifficultyButton _easyDifficultyButton;
         [SerializeField] private DifficultyButton _mediumDifficultyButton;
         [SerializeField] private DifficultyButton _hardDifficultyButton;
+        [SerializeField] private Button _closeButton;
 
         private LevelConfiguration _easyLevelConfiguration;
         private LevelConfiguration _normalLevelConfiguration;
         private LevelConfiguration _hardLevelConfiguration;
-        
+
         public void SetConfigurations
         (
             LevelConfiguration easyLevelConfiguration,
@@ -22,29 +24,32 @@ namespace _Game.Code.UI.Window
             LevelConfiguration hardLevelConfiguration
         )
         {
-            _easyLevelConfiguration =  easyLevelConfiguration;
+            _easyLevelConfiguration = easyLevelConfiguration;
             _normalLevelConfiguration = normalLevelConfiguration;
             _hardLevelConfiguration = hardLevelConfiguration;
-            
+
             Open();
         }
 
-        protected override void OnOpen()
+        private void Open()
         {
-            _levelName.text = $"LEVEL {_easyLevelConfiguration.Id}";
+            _closeButton.onClick.AddListener(Close);
             
+            InvokeOpen();
+
+            _levelName.text = $"LEVEL {_easyLevelConfiguration.Id}";
+
             _easyDifficultyButton.SetLevelConfiguration(_easyLevelConfiguration);
             _mediumDifficultyButton.SetLevelConfiguration(_normalLevelConfiguration);
             _hardDifficultyButton.SetLevelConfiguration(_hardLevelConfiguration);
         }
 
-        protected override void OnClose()
+        private void Close()
         {
-            SetNullableConfigurations();
-        }
-
-        private void SetNullableConfigurations()
-        {
+            _closeButton.onClick.RemoveListener(Close);
+            
+            InvokeClose();
+            
             _easyDifficultyButton.SetLevelConfiguration(null);
             _mediumDifficultyButton.SetLevelConfiguration(null);
             _hardDifficultyButton.SetLevelConfiguration(null);
