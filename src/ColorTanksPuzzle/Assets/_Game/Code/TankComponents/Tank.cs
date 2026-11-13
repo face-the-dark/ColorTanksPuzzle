@@ -6,8 +6,6 @@ using _Game.Code.Providers;
 using _Game.Code.Spawners;
 using _Game.Code.WaitingAreaComponents;
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 using SplineMesh;
 using UnityEngine;
 
@@ -121,10 +119,14 @@ namespace _Game.Code.TankComponents
             _tankMover.CurrentLengthPercentageIncreased -= OnCurrentLengthPercentageIncreased;
             _tankMover.CirclePassed -= OnCirclePassed;
 
+            _tankMover.StopMove();
+            _tankRotator.StopRotate();
+            _tankShooter.StopShoot();
+
+            _isMoving = false;
+            
             MovingStopped?.Invoke(this);
             Died?.Invoke(this);
-
-            Destroy(gameObject);
         }
 
         private void OnCurrentLengthPercentageIncreased(float currentLengthPercentage) =>
