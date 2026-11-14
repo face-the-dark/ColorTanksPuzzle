@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.UI.TankHealthView
   _text: {fileID: 5238198640352398439}
-  _tankShooter: {fileID: 600859958125622287}
+  _tank: {fileID: 3446851137628028536}
 --- !u!1 &1292776484045473698
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 4943949501064425123}
   - component: {fileID: 600859958125622287}
   - component: {fileID: 8951658886726705312}
+  - component: {fileID: 3782598696676681326}
   - component: {fileID: 6816027963292986665}
   m_Layer: 8
   m_Name: Tank
@@ -537,6 +538,8 @@ MonoBehaviour:
   _tankMover: {fileID: 5071630348431066589}
   _tankRotator: {fileID: 9204070678284714604}
   _tankShooter: {fileID: 600859958125622287}
+  _tankHealth: {fileID: 3782598696676681326}
+  _tankDeath: {fileID: 6816027963292986665}
   _tankDyer: {fileID: 4943949501064425123}
 --- !u!114 &5071630348431066589
 MonoBehaviour:
@@ -599,8 +602,11 @@ MonoBehaviour:
   _pixelLayer:
     serializedVersion: 2
     m_Bits: 64
+  _ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 384
   _bulletPrefab: {fileID: 648858509853279321, guid: c5bd1a1e96b49464cbae5705094096a4, type: 3}
-  _fireRate: 20
+  _fireRate: 30
 --- !u!114 &8951658886726705312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,6 +620,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Tanks.TankAnimator
   _shootClip: {fileID: 7400000, guid: 7433e09fe16ada2429ff66b624f6c73a, type: 2}
+--- !u!114 &3782598696676681326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884587981952729076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ae0023adb44a758f49b35144762374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.TankComponents.TankHealth
 --- !u!114 &6816027963292986665
 MonoBehaviour:
   m_ObjectHideFlags: 0

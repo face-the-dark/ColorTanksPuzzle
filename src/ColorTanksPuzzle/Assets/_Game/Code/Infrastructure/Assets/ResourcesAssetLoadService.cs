@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace _Game.Code.Infrastructure.Assets
 {
-    public class AssetLoadService
+    public class ResourcesAssetLoadService : IAssetLoadService
     {
         public List<DifficultyConfiguration> LoadDifficultyConfigurations() =>
             Resources
@@ -25,16 +25,16 @@ namespace _Game.Code.Infrastructure.Assets
         public Palette LoadPalette() => 
             Resources.Load<Palette>(AssetPath.PalettePath);
 
-        public Pixel LoadPixel() => 
+        public Pixel LoadPixelPrefab() => 
             Resources.Load<Pixel>(AssetPath.PixelPrefabPath);
 
-        public Tank LoadTank() => 
+        public Tank LoadTankPrefab() => 
             Resources.Load<Tank>(AssetPath.TankPrefabPath);
 
-        public Bullet LoadBullet() => 
+        public Bullet LoadBulletPrefab() => 
             Resources.Load<Bullet>(AssetPath.BulletPrefabPath);
 
-        public WaitingAreaCell LoadWaitingAreaCell() => 
+        public WaitingAreaCell LoadWaitingAreaCellPrefab() => 
             Resources.Load<WaitingAreaCell>(AssetPath.WaitingAreaCellPrefabPath);
 
         public BonusesConfiguration LoadBonusesConfiguration() => 

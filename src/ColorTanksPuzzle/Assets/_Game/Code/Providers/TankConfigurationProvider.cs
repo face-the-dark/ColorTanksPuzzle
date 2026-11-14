@@ -10,7 +10,7 @@ namespace _Game.Code.Providers
         public TankConfiguration TankConfiguration { get; }
 
         [Inject]
-        public TankConfigurationProvider(AssetLoadService assetLoadService)
+        public TankConfigurationProvider(IAssetLoadService assetLoadService)
         {
             if (assetLoadService == null)
                 throw new ArgumentNullException(nameof(assetLoadService));

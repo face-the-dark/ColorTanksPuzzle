@@ -3,6 +3,7 @@ using _Game.Code.Destroyers;
 using _Game.Code.Extensions;
 using _Game.Code.Pixels;
 using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.Bullets
 {
@@ -18,6 +19,7 @@ namespace _Game.Code.Bullets
         private Coroutine _flyCoroutine;
         private bool _isFlying;
 
+        [Inject]
         public void Construct(PixelDestroyer pixelDestroyer) =>
             _pixelDestroyer = pixelDestroyer;
 

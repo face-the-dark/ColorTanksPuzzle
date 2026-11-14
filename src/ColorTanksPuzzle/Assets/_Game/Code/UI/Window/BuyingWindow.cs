@@ -25,7 +25,7 @@ namespace _Game.Code.UI.Window
         private Bonus _bonus;
 
         [Inject]
-        public void Construct(BonusBuyer bonusBuyer, AssetLoadService assetLoadService)
+        public void Construct(BonusBuyer bonusBuyer, IAssetLoadService assetLoadService)
         {
             _bonusBuyer = bonusBuyer ?? throw new ArgumentNullException(nameof(bonusBuyer));
 

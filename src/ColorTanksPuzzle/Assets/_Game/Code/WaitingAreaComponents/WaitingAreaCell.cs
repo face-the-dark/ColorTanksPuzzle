@@ -15,6 +15,13 @@ namespace _Game.Code.WaitingAreaComponents
         public bool IsFree => _isFree;
         public Tank TakenTank => _takenTank;
 
+        public event Action Spawned;
+        
+        public void Initialize()
+        {
+            Spawned?.Invoke();
+        }
+
         public void TakeOver(Tank tank)
         {
             if (_isFree == false)

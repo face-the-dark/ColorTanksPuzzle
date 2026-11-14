@@ -3,10 +3,11 @@
 namespace _Game.Code.TankComponents
 {
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(TankShooter))]
-    [RequireComponent(typeof(TankDeath))]
+    [RequireComponent(typeof(Tank))]
     public class TankAnimator : MonoBehaviour
     {
+        private const float FireRate = 0.05f;
+        
         private static readonly int ShootKey = Animator.StringToHash("Shoot");
         private static readonly int ShootSpeedKey = Animator.StringToHash("ShootSpeed");
         private static readonly int DieKey = Animator.StringToHash("Die");
@@ -14,35 +15,33 @@ namespace _Game.Code.TankComponents
         [SerializeField] private AnimationClip _shootClip;
         
         private Animator _animator;
-        private TankShooter _tankShooter;
-        private TankDeath _tankDeath;
+        private Tank _tank;
 
         private float _shootClipSpeed;
         
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-            _tankShooter = GetComponent<TankShooter>();
-            _tankDeath = GetComponent<TankDeath>();
+            _tank = GetComponent<Tank>();
             
-            _shootClipSpeed = _shootClip.length / _tankShooter.FireRate;
+            _shootClipSpeed = _shootClip.length / FireRate;
         }
 
         private void OnEnable()
         {
-            _tankShooter.Shot += OnShot;
-            _tankShooter.Died += OnDied;
+            _tank.Shot += OnShot;
+            _tank.Died += OnDied;
         }
 
         private void OnDisable()
         {
-            _tankShooter.Shot -= OnShot;
-            _tankShooter.Died -= OnDied;
+            _tank.Shot -= OnShot;
+            _tank.Died -= OnDied;
         }
 
         public void OnDieAnimationComplete()
         {
-            _tankDeath.Die();
+            _tank.Die();
         }
 
         private void OnShot()
@@ -51,7 +50,7 @@ namespace _Game.Code.TankComponents
             _animator.SetTrigger(ShootKey);
         }
 
-        private void OnDied()
+        private void OnDied(Tank tank)
         {
             _animator.SetTrigger(DieKey);
         }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Code.Destroyers;
 using _Game.Code.Generators.Data;
 using _Game.Code.Generators.Tanks;
+using _Game.Code.Infrastructure;
 using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Providers;
 using _Game.Code.TankComponents;
@@ -22,7 +22,7 @@ namespace _Game.Code.Spawners
         private readonly List<Tank> _spawnedTanks = new();
         private readonly TanksDataGenerator _tanksDataGenerator;
         private readonly WaitingArea _waitingArea;
-        private readonly PixelDestroyer _pixelDestroyer;
+        private readonly GameFactory _gameFactory;
         private readonly TankConfigurationProvider _tankConfigurationProvider;
         private readonly Tank _tankPrefab;
 
@@ -35,18 +35,18 @@ namespace _Game.Code.Spawners
             SpawningLanesContainer spawningLanesContainer,
             TanksDataGenerator tanksDataGenerator,
             WaitingArea waitingArea,
-            AssetLoadService assetLoadService,
-            PixelDestroyer pixelDestroyer,
+            IAssetLoadService assetLoadService,
+            GameFactory gameFactory,
             TankConfigurationProvider tankConfigurationProvider)
         {
             _spline = spline;
             _spawningLanes = spawningLanesContainer.SpawningLanes;
             _tanksDataGenerator = tanksDataGenerator;
             _waitingArea = waitingArea;
-            _pixelDestroyer = pixelDestroyer;
+            _gameFactory = gameFactory;
             _tankConfigurationProvider = tankConfigurationProvider;
 
-            _tankPrefab = assetLoadService.LoadTank();
+            _tankPrefab = assetLoadService.LoadTankPrefab();
 
             _tanksDataGenerator.DataGenerated += OnDataGenerated;
         }
@@ -91,7 +91,7 @@ namespace _Game.Code.Spawners
             lane.Add(tank);
             _spawnedTanks.Add(tank);
 
-            tank.Initialize(_spline, tankData, _waitingArea, lane, _pixelDestroyer, _tankConfigurationProvider);
+            tank.Initialize(_spline, tankData, _waitingArea, lane, _gameFactory, _tankConfigurationProvider);
         }
     }
 }

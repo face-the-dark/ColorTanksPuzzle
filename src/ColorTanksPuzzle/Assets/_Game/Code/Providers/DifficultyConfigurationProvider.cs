@@ -12,7 +12,7 @@ namespace _Game.Code.Providers
         private readonly Dictionary<DifficultyMode, DifficultyConfiguration> _difficultyConfigurations;
 
         [Inject]
-        public DifficultyConfigurationProvider(AssetLoadService assetLoadService)
+        public DifficultyConfigurationProvider(IAssetLoadService assetLoadService)
         {
             if (assetLoadService == null)
                 throw new ArgumentNullException(nameof(assetLoadService));

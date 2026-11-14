@@ -10,10 +10,10 @@ namespace _Game.Code.Providers
         public BonusesConfiguration BonusesConfiguration { get; }
 
         [Inject]
-        public BonusesConfigurationProvider(AssetLoadService assetLoadService)
+        public BonusesConfigurationProvider(IAssetLoadService assetLoadService)
         {
-            if (assetLoadService == null) 
-                throw  new ArgumentNullException(nameof(assetLoadService));
+            if (assetLoadService == null)
+                throw new ArgumentNullException(nameof(assetLoadService));
 
             BonusesConfiguration = assetLoadService.LoadBonusesConfiguration();
         }

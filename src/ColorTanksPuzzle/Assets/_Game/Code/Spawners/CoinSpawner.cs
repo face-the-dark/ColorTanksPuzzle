@@ -14,7 +14,7 @@ namespace _Game.Code.Spawners
         private readonly Coin _coinPrefab;
 
         [Inject]
-        public CoinSpawner(AssetLoadService assetLoadService, Camera camera, RectTransform coinUiTarget)
+        public CoinSpawner(IAssetLoadService assetLoadService, Camera camera, RectTransform coinUiTarget)
         {
             if (assetLoadService == null)
                 throw new ArgumentNullException(nameof(assetLoadService));

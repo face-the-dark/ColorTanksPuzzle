@@ -9,12 +9,12 @@ namespace _Game.Code.Bonuses
     public class BonusBuyer
     {
         private readonly PlayerDataService _playerDataService;
-        private readonly AssetLoadService _assetLoadService;
+        private readonly IAssetLoadService _assetLoadService;
 
         private BonusesConfiguration _bonusesConfiguration;
 
         [Inject]
-        public BonusBuyer(PlayerDataService playerDataService, AssetLoadService assetLoadService)
+        public BonusBuyer(PlayerDataService playerDataService, IAssetLoadService assetLoadService)
         {
             _playerDataService = playerDataService ?? throw new ArgumentNullException(nameof(playerDataService));
             _assetLoadService = assetLoadService ?? throw new ArgumentNullException(nameof(assetLoadService));

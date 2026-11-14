@@ -31,7 +31,7 @@ namespace _Game.Code.Spawners
         public WaitingAreaCellSpawner
         (
             WaitingAreaSpawnBoundaries waitingAreaSpawnBoundaries,
-            AssetLoadService assetLoadService,
+            IAssetLoadService assetLoadService,
             DifficultyConfigurationProvider difficultyConfigurationProvider,
             LevelConfigurationProvider levelConfigurationProvider
         )
@@ -45,7 +45,7 @@ namespace _Game.Code.Spawners
             if (assetLoadService == null)
                 throw new ArgumentNullException(nameof(assetLoadService));
 
-            _waitingAreaCellPrefab = assetLoadService.LoadWaitingAreaCell();
+            _waitingAreaCellPrefab = assetLoadService.LoadWaitingAreaCellPrefab();
         }
 
         public event Action<List<WaitingAreaCell>> CellsSpawned;
@@ -96,6 +96,7 @@ namespace _Game.Code.Spawners
             Vector3 position = new(_currentPositionByX, 0.5f, _currentPositionByZ);
 
             WaitingAreaCell waitingAreaCell = Object.Instantiate(_waitingAreaCellPrefab, position, Quaternion.identity);
+            waitingAreaCell.Initialize();
 
             _currentWaitingAreaCells.Add(waitingAreaCell);
 

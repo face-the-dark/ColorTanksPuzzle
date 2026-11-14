@@ -59,6 +59,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.RegisterComponent(_gameRunner);
 
             builder.Register<DeterministicRandom>(Lifetime.Singleton);
+            builder.Register<GameFactory>(Lifetime.Singleton);
             builder.Register<PixelArtSpawner>(Lifetime.Singleton)
                 .WithParameter(_pixelArtContainer);
             builder.Register<TankHpGenerator>(Lifetime.Singleton);

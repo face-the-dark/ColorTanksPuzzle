@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using _Game.Code.Destroyers;
 using _Game.Code.Generators.Data;
+using _Game.Code.Infrastructure;
 using _Game.Code.Providers;
 using _Game.Code.Spawners;
 using _Game.Code.WaitingAreaComponents;
@@ -16,6 +16,8 @@ namespace _Game.Code.TankComponents
         [SerializeField] private TankMover _tankMover;
         [SerializeField] private TankRotator _tankRotator;
         [SerializeField] private TankShooter _tankShooter;
+        [SerializeField] private TankHealth _tankHealth;
+        [SerializeField] private TankDeath _tankDeath;
         [SerializeField] private TankDyer _tankDyer;
 
         private Spline _spline;
@@ -30,9 +32,11 @@ namespace _Game.Code.TankComponents
 
         public bool IsMoving => _isMoving;
         public bool IsBlocked => _isBlocked;
-        public int Hp => _tankShooter.Hp;
+        public int Hp => _tankHealth.Value;
         public Color Color => _tankShooter.Color;
 
+        public event Action Shot;
+        public event Action<int> HealthValueChanged;
         public event Action<Tank> MovingStopped;
         public event Action<Tank> Died;
 
@@ -42,20 +46,28 @@ namespace _Game.Code.TankComponents
             TankData tankData,
             WaitingArea waitingArea,
             SpawningLane spawningLane,
-            PixelDestroyer pixelDestroyer,
+            GameFactory gameFactory,
             TankConfigurationProvider tankConfigurationProvider
         )
         {
             _spline = spline;
             _tankMover.Initialize(spline, tankConfigurationProvider);
             _tankRotator.Initialize(spline);
-            _tankShooter.Initialize(tankData, pixelDestroyer);
+            _tankShooter.Initialize(tankData.Color, gameFactory);
+            _tankHealth.Initialize(tankData.Hp);
             _tankDyer.Initialize(tankData);
 
             _waitingArea = waitingArea;
             _lane = spawningLane;
 
-            _tankShooter.Died += Die;
+            _tankShooter.Shot += OnShot;
+            _tankHealth.ValueChanged += OnHealthValueChanged;
+            _tankHealth.Died += Die;
+        }
+
+        private void OnHealthValueChanged(int value)
+        {
+            HealthValueChanged?.Invoke(value);
         }
 
         public void MoveToSpline()
@@ -115,18 +127,21 @@ namespace _Game.Code.TankComponents
 
         public void Die()
         {
-            _tankShooter.Died -= Die;
+            _tankHealth.Died -= Die;
+            _tankHealth.ValueChanged -= OnHealthValueChanged;
+            _tankShooter.Shot -= OnShot;
             _tankMover.CurrentLengthPercentageIncreased -= OnCurrentLengthPercentageIncreased;
             _tankMover.CirclePassed -= OnCirclePassed;
-
-            _tankMover.StopMove();
-            _tankRotator.StopRotate();
-            _tankShooter.StopShoot();
 
             _isMoving = false;
             
             MovingStopped?.Invoke(this);
             Died?.Invoke(this);
+            
+            _tankMover.StopMove();
+            _tankRotator.StopRotate();
+            _tankShooter.StopShoot();
+            _tankDeath.Die();
         }
 
         private void OnCurrentLengthPercentageIncreased(float currentLengthPercentage) =>
@@ -156,6 +171,13 @@ namespace _Game.Code.TankComponents
 
                 MovingStopped?.Invoke(this);
             }
+        }
+
+        private void OnShot()
+        {
+            _tankHealth.Decrease();
+            
+            Shot?.Invoke();
         }
     }
 }

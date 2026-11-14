@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using _Game.Code.Bullets;
-using _Game.Code.Destroyers;
 using _Game.Code.Extensions;
-using _Game.Code.Generators.Data;
+using _Game.Code.Infrastructure;
 using _Game.Code.Pixels;
 using UnityEngine;
 
@@ -11,44 +12,36 @@ namespace _Game.Code.TankComponents
 {
     public class TankShooter : MonoBehaviour
     {
+        private const int MaxRaycastHitsSize = 40;
+        
+        private readonly RaycastHit[] _raycastHits = new RaycastHit[MaxRaycastHitsSize];
+        private readonly IComparer<RaycastHit> _distanceComparer =
+            Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance));
+
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private float _shootMaxDistance = 30f;
         [SerializeField] private LayerMask _pixelLayer;
         [SerializeField] private Bullet _bulletPrefab;
-        [SerializeField] private float _fireRate = 1f;
 
-        private PixelDestroyer _pixelDestroyer;
+        private GameFactory _gameFactory;
 
         private Color _color;
-        private int _hp;
 
         private Coroutine _shootCoroutine;
         private Pixel _currentPixel;
+        private List<Pixel> _blockedPixels = new();
         private bool _isShooting;
-        private float _reloadTime;
 
-        public event Action Died;
-        public event Action<int> HpChanged;
         public event Action Shot;
 
-        public int Hp => _hp;
         public Color Color => _color;
-        public float FireRate => 1 / _fireRate;
 
-        public void Initialize
-        (
-            TankData tankData,
-            PixelDestroyer pixelDestroyer
-        )
+        public void Initialize(Color color, GameFactory gameFactory)
         {
-            _color = tankData.Color;
-            _hp = tankData.Hp;
+            _color = color;
 
-            _pixelDestroyer = pixelDestroyer;
+            _gameFactory = gameFactory ?? throw new ArgumentNullException(nameof(gameFactory));
         }
-
-        private void Start() =>
-            HpChanged?.Invoke(_hp);
 
         public void StartShoot()
         {
@@ -61,30 +54,48 @@ namespace _Game.Code.TankComponents
         {
             _isShooting = false;
             this.StopCurrentCoroutine(ref _shootCoroutine);
+            
+            _blockedPixels = new List<Pixel>();
         }
 
         private IEnumerator Shoot()
         {
             while (_isShooting)
             {
-                Ray ray = new Ray(_shootPoint.position, _shootPoint.forward);
+                int hitsCount = Physics.RaycastNonAlloc
+                (
+                    _shootPoint.position,
+                    _shootPoint.forward,
+                    _raycastHits,
+                    _shootMaxDistance,
+                    _pixelLayer
+                );
 
-                if (Physics.Raycast(ray, out RaycastHit hit, _shootMaxDistance, _pixelLayer))
+                Array.Sort(_raycastHits, 0, hitsCount, _distanceComparer);
+
+                List<Pixel> pixelHits = new List<Pixel>();
+
+                for (int i = 0; i < hitsCount; i++)
+                    if (_raycastHits[i].collider && _raycastHits[i].collider.TryGetComponent(out Pixel pixelHit))
+                        pixelHits.Add(pixelHit);
+                
+                if (pixelHits.Count > 0)
                 {
-                    if (hit.collider.TryGetComponent(out Pixel pixel))
+                    Pixel firstPixel = pixelHits.FindAll(pixel => pixel.IsWillBeDestroyed == false).FirstOrDefault();
+
+                    if (firstPixel && CanDestroyPixel(firstPixel) && _blockedPixels.Contains(firstPixel) == false)
                     {
-                        if (CanDestroyPixel(pixel) && IsReloaded())
-                        {
-                            Bullet bullet = SpawnBullet(pixel);
+                        Bullet bullet = SpawnBullet(firstPixel);
 
-                            _currentPixel = pixel;
-                            pixel.MarkForDestruction(bullet);
+                        if (_currentPixel != firstPixel)
+                            _blockedPixels = new();
 
-                            ReduceHp();
-                            Reload();
+                        _currentPixel = firstPixel;
+                        firstPixel.MarkForDestruction(bullet);
 
-                            Shot?.Invoke();
-                        }
+                        _blockedPixels.AddRange(pixelHits.FindAll(pixel => pixel.IsWillBeDestroyed == false));
+
+                        Shot?.Invoke();
                     }
                 }
 
@@ -94,7 +105,8 @@ namespace _Game.Code.TankComponents
 
         private bool CanDestroyPixel(Pixel pixel)
         {
-            return pixel.Color == _color
+            return pixel
+                   && pixel.Color == _color
                    && pixel.Equals(_currentPixel) == false
                    && pixel.IsWillBeDestroyed == false
                    && pixel.DestructionBullet is null;
@@ -103,21 +115,10 @@ namespace _Game.Code.TankComponents
         private Bullet SpawnBullet(Pixel pixel)
         {
             Vector3 bulletSpawnPosition = GetBulletSpawnPosition(pixel);
-            Bullet bullet = Instantiate(_bulletPrefab, bulletSpawnPosition, Quaternion.identity);
-            bullet.Construct(_pixelDestroyer);
+            Bullet bullet = _gameFactory.CreateBullet(bulletSpawnPosition);
             bullet.StartFly(pixel.transform.position, _color);
 
             return bullet;
-        }
-
-        private void ReduceHp()
-        {
-            _hp--;
-
-            if (_hp <= 0)
-                Died?.Invoke();
-
-            HpChanged?.Invoke(_hp);
         }
 
         private Vector3 GetBulletSpawnPosition(Pixel pixel)
@@ -135,16 +136,6 @@ namespace _Game.Code.TankComponents
             }
 
             return _shootPoint.position;
-        }
-
-        private void Reload()
-        {
-            _reloadTime = Time.time + FireRate;
-        }
-
-        private bool IsReloaded()
-        {
-            return Time.time >= _reloadTime;
         }
     }
 }

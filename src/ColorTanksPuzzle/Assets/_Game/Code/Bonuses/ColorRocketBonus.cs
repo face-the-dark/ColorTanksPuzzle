@@ -28,7 +28,7 @@ namespace _Game.Code.Bonuses
             TankDestroyer tankDestroyer,
             CameraMover cameraMover,
             Selector selector,
-            AssetLoadService assetLoadService
+            IAssetLoadService assetLoadService
         )
         {
             _pixelDestroyer = pixelDestroyer ?? throw new ArgumentNullException(nameof(pixelDestroyer));

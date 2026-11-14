@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using _Game.Code.Spawners;
 using _Game.Code.TankComponents;
 using UnityEngine;
@@ -29,6 +28,8 @@ namespace _Game.Code.Destroyers
 
         public void Destroy(Tank tank)
         {
+            tank.Died -= Destroy;
+            
             _tanks.Remove(tank);
             
             tank.Unblock();
@@ -46,14 +47,7 @@ namespace _Game.Code.Destroyers
             _tanks = tanks;
 
             foreach (Tank tank in tanks) 
-                tank.Died += OnDied;
-        }
-
-        private void OnDied(Tank tank)
-        {
-            tank.Died -= OnDied;
-            
-            Destroy(tank);
+                tank.Died += Destroy;
         }
     }
 }
