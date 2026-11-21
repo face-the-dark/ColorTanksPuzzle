@@ -59,6 +59,11 @@ namespace _Game.Code.WaitingAreaComponents
             waitingAreaCell.Release();
         }
 
+        public bool Contains(Tank tank)
+        {
+            return _waitingAreaCells.Find(cell => tank.Equals(cell.TakenTank)) != null;
+        }
+
         private WaitingAreaCell GetFreeCell()
         {
             WaitingAreaCell waitingAreaCell = _waitingAreaCells.Find(cell => cell.IsFree);

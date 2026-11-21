@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Game.Code.ConfigurationProvider;
 using _Game.Code.Configurations;
 using _Game.Code.Configurations.Difficulty;
 using _Game.Code.Infrastructure.Assets;
-using _Game.Code.Providers;
 using _Game.Code.WaitingAreaComponents;
 using UnityEngine;
 using VContainer;

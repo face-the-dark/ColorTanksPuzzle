@@ -33,13 +33,14 @@ namespace _Game.Code.Destroyers
             _tanks.Remove(tank);
             
             tank.Unblock();
-            tank.RemoveFromWaitingAreaOrLane();
             tank.Die();
         }
         
         public void DestroyAllByColor(Color color)
         {
-            _tanks.FindAll(x => x.Color == color && x.IsMoving == false).ForEach(Destroy);
+            _tanks
+                .FindAll(x => x.Color == color && x.IsMoving == false)
+                .ForEach(Destroy);
         }
         
         private void OnTankSpawned(List<Tank> tanks)

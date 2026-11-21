@@ -3,7 +3,7 @@ using _Game.Code.Configurations.Difficulty;
 using _Game.Code.Configurations.Levels;
 using VContainer;
 
-namespace _Game.Code.Providers
+namespace _Game.Code.ConfigurationProvider
 {
     public class LevelConfigurationProvider
     {

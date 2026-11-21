@@ -1,13 +1,17 @@
 ﻿using _Game.Code.Bonuses;
 using _Game.Code.Cameras;
 using _Game.Code.Coins;
+using _Game.Code.ConfigurationProvider;
 using _Game.Code.Configurations;
 using _Game.Code.Destroyers;
 using _Game.Code.Generators.Tanks;
 using _Game.Code.Players;
-using _Game.Code.Providers;
 using _Game.Code.Spawners;
+using _Game.Code.Spawners.Lines;
+using _Game.Code.Spawners.Lines.DOTweenImplementation;
 using _Game.Code.SplineModifiers;
+using _Game.Code.TankComponents;
+using _Game.Code.TankComponents.DOTween;
 using _Game.Code.UI;
 using _Game.Code.UI.BonusButtons;
 using _Game.Code.UI.View;
@@ -35,7 +39,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
         [SerializeField] private RectTransform _coinUiTarget;
         [SerializeField] private SplineTanksCountView _splineTanksCountView;
         [SerializeField] private Spline _spline;
-        [SerializeField] private SpawningLanesContainer _spawningLanesContainer;
+        [SerializeField] private SpawnLines _spawnLines;
         [SerializeField] private ZoomPoints _zoomPoints;
         [SerializeField] private CoinsView _coinsView;
         [SerializeField] private BuyingWindow _buyingWindow;
@@ -52,12 +56,15 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.RegisterComponent(_colorRocketSplineBonusButton);
             builder.RegisterComponent(_splineTanksCountView);
             builder.RegisterComponent(_waitingAreaSpawnBoundaries);
-            builder.RegisterComponent(_spawningLanesContainer);
+            builder.RegisterComponent(_spawnLines);
             builder.RegisterComponent(_zoomPoints);
             builder.RegisterComponent(_coinsView);
             builder.RegisterComponent(_buyingWindow);
             builder.RegisterComponent(_gameRunner);
-
+            builder.RegisterComponent(_spline);
+            
+            builder.Register<ITankJumpAnimator, DOTweenTankJumpAnimator>(Lifetime.Transient);
+            builder.Register<ITankGroupMoveAnimator, DOTweenTankGroupMoveAnimator>(Lifetime.Transient);
             builder.Register<DeterministicRandom>(Lifetime.Singleton);
             builder.Register<GameFactory>(Lifetime.Singleton);
             builder.Register<PixelArtSpawner>(Lifetime.Singleton)
@@ -65,7 +72,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.Register<TankHpGenerator>(Lifetime.Singleton);
             builder.Register<TankOrderGenerator>(Lifetime.Singleton);
             builder.Register<TankLaneDistributor>(Lifetime.Singleton)
-                .WithParameter(_spawningLanesContainer);
+                .WithParameter(_spawnLines);
             builder.Register<TanksDataGenerator>(Lifetime.Singleton);
             builder.Register<WaitingArea>(Lifetime.Singleton);
             builder.Register<PlayerInput>(Lifetime.Singleton);
@@ -93,10 +100,10 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
                 .WithParameter(_coinUiTarget);
             builder.Register<TankSpawner>(Lifetime.Singleton)
                 .WithParameter(_spline)
-                .WithParameter(_spawningLanesContainer);
+                .WithParameter(_spawnLines);
             
             builder.Register<IBonus, ExpansionBonus>(Lifetime.Singleton);
-            builder.Register<IBonus, FreezeSplineBonus>(Lifetime.Singleton);
+            builder.Register<IBonus, SwitchTanksBonus>(Lifetime.Singleton);
             builder.Register<IBonus, SacrificeBonus>(Lifetime.Singleton);
             builder.Register<IBonus, ColorRocketBonus>(Lifetime.Singleton);
             
@@ -107,6 +114,11 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
                 container.Inject(_levelLabel);
                 container.Inject(_winWindow);
                 container.Inject(_loseWindow);
+
+                foreach (SpawnLine spawnLine in _spawnLines.Lines)
+                {
+                    container.Inject(spawnLine);
+                }
             });
 
             builder.RegisterEntryPoint<GameEntryPoint>();

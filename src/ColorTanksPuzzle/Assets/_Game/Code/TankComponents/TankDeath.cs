@@ -4,9 +4,7 @@ namespace _Game.Code.TankComponents
 {
     public class TankDeath : MonoBehaviour
     {
-        public void Die()
-        {
+        public void Die() => 
             Destroy(gameObject);
-        }
     }
 }

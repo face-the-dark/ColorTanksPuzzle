@@ -9,10 +9,9 @@ namespace _Game.Code.WaitingAreaComponents
     {
         [SerializeField] private Transform _point;
 
-        private bool _isFree = true;
         private Tank _takenTank;
 
-        public bool IsFree => _isFree;
+        public bool IsFree => _takenTank == null;
         public Tank TakenTank => _takenTank;
 
         public event Action Spawned;
@@ -24,10 +23,6 @@ namespace _Game.Code.WaitingAreaComponents
 
         public void TakeOver(Tank tank)
         {
-            if (_isFree == false)
-                throw new Exception(nameof(_isFree));
-
-            _isFree = false;
             _takenTank = tank;
             
             tank.transform
@@ -37,10 +32,6 @@ namespace _Game.Code.WaitingAreaComponents
 
         public void Release()
         {
-            if (_isFree)
-                throw new Exception(nameof(_isFree));
-
-            _isFree = true;
             _takenTank = null;
         }
 

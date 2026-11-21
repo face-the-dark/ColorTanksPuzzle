@@ -1,5 +1,4 @@
-﻿using _Game.Code.Generators.Data;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Game.Code.TankComponents
 {
@@ -7,10 +6,10 @@ namespace _Game.Code.TankComponents
     {
         [SerializeField] private TankPartDyer[] _tankParts;
         
-        public void Initialize(TankData tankData)
+        public void Initialize(Color color)
         {
             foreach (TankPartDyer tankPartDyer in _tankParts) 
-                tankPartDyer.ApplyColor(tankData.Color);
+                tankPartDyer.ApplyColor(color);
         }
     }
 }

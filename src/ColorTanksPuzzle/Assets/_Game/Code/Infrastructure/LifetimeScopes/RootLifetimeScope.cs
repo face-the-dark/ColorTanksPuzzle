@@ -1,7 +1,7 @@
-﻿using _Game.Code.Infrastructure.Assets;
+﻿using _Game.Code.ConfigurationProvider;
+using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Infrastructure.SceneManagment;
 using _Game.Code.PersistenceProgress;
-using _Game.Code.Providers;
 using VContainer;
 using VContainer.Unity;
 

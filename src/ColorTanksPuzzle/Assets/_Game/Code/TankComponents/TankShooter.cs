@@ -7,6 +7,7 @@ using _Game.Code.Extensions;
 using _Game.Code.Infrastructure;
 using _Game.Code.Pixels;
 using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.TankComponents
 {
@@ -21,26 +22,29 @@ namespace _Game.Code.TankComponents
         [SerializeField] private Transform _shootPoint;
         [SerializeField] private float _shootMaxDistance = 30f;
         [SerializeField] private LayerMask _pixelLayer;
-        [SerializeField] private Bullet _bulletPrefab;
 
         private GameFactory _gameFactory;
 
         private Color _color;
 
+        private bool _isShooting;
         private Coroutine _shootCoroutine;
         private Pixel _currentPixel;
         private List<Pixel> _blockedPixels = new();
-        private bool _isShooting;
 
         public event Action Shot;
 
         public Color Color => _color;
 
-        public void Initialize(Color color, GameFactory gameFactory)
+        [Inject]
+        public void Construct(GameFactory gameFactory)
+        {
+            _gameFactory = gameFactory ?? throw new ArgumentNullException(nameof(gameFactory));
+        }
+        
+        public void Initialize(Color color)
         {
             _color = color;
-
-            _gameFactory = gameFactory ?? throw new ArgumentNullException(nameof(gameFactory));
         }
 
         public void StartShoot()
@@ -62,23 +66,9 @@ namespace _Game.Code.TankComponents
         {
             while (_isShooting)
             {
-                int hitsCount = Physics.RaycastNonAlloc
-                (
-                    _shootPoint.position,
-                    _shootPoint.forward,
-                    _raycastHits,
-                    _shootMaxDistance,
-                    _pixelLayer
-                );
+                int hitsCount = RaycastAndSortHits();
+                List<Pixel> pixelHits = FindPixelsHits(hitsCount);
 
-                Array.Sort(_raycastHits, 0, hitsCount, _distanceComparer);
-
-                List<Pixel> pixelHits = new List<Pixel>();
-
-                for (int i = 0; i < hitsCount; i++)
-                    if (_raycastHits[i].collider && _raycastHits[i].collider.TryGetComponent(out Pixel pixelHit))
-                        pixelHits.Add(pixelHit);
-                
                 if (pixelHits.Count > 0)
                 {
                     Pixel firstPixel = pixelHits.FindAll(pixel => pixel.IsWillBeDestroyed == false).FirstOrDefault();
@@ -101,6 +91,32 @@ namespace _Game.Code.TankComponents
 
                 yield return null;
             }
+        }
+
+        private List<Pixel> FindPixelsHits(int hitsCount)
+        {
+            List<Pixel> pixelHits = new List<Pixel>();
+
+            for (int i = 0; i < hitsCount; i++)
+                if (_raycastHits[i].collider && _raycastHits[i].collider.TryGetComponent(out Pixel pixelHit))
+                    pixelHits.Add(pixelHit);
+            return pixelHits;
+        }
+
+        private int RaycastAndSortHits()
+        {
+            int hitsCount = Physics.RaycastNonAlloc
+            (
+                _shootPoint.position,
+                _shootPoint.forward,
+                _raycastHits,
+                _shootMaxDistance,
+                _pixelLayer
+            );
+
+            Array.Sort(_raycastHits, 0, hitsCount, _distanceComparer);
+            
+            return hitsCount;
         }
 
         private bool CanDestroyPixel(Pixel pixel)

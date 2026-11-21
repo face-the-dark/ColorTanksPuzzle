@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Code.ConfigurationProvider;
 using _Game.Code.Configurations.Difficulty;
-using _Game.Code.Providers;
 using _Game.Code.Utilities;
 using VContainer;
 

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
+using _Game.Code.ConfigurationProvider;
 using _Game.Code.Extensions;
-using _Game.Code.Providers;
 using SplineMesh;
 using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.TankComponents
 {
@@ -16,16 +17,23 @@ namespace _Game.Code.TankComponents
         private TankConfigurationProvider _tankConfigurationProvider;
 
         private float _currentSpeed;
-        private float _currentSplineRate;
+        private float _passedDistance;
         private Coroutine _moveCoroutine;
+        private bool _isFirstCirclePassed;
+        private bool _isLoop;
+        
+        public bool IsMoving => _moveCoroutine != null;
+        public bool IsLoop => _isLoop;
 
-        public event Action<float> CurrentLengthPercentageIncreased;
+        public event Action<float> DistancePassed;
         public event Action CirclePassed;
 
-        public void Initialize(Spline spline, TankConfigurationProvider tankConfigurationProvider)
+        [Inject]
+        public void Construct(Spline spline, TankConfigurationProvider tankConfigurationProvider)
         {
-            _spline = spline;
-            _tankConfigurationProvider = tankConfigurationProvider;
+            _spline = spline ?? throw new ArgumentNullException(nameof(spline));
+            _tankConfigurationProvider = tankConfigurationProvider 
+                                         ?? throw new ArgumentNullException(nameof(tankConfigurationProvider));
 
             _speed = _tankConfigurationProvider.TankConfiguration.TankSpeed;
             _speedModifier = _tankConfigurationProvider.TankConfiguration.SpeedModifier;
@@ -33,7 +41,7 @@ namespace _Game.Code.TankComponents
 
         public void StartMove()
         {
-            _currentSplineRate = 0f;
+            _passedDistance = 0f;
 
             this.StopCurrentCoroutine(ref _moveCoroutine);
             _moveCoroutine = StartCoroutine(Move());
@@ -42,8 +50,11 @@ namespace _Game.Code.TankComponents
         public void StopMove() =>
             this.StopCurrentCoroutine(ref _moveCoroutine);
 
-        public void IncreaseSpeed() =>
+        public void StartLoopMove()
+        {
+            _isLoop = true;
             _speed *= _speedModifier;
+        }
 
         public void ZeroingSpeed()
         {
@@ -62,14 +73,14 @@ namespace _Game.Code.TankComponents
 
         private IEnumerator Move()
         {
-            while (_currentSplineRate < _spline.Length)
+            while (_passedDistance < _spline.Length)
             {
-                _currentSplineRate += _speed * Time.deltaTime;
-                _currentSplineRate = Mathf.Min(_currentSplineRate, _spline.Length);
+                _passedDistance += _speed * Time.deltaTime;
+                _passedDistance = Mathf.Min(_passedDistance, _spline.Length);
 
-                CurrentLengthPercentageIncreased?.Invoke(_currentSplineRate);
+                DistancePassed?.Invoke(_passedDistance);
 
-                CurveSample curveSample = _spline.GetSampleAtDistance(_currentSplineRate);
+                CurveSample curveSample = _spline.GetSampleAtDistance(_passedDistance);
 
                 transform.position = curveSample.location;
 

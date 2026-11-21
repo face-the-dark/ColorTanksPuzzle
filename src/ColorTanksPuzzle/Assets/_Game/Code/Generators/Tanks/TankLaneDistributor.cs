@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _Game.Code.Generators.Data;
 using _Game.Code.Spawners;
+using _Game.Code.Spawners.Lines;
 using VContainer;
 
 namespace _Game.Code.Generators.Tanks
@@ -11,12 +12,12 @@ namespace _Game.Code.Generators.Tanks
         private readonly int _laneCount;
 
         [Inject]
-        public TankLaneDistributor(SpawningLanesContainer spawningLanesContainer)
+        public TankLaneDistributor(SpawnLines spawnLines)
         {
-            if (spawningLanesContainer.LanesCount <= 0)
-                throw new ArgumentOutOfRangeException(nameof(spawningLanesContainer.LanesCount));
+            if (spawnLines.LinesCount <= 0)
+                throw new ArgumentOutOfRangeException(nameof(spawnLines.LinesCount));
 
-            _laneCount = spawningLanesContainer.LanesCount;
+            _laneCount = spawnLines.LinesCount;
         }
 
         public void Distribute(List<TankData> tanks)

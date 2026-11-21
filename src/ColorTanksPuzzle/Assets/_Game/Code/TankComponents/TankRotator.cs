@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using _Game.Code.Extensions;
 using SplineMesh;
 using Unity.Mathematics;
 using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.TankComponents
 {
@@ -14,12 +16,15 @@ namespace _Game.Code.TankComponents
 
         private Spline _spline;
 
-        private float _currentLengthPercentage;
+        private float _passedDistance;
         private bool _isRotating;
         private Coroutine _rotateCoroutine;
 
-        public void Initialize(Spline spline) =>
-            _spline = spline;
+        [Inject]
+        public void Construct(Spline spline)
+        {
+            _spline = spline ?? throw new ArgumentNullException(nameof(spline));
+        }
 
         public void StartRotate()
         {
@@ -36,15 +41,15 @@ namespace _Game.Code.TankComponents
             ResetRotation();
         }
 
-        public void UpdateCurrentLengthPercentage(float currentLengthPercentage) =>
-            _currentLengthPercentage = currentLengthPercentage;
+        public void UpdatePassedDistance(float passedDistance) =>
+            _passedDistance = passedDistance;
 
         private IEnumerator Rotate()
         {
             while (_isRotating)
             {
-                _currentLengthPercentage = Mathf.Min(_currentLengthPercentage, _spline.Length);
-                float3 localTangent = _spline.GetSampleAtDistance(_currentLengthPercentage).tangent;
+                _passedDistance = Mathf.Min(_passedDistance, _spline.Length);
+                float3 localTangent = _spline.GetSampleAtDistance(_passedDistance).tangent;
                 Vector3 forwardWorldDirection = _spline.transform.TransformDirection(localTangent).normalized;
 
                 int invertScale = _isInvertAxis ? -1 : 1;
@@ -60,9 +65,9 @@ namespace _Game.Code.TankComponents
         {
             int invertScale = _isInvertAxis ? -1 : 1;
 
-            _hull.rotation = 
+            _hull.rotation =
                 Quaternion.LookRotation(Vector3.forward * invertScale, _spline.transform.up * invertScale);
-            
+
             _turret.rotation =
                 Quaternion.LookRotation(Vector3.forward * invertScale, _spline.transform.up * invertScale);
         }
@@ -83,11 +88,15 @@ namespace _Game.Code.TankComponents
         {
             if (forwardWorldDirection != Vector3.zero)
             {
-                float3 localUpVector = _spline.GetSampleAtDistance(_currentLengthPercentage).up;
+                float3 localUpVector = _spline.GetSampleAtDistance(_passedDistance).up;
                 Vector3 worldUpDirection = _spline.transform.TransformDirection(localUpVector).normalized;
                 Vector3 worldLeftDirection = Vector3.Cross(worldUpDirection, forwardWorldDirection);
 
-                _turret.rotation = Quaternion.LookRotation(worldLeftDirection, _spline.transform.up * invertScale);
+                _turret.rotation = Quaternion.LookRotation
+                (
+                    worldLeftDirection,
+                    _spline.transform.up * invertScale
+                );
             }
         }
     }

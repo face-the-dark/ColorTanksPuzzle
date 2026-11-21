@@ -10,7 +10,7 @@ namespace _Game.Code.TankComponents
         public int Value => _value;
 
         public event Action<int> ValueChanged;
-        public event Action Died;
+        public event Action ValueEnded;
         
         public void Initialize(int value)
         {
@@ -32,7 +32,7 @@ namespace _Game.Code.TankComponents
             ValueChanged?.Invoke(_value);
             
             if (_value <= 0)
-                Died?.Invoke();
+                ValueEnded?.Invoke();
         }
     }
 }

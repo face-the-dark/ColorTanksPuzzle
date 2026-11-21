@@ -1,5 +1,5 @@
-﻿using _Game.Code.Configurations.Levels;
-using _Game.Code.Providers;
+﻿using _Game.Code.ConfigurationProvider;
+using _Game.Code.Configurations.Levels;
 using UnityEngine;
 using VContainer;
 

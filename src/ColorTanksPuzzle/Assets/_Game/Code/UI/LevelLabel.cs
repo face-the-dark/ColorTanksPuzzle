@@ -1,5 +1,5 @@
-﻿using _Game.Code.Configurations.Difficulty;
-using _Game.Code.Providers;
+﻿using _Game.Code.ConfigurationProvider;
+using _Game.Code.Configurations.Difficulty;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

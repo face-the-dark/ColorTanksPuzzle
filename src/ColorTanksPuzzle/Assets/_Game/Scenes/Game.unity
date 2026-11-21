@@ -2282,7 +2282,7 @@ Transform:
   m_GameObject: {fileID: 472690258}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 70, z: -25.5}
+  m_LocalPosition: {x: 0, y: 70, z: -20.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3561,7 +3561,7 @@ GameObject:
   - component: {fileID: 826888162}
   - component: {fileID: 826888163}
   m_Layer: 0
-  m_Name: Spawning Lane (1)
+  m_Name: SpawnLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4641,7 +4641,7 @@ GameObject:
   - component: {fileID: 1155352454}
   - component: {fileID: 1155352455}
   m_Layer: 0
-  m_Name: Spawning Lane (2)
+  m_Name: SpawnLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5418,7 +5418,7 @@ GameObject:
   - component: {fileID: 1404249962}
   - component: {fileID: 1404249963}
   m_Layer: 0
-  m_Name: Spawning Lane
+  m_Name: SpawnLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7075,7 +7075,7 @@ GameObject:
   - component: {fileID: 1655969780}
   - component: {fileID: 1655969781}
   m_Layer: 0
-  m_Name: SpawningLanesContainer
+  m_Name: SpawnLines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7111,7 +7111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c7c1337ead140c6a6667bd54898e29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Spawners.SpawningLanesContainer
-  _spawningLanes:
+  _lines:
   - {fileID: 1404249963}
   - {fileID: 826888163}
   - {fileID: 1155352455}
@@ -8238,7 +8238,7 @@ MonoBehaviour:
   _coinUiTarget: {fileID: 1536026268}
   _splineTanksCountView: {fileID: 483331860}
   _spline: {fileID: 1553780079}
-  _spawningLanesContainer: {fileID: 1655969781}
+  _spawnLines: {fileID: 1655969781}
   _zoomPoints: {fileID: 141941061}
   _coinsView: {fileID: 990246004}
   _buyingWindow: {fileID: 1575453535}

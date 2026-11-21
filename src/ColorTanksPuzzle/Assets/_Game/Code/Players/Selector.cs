@@ -1,6 +1,6 @@
 ﻿using System;
+using _Game.Code.ConfigurationProvider;
 using _Game.Code.Pixels;
-using _Game.Code.Providers;
 using _Game.Code.TankComponents;
 using UnityEngine;
 using VContainer;

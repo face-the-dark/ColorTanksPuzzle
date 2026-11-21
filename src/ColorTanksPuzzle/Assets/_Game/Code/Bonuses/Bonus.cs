@@ -4,7 +4,7 @@
     {
         None,
         Expansion,
-        FreezeSpline,
+        SwitchTanks,
         Sacrifice,
         ColorRocket
     }

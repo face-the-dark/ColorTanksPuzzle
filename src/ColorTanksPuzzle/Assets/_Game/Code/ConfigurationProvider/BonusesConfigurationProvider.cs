@@ -3,7 +3,7 @@ using _Game.Code.Configurations.Bonuses;
 using _Game.Code.Infrastructure.Assets;
 using VContainer;
 
-namespace _Game.Code.Providers
+namespace _Game.Code.ConfigurationProvider
 {
     public class BonusesConfigurationProvider
     {

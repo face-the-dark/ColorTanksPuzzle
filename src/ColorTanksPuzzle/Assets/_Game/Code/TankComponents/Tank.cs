@@ -1,13 +1,9 @@
 using System;
 using System.Linq;
 using _Game.Code.Generators.Data;
-using _Game.Code.Infrastructure;
-using _Game.Code.Providers;
-using _Game.Code.Spawners;
-using _Game.Code.WaitingAreaComponents;
-using DG.Tweening;
 using SplineMesh;
 using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.TankComponents
 {
@@ -21,94 +17,84 @@ namespace _Game.Code.TankComponents
         [SerializeField] private TankDyer _tankDyer;
 
         private Spline _spline;
-        private WaitingArea _waitingArea;
-        private SpawningLane _lane;
+        private ITankJumpAnimator _tankJumpAnimator;
 
-        private bool _isFirstCirclePassed;
-        private bool _isMoving;
-        private bool _isLoopMoving;
         private bool _isBlocked = true;
-        private Sequence _moveTweenerCore;
 
-        public bool IsMoving => _isMoving;
+        public bool IsMoving => _tankMover.IsMoving;
         public bool IsBlocked => _isBlocked;
         public int Hp => _tankHealth.Value;
         public Color Color => _tankShooter.Color;
 
         public event Action Shot;
         public event Action<int> HealthValueChanged;
+        public event Action HealthValueEnded;
         public event Action<Tank> MovingStopped;
+        public event Action<Tank> CirclePassed;
         public event Action<Tank> Died;
 
-        public void Initialize
-        (
-            Spline spline,
-            TankData tankData,
-            WaitingArea waitingArea,
-            SpawningLane spawningLane,
-            GameFactory gameFactory,
-            TankConfigurationProvider tankConfigurationProvider
-        )
+        [Inject]
+        public void Construct(Spline spline, ITankJumpAnimator tankJumpAnimator)
         {
-            _spline = spline;
-            _tankMover.Initialize(spline, tankConfigurationProvider);
-            _tankRotator.Initialize(spline);
-            _tankShooter.Initialize(tankData.Color, gameFactory);
-            _tankHealth.Initialize(tankData.Hp);
-            _tankDyer.Initialize(tankData);
-
-            _waitingArea = waitingArea;
-            _lane = spawningLane;
-
-            _tankShooter.Shot += OnShot;
-            _tankHealth.ValueChanged += OnHealthValueChanged;
-            _tankHealth.Died += Die;
+            _spline = spline ?? throw new ArgumentNullException(nameof(spline));
+            _tankJumpAnimator = tankJumpAnimator ?? throw new ArgumentNullException(nameof(tankJumpAnimator));
         }
 
-        private void OnHealthValueChanged(int value)
+        public void Initialize(TankData tankData)
         {
-            HealthValueChanged?.Invoke(value);
+            if (tankData == null)
+                throw new ArgumentNullException(nameof(tankData));
+            
+            _tankShooter.Initialize(tankData.Color);
+            _tankHealth.Initialize(tankData.Hp);
+            _tankDyer.Initialize(tankData.Color);
+        }
+        
+        private void OnDestroy()
+        {
+            _tankJumpAnimator?.Kill();
         }
 
         public void MoveToSpline()
         {
-            if (_isMoving == false)
-                RemoveFromWaitingAreaOrLane();
-
-            _moveTweenerCore = transform
-                .DOJump(_spline.nodes.First().Position, 20f, 1, 0.5f)
-                .SetEase(Ease.Linear);
-
-            _moveTweenerCore.onComplete += StartMove;
+            _tankJumpAnimator.JumpTo(
+                transform,
+                _spline.nodes.First().Position,
+                power: 20f,
+                duration: 0.5f,
+                onComplete: StartMove);
         }
 
         private void StartMove()
         {
-            _moveTweenerCore.onComplete -= StartMove;
-
-            _tankMover.CurrentLengthPercentageIncreased += OnCurrentLengthPercentageIncreased;
+            _tankShooter.Shot += OnShot;
+            _tankHealth.ValueChanged += OnHealthValueChanged;
+            _tankHealth.ValueEnded += OnHealthValueEnded;
+            _tankMover.DistancePassed += OnDistancePassed;
             _tankMover.CirclePassed += OnCirclePassed;
 
             _tankMover.StartMove();
             _tankRotator.StartRotate();
             _tankShooter.StartShoot();
-
-            _isMoving = true;
         }
 
-        public void RemoveFromWaitingAreaOrLane()
+        private void StopMove()
         {
-            if (_isFirstCirclePassed && _isMoving == false)
-                _waitingArea.Remove(this);
-            else
-                _lane.Remove(this);
+            _tankMover.StopMove();
+            _tankRotator.StopRotate();
+            _tankShooter.StopShoot();
+
+            _tankShooter.Shot -= OnShot;
+            _tankHealth.ValueChanged -= OnHealthValueChanged;
+            _tankHealth.ValueEnded -= OnHealthValueEnded;
+            _tankMover.DistancePassed -= OnDistancePassed;
+            _tankMover.CirclePassed -= OnCirclePassed;
+
+            MovingStopped?.Invoke(this);
         }
 
-        public void StartLoopMove()
-        {
-            _isLoopMoving = true;
-            _tankMover.IncreaseSpeed();
-        }
+        public void StartLoopMove() =>
+            _tankMover.StartLoopMove();
 
         public void StartShoot() =>
             _tankShooter.StartShoot();
@@ -119,6 +105,9 @@ namespace _Game.Code.TankComponents
         public void Unblock() =>
             _isBlocked = false;
 
+        public void Block() => 
+            _isBlocked = true;
+
         public void FreezeMoving() =>
             _tankMover.ZeroingSpeed();
 
@@ -127,57 +116,43 @@ namespace _Game.Code.TankComponents
 
         public void Die()
         {
-            _tankHealth.Died -= Die;
-            _tankHealth.ValueChanged -= OnHealthValueChanged;
-            _tankShooter.Shot -= OnShot;
-            _tankMover.CurrentLengthPercentageIncreased -= OnCurrentLengthPercentageIncreased;
-            _tankMover.CirclePassed -= OnCirclePassed;
+            StopMove();
 
-            _isMoving = false;
-            
-            MovingStopped?.Invoke(this);
-            Died?.Invoke(this);
-            
-            _tankMover.StopMove();
-            _tankRotator.StopRotate();
-            _tankShooter.StopShoot();
             _tankDeath.Die();
+
+            Died?.Invoke(this);
         }
 
-        private void OnCurrentLengthPercentageIncreased(float currentLengthPercentage) =>
-            _tankRotator.UpdateCurrentLengthPercentage(currentLengthPercentage);
+        private void OnDistancePassed(float distance) =>
+            _tankRotator.UpdatePassedDistance(distance);
 
         private void OnCirclePassed()
         {
-            _tankMover.CurrentLengthPercentageIncreased -= OnCurrentLengthPercentageIncreased;
-            _tankMover.CirclePassed -= OnCirclePassed;
+            StopMove();
 
-            if (_isLoopMoving)
-            {
-                MoveToSpline();
-            }
-            else
-            {
-                if (_isFirstCirclePassed == false)
-                    _isFirstCirclePassed = true;
+            if (_tankMover.IsLoop)
+                StartMove();
 
-                _waitingArea.Add(this);
-
-                _tankMover.StopMove();
-                _tankRotator.StopRotate();
-                _tankShooter.StopShoot();
-
-                _isMoving = false;
-
-                MovingStopped?.Invoke(this);
-            }
+            CirclePassed?.Invoke(this);
         }
 
         private void OnShot()
         {
             _tankHealth.Decrease();
-            
+
             Shot?.Invoke();
+        }
+
+        private void OnHealthValueChanged(int value)
+        {
+            HealthValueChanged?.Invoke(value);
+        }
+
+        private void OnHealthValueEnded()
+        {
+            StopMove();
+
+            HealthValueEnded?.Invoke();
         }
     }
 }

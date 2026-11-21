@@ -1,8 +1,8 @@
 ﻿using System;
+using _Game.Code.ConfigurationProvider;
 using _Game.Code.Configurations.Difficulty;
 using _Game.Code.Destroyers;
 using _Game.Code.PersistenceProgress;
-using _Game.Code.Providers;
 using _Game.Code.WaitingAreaComponents;
 using VContainer;
 

@@ -5,93 +5,71 @@ using _Game.Code.Generators.Data;
 using _Game.Code.Generators.Tanks;
 using _Game.Code.Infrastructure;
 using _Game.Code.Infrastructure.Assets;
-using _Game.Code.Providers;
+using _Game.Code.Spawners.Lines;
 using _Game.Code.TankComponents;
 using _Game.Code.WaitingAreaComponents;
 using SplineMesh;
-using UnityEngine;
 using VContainer;
-using Object = UnityEngine.Object;
 
 namespace _Game.Code.Spawners
 {
     public class TankSpawner : IDisposable
     {
-        private readonly Spline _spline;
-        private readonly IReadOnlyList<SpawningLane> _spawningLanes;
+        private readonly IReadOnlyList<SpawnLine> _spawnLines;
         private readonly List<Tank> _spawnedTanks = new();
         private readonly TanksDataGenerator _tanksDataGenerator;
-        private readonly WaitingArea _waitingArea;
         private readonly GameFactory _gameFactory;
-        private readonly TankConfigurationProvider _tankConfigurationProvider;
-        private readonly Tank _tankPrefab;
 
         public event Action<List<Tank>> TanksSpawned;
 
         [Inject]
         public TankSpawner
         (
-            Spline spline,
-            SpawningLanesContainer spawningLanesContainer,
+            SpawnLines spawnLines,
             TanksDataGenerator tanksDataGenerator,
             WaitingArea waitingArea,
             IAssetLoadService assetLoadService,
-            GameFactory gameFactory,
-            TankConfigurationProvider tankConfigurationProvider)
+            GameFactory gameFactory
+        )
         {
-            _spline = spline;
-            _spawningLanes = spawningLanesContainer.SpawningLanes;
+            _spawnLines = spawnLines.Lines;
             _tanksDataGenerator = tanksDataGenerator;
-            _waitingArea = waitingArea;
             _gameFactory = gameFactory;
-            _tankConfigurationProvider = tankConfigurationProvider;
 
-            _tankPrefab = assetLoadService.LoadTankPrefab();
-
-            _tanksDataGenerator.DataGenerated += OnDataGenerated;
+            _tanksDataGenerator.DataGenerated += SpawnTanks;
         }
 
         public void Dispose() =>
-            _tanksDataGenerator.DataGenerated -= OnDataGenerated;
-
-        private void OnDataGenerated(List<TankData> tanksData) =>
-            SpawnTanks(tanksData);
+            _tanksDataGenerator.DataGenerated -= SpawnTanks;
 
         private void SpawnTanks(List<TankData> tanksData)
         {
-            for (int i = 0; i < _spawningLanes.Count; i++)
+            for (int i = 0; i < _spawnLines.Count; i++)
             {
-                IEnumerable<TankData> tankDatas = tanksData
-                    .Where(x => x.LaneIndex == i);
+                int laneIndex = i;
+                IEnumerable<TankData> tanksDataByLineIndex = tanksData.Where(x => x.LaneIndex == laneIndex);
 
-                foreach (TankData tankData in tankDatas)
+                foreach (TankData tankData in tanksDataByLineIndex)
                 {
-                    SpawningLane lane = _spawningLanes[i];
+                    SpawnLine spawnLine = _spawnLines[i];
 
-                    Spawn(tankData, lane);
+                    Spawn(tankData, spawnLine);
                 }
             }
 
             TanksSpawned?.Invoke(_spawnedTanks);
 
-            foreach (SpawningLane spawningLane in _spawningLanes)
-                spawningLane.UnblockFirstTank();
+            foreach (SpawnLine spawnLine in _spawnLines)
+                spawnLine.UnblockFirstTank();
         }
 
-        private void Spawn(TankData tankData, SpawningLane lane)
+        private void Spawn(TankData tankData, SpawnLine spawnLine)
         {
-            Tank tank = Object.Instantiate
-            (
-                _tankPrefab,
-                Vector3.zero,
-                Quaternion.identity,
-                lane.transform
-            );
+            Tank tank = _gameFactory.CreateTank(spawnLine.transform);
+            tank.Initialize(tankData);
 
-            lane.Add(tank);
+            spawnLine.Add(tank);
             _spawnedTanks.Add(tank);
-
-            tank.Initialize(_spline, tankData, _waitingArea, lane, _gameFactory, _tankConfigurationProvider);
         }
     }
 }

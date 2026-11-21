@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using _Game.Code.PersistenceProgress;
 using _Game.Code.Players;
-using _Game.Code.UI;
-using _Game.Code.UI.Window;
 using VContainer;
 
 namespace _Game.Code.Bonuses
@@ -14,12 +12,13 @@ namespace _Game.Code.Bonuses
         private readonly InputReader _inputReader;
         private readonly TankDispatcher _tankDispatcher;
         private readonly PlayerDataService _playerDataService;
-        private readonly BuyingWindow _buyingWindow;
 
         private readonly Dictionary<Bonus, IBonus> _bonuses;
         
         private PlayerData _playerData;
         private bool _isAllBonusesBlocked;
+        
+        public event Action<Bonus> BonusCountNotEnough;
 
         [Inject]
         public BonusActivator
@@ -28,15 +27,12 @@ namespace _Game.Code.Bonuses
             TankDispatcher tankDispatcher,
             BonusBuyer bonusBuyer,
             IReadOnlyList<IBonus> bonuses,
-            PlayerDataService playerDataService,
-            BuyingWindow buyingWindow
+            PlayerDataService playerDataService
         )
         {
             _inputReader = inputReader ?? throw new ArgumentNullException(nameof(inputReader));
             _tankDispatcher = tankDispatcher ?? throw new ArgumentNullException(nameof(tankDispatcher));
-            _playerDataService = playerDataService 
-                                            ?? throw new ArgumentNullException(nameof(playerDataService));
-            _buyingWindow = buyingWindow ?? throw new ArgumentNullException(nameof(buyingWindow));
+            _playerDataService = playerDataService ?? throw new ArgumentNullException(nameof(playerDataService));
 
             if (bonuses is null || bonuses.Count <= 0)
                 throw new ArgumentNullException(nameof(bonuses));
@@ -61,7 +57,7 @@ namespace _Game.Code.Bonuses
             ActivateBonus(Bonus.Expansion);
 
         private void ActivateFreezeSplineBonus() =>
-            ActivateBonus(Bonus.FreezeSpline);
+            ActivateBonus(Bonus.SwitchTanks);
 
         private void ActivateSacrificeBonus() =>
             ActivateBonus(Bonus.Sacrifice);
@@ -73,7 +69,7 @@ namespace _Game.Code.Bonuses
         {
             if (_playerDataService.IsEnoughBonusCount(bonus) == false)
             {
-                ShowBuyingWindow(bonus);
+                BonusCountNotEnough?.Invoke(bonus);
             }
             else if (_isAllBonusesBlocked == false)
             {
@@ -95,9 +91,6 @@ namespace _Game.Code.Bonuses
                 }
             }
         }
-
-        private void ShowBuyingWindow(Bonus bonus) =>
-            _buyingWindow.Open(bonus);
 
         private void OnActivatedBonus(IBonus bonus)
         {

@@ -14,8 +14,8 @@ namespace _Game.Code.PersistenceProgress
 
             BonusesCounts = new List<BonusCount>
             {
-                new(Bonus.Expansion, 0),
-                new(Bonus.FreezeSpline, 0),
+                new(Bonus.SwitchTanks, 0),
+                new(Bonus.SwitchTanks, 0),
                 new(Bonus.Sacrifice, 0),
                 new(Bonus.ColorRocket, 0)
             };

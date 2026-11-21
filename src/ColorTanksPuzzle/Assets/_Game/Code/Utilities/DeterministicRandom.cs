@@ -1,5 +1,5 @@
 ﻿using System;
-using _Game.Code.Providers;
+using _Game.Code.ConfigurationProvider;
 using VContainer;
 
 namespace _Game.Code.Utilities

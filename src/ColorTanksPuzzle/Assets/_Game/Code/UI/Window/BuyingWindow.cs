@@ -19,23 +19,27 @@ namespace _Game.Code.UI.Window
         [SerializeField] private TextMeshProUGUI _bonusPriceText;
 
         private BonusBuyer _bonusBuyer;
+        private BonusActivator _bonusActivator;
 
         private BonusesConfiguration _bonusesConfiguration;
 
         private Bonus _bonus;
 
         [Inject]
-        public void Construct(BonusBuyer bonusBuyer, IAssetLoadService assetLoadService)
+        public void Construct(BonusBuyer bonusBuyer, BonusActivator bonusActivator, IAssetLoadService assetLoadService)
         {
             _bonusBuyer = bonusBuyer ?? throw new ArgumentNullException(nameof(bonusBuyer));
+            _bonusActivator = bonusActivator ?? throw new ArgumentNullException(nameof(bonusActivator));
 
             if (assetLoadService == null)
                 throw new ArgumentNullException(nameof(assetLoadService));
 
             _bonusesConfiguration = assetLoadService.LoadBonusesConfiguration();
+
+            _bonusActivator.BonusCountNotEnough += Open;
         }
 
-        public void Open(Bonus bonus)
+        private void Open(Bonus bonus)
         {
             _closeButton.onClick.AddListener(Close);
             

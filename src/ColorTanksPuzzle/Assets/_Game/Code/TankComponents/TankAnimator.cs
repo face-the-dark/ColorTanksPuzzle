@@ -15,6 +15,7 @@ namespace _Game.Code.TankComponents
         [SerializeField] private AnimationClip _shootClip;
         
         private Animator _animator;
+        
         private Tank _tank;
 
         private float _shootClipSpeed;
@@ -30,13 +31,13 @@ namespace _Game.Code.TankComponents
         private void OnEnable()
         {
             _tank.Shot += OnShot;
-            _tank.Died += OnDied;
+            _tank.HealthValueEnded += OnHealthValueEnded;
         }
 
         private void OnDisable()
         {
             _tank.Shot -= OnShot;
-            _tank.Died -= OnDied;
+            _tank.HealthValueEnded -= OnHealthValueEnded;
         }
 
         public void OnDieAnimationComplete()
@@ -50,7 +51,7 @@ namespace _Game.Code.TankComponents
             _animator.SetTrigger(ShootKey);
         }
 
-        private void OnDied(Tank tank)
+        private void OnHealthValueEnded()
         {
             _animator.SetTrigger(DieKey);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Code.Bullets;
 using _Game.Code.Infrastructure.Assets;
+using _Game.Code.TankComponents;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -24,6 +25,13 @@ namespace _Game.Code.Infrastructure
             Bullet bulletPrefab = _assetLoadService.LoadBulletPrefab();
             
             return _container.Instantiate(bulletPrefab, position, Quaternion.identity);
+        }
+
+        public Tank CreateTank(Transform spawningLane)
+        {
+            Tank tankPrefab = _assetLoadService.LoadTankPrefab();
+            
+            return _container.Instantiate(tankPrefab, spawningLane);
         }
     }
 }
