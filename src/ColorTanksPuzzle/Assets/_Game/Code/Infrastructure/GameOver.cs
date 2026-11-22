@@ -1,6 +1,7 @@
 ﻿using System;
 using _Game.Code.ConfigurationProvider;
 using _Game.Code.Configurations.Difficulty;
+using _Game.Code.Configurations.Levels;
 using _Game.Code.Destroyers;
 using _Game.Code.PersistenceProgress;
 using _Game.Code.WaitingAreaComponents;
@@ -45,8 +46,10 @@ namespace _Game.Code.Infrastructure
 
         private void Win()
         {
-            int levelId = _levelConfigurationProvider.LevelConfiguration.Id;
-            DifficultyMode difficulty = _levelConfigurationProvider.LevelConfiguration.DifficultyMode;
+            LevelConfiguration levelConfiguration = _levelConfigurationProvider.LevelConfiguration;
+            int levelId = levelConfiguration.Id;
+            DifficultyMode difficulty = levelConfiguration.DifficultyMode;
+            _playerDataService.IncreaseMoney(levelConfiguration.RewardCoins);
             
             _playerDataService.MarkLevelPassed(levelId, difficulty);
 

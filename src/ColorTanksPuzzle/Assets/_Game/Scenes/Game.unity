@@ -474,6 +474,7 @@ MonoBehaviour:
   _rootCanvas: {fileID: 42006509}
   _menuButton: {fileID: 1688313826}
   _tryAgainButton: {fileID: 33490397}
+  _levelText: {fileID: 2102982709}
 --- !u!114 &42006511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,6 +783,9 @@ MonoBehaviour:
   _windowCanvas: {fileID: 1823301634}
   _rootCanvas: {fileID: 197351407}
   _continueButton: {fileID: 1954770403}
+  _levelText: {fileID: 243265143}
+  _rewardImage: {fileID: 1879674479}
+  _rewardCoins: {fileID: 2135836440}
 --- !u!1 &201711444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1750,7 +1754,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -118163405, guid: 99ba46733865a144bbe8eb3aa73dc108, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9d48473520fcbc46a737de19acc9d98, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5800,7 +5804,7 @@ GameObject:
   - component: {fileID: 1432756476}
   - component: {fileID: 1432756479}
   m_Layer: 5
-  m_Name: FreezeSplineBonusButton
+  m_Name: SwitchTanksBonusButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6062,7 +6066,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -8041,7 +8045,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

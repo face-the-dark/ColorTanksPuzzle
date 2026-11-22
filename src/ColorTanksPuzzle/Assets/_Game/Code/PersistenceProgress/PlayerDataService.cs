@@ -100,16 +100,7 @@ namespace _Game.Code.PersistenceProgress
 
         public void MarkLevelPassed(int levelId, DifficultyMode difficulty)
         {
-            PassedLevel level = _currentPlayerData.PassedLevels.Find(x => x.Id == levelId);
-
-            if (level == null)
-            {
-                level = new PassedLevel
-                {
-                    Id = levelId
-                };
-                _currentPlayerData.PassedLevels.Add(level);
-            }
+            PassedLevel level = GetOrFindPassedLevel(levelId);
 
             level.PassedDifficulties.Add(difficulty);
 
@@ -127,6 +118,27 @@ namespace _Game.Code.PersistenceProgress
             ) != null;
         }
 
+        public bool IsDifficultyPassed(int levelId, DifficultyMode difficultyMode)
+        {
+            List<PassedLevel> passedLevels = _currentPlayerData.PassedLevels;
+            
+            if  (passedLevels == null || passedLevels.Count == 0)
+                return false;
+
+            PassedLevel passedLevel = passedLevels.Find(x => x.Id == levelId);
+            
+            if (passedLevel == null) 
+                return false;
+
+
+            List<DifficultyMode> passedDifficulties = passedLevel.PassedDifficulties;
+            
+            if (passedDifficulties == null || passedDifficulties.Count == 0)
+                return false;
+            
+            return passedDifficulties.Contains(difficultyMode);
+        }
+
         public void Reset()
         {
             _currentPlayerData = _previousPlayerData.Clone();
@@ -135,6 +147,22 @@ namespace _Game.Code.PersistenceProgress
             
             foreach (Bonus bonus in Enum.GetValues(typeof(Bonus)))
                 BonusCountChanged?.Invoke(bonus, GetBonusCount(bonus).Value);
+        }
+
+        private PassedLevel GetOrFindPassedLevel(int levelId)
+        {
+            PassedLevel level = _currentPlayerData.PassedLevels.Find(x => x.Id == levelId);
+
+            if (level == null)
+            {
+                level = new PassedLevel
+                {
+                    Id = levelId
+                };
+                _currentPlayerData.PassedLevels.Add(level);
+            }
+
+            return level;
         }
 
         private BonusCount GetBonusCount(Bonus bonus)

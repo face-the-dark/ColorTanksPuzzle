@@ -1,4 +1,5 @@
-﻿using _Game.Code.ConfigurationProvider;
+﻿using System;
+using _Game.Code.ConfigurationProvider;
 using _Game.Code.Configurations.Difficulty;
 using TMPro;
 using UnityEngine;
@@ -17,11 +18,12 @@ namespace _Game.Code.UI
         [SerializeField] private TextMeshProUGUI _text;
 
         private LevelConfigurationProvider _levelConfigurationProvider;
-        
+
         [Inject]
         public void Construct(LevelConfigurationProvider levelConfigurationProvider)
         {
-            _levelConfigurationProvider = levelConfigurationProvider;
+            _levelConfigurationProvider = levelConfigurationProvider ??
+                                          throw new ArgumentNullException(nameof(levelConfigurationProvider));
         }
 
         private void Start()
@@ -35,18 +37,18 @@ namespace _Game.Code.UI
         private Sprite ChooseColorByDifficulty()
         {
             DifficultyMode difficultyMode = _levelConfigurationProvider.LevelConfiguration.DifficultyMode;
-            
+
             switch (difficultyMode)
             {
                 case DifficultyMode.Easy:
                     return _spriteForEasyDifficulty;
-                
+
                 case DifficultyMode.Normal:
                     return _spriteForNormalDifficulty;
-                
+
                 case DifficultyMode.Hard:
                     return _spriteForHardDifficulty;
-                
+
                 default:
                     return null;
             }

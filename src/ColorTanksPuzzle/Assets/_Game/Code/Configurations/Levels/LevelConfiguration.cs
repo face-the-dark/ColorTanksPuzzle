@@ -10,10 +10,14 @@ namespace _Game.Code.Configurations.Levels
         [SerializeField] private Texture2D _picture;
         [SerializeField] private DifficultyMode _difficultyMode;
         [SerializeField] private int _seed;
+        [SerializeField] private Sprite _rewardSprite;
+        [SerializeField] private int _rewardCoins;
         
         public int Id => _id;
         public Texture2D Picture => _picture;
         public DifficultyMode DifficultyMode => _difficultyMode;
         public int Seed => _seed;
+        public Sprite RewardSprite => _rewardSprite;
+        public int RewardCoins => _rewardCoins;
     }
 }

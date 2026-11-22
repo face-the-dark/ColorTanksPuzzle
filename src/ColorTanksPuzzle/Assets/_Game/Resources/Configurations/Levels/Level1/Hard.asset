@@ -16,3 +16,5 @@ MonoBehaviour:
   _picture: {fileID: 2800000, guid: f28277b8f54f19441a264d2c9470a5a2, type: 3}
   _difficultyMode: 2
   _seed: 12347
+  _rewardSprite: {fileID: 1192235082, guid: 5c86bd73cd054f645a9bb1d54ec63b1e, type: 3}
+  _rewardCoins: 45
