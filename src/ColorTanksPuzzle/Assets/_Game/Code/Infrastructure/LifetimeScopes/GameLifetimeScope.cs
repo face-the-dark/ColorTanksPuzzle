@@ -46,7 +46,9 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
         [SerializeField] private LevelLabel _levelLabel;
         [SerializeField] private WinWindow _winWindow;
         [SerializeField] private LoseWindow _loseWindow;
+        [SerializeField] private SettingsWindow _settingsWindow;
         [SerializeField] private GameRunner _gameRunner;
+        [SerializeField] private SettingsButton _settingsButton;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -60,8 +62,10 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.RegisterComponent(_zoomPoints);
             builder.RegisterComponent(_coinsView);
             builder.RegisterComponent(_buyingWindow);
+            builder.RegisterComponent(_settingsWindow);
             builder.RegisterComponent(_gameRunner);
             builder.RegisterComponent(_spline);
+            builder.RegisterComponent(_settingsButton);
             
             builder.Register<ITankJumpAnimator, DOTweenTankJumpAnimator>(Lifetime.Transient);
             builder.Register<ITankGroupMoveAnimator, DOTweenTankGroupMoveAnimator>(Lifetime.Transient);

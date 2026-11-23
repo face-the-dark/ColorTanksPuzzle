@@ -39,6 +39,11 @@ namespace _Game.Code.UI.Window
             _bonusActivator.BonusCountNotEnough += Open;
         }
 
+        private void OnDestroy()
+        {
+            _bonusActivator.BonusCountNotEnough -= Open;
+        }
+
         private void Open(Bonus bonus)
         {
             _closeButton.onClick.AddListener(Close);
