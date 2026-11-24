@@ -10,12 +10,12 @@ namespace _Game.Code.UI.View
         [SerializeField] private Tank _tank;
 
         private void OnEnable() => 
-            _tank.HealthValueChanged += OnHpChanged;
+            _tank.HealthValueChanged += OnHealthValueChanged;
 
         private void OnDisable() => 
-            _tank.HealthValueChanged -= OnHpChanged;
+            _tank.HealthValueChanged -= OnHealthValueChanged;
 
-        private void OnHpChanged(int value) => 
+        private void OnHealthValueChanged(int value) => 
             _text.text = value.ToString();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Code.Bullets;
+using _Game.Code.ColorRocketComponents;
 using _Game.Code.Infrastructure.Assets;
 using _Game.Code.TankComponents;
 using UnityEngine;
@@ -8,7 +9,7 @@ using VContainer.Unity;
 
 namespace _Game.Code.Infrastructure
 {
-    public class GameFactory
+    public class GameFactory : IGameFactory
     {
         private readonly IObjectResolver _container;
         private readonly IAssetLoadService _assetLoadService;
@@ -32,6 +33,13 @@ namespace _Game.Code.Infrastructure
             Tank tankPrefab = _assetLoadService.LoadTankPrefab();
             
             return _container.Instantiate(tankPrefab, spawningLane);
+        }
+
+        public ColorRocket CreateColorRocket()
+        {
+            ColorRocket colorRocketPrefab = _assetLoadService.LoadColorRocketPrefab();
+            
+            return _container.Instantiate(colorRocketPrefab);
         }
     }
 }

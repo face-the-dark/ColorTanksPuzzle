@@ -23,7 +23,7 @@ namespace _Game.Code.TankComponents
         [SerializeField] private float _shootMaxDistance = 30f;
         [SerializeField] private LayerMask _pixelLayer;
 
-        private GameFactory _gameFactory;
+        private IGameFactory _gameFactory;
 
         private Color _color;
 
@@ -37,7 +37,7 @@ namespace _Game.Code.TankComponents
         public Color Color => _color;
 
         [Inject]
-        public void Construct(GameFactory gameFactory)
+        public void Construct(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory ?? throw new ArgumentNullException(nameof(gameFactory));
         }

@@ -2,6 +2,7 @@
 using _Game.Code.Cameras;
 using _Game.Code.ColorRocketComponents;
 using _Game.Code.Destroyers;
+using _Game.Code.Infrastructure;
 using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Pixels;
 using _Game.Code.Players;
@@ -11,13 +12,13 @@ using Object = UnityEngine.Object;
 
 namespace _Game.Code.Bonuses
 {
-    public class ColorRocketBonus : IDisposable, IBonus
+    public class ColorRocketBonus : IBonus
     {
         private readonly PixelDestroyer _pixelDestroyer;
         private readonly TankDestroyer _tankDestroyer;
         private readonly CameraMover _cameraMover;
         private readonly Selector _selector;
-        private readonly ColorRocket _colorRocketPrefab;
+        private readonly IGameFactory _gameFactory;
 
         private bool _isActivated;
 
@@ -28,32 +29,29 @@ namespace _Game.Code.Bonuses
             TankDestroyer tankDestroyer,
             CameraMover cameraMover,
             Selector selector,
-            IAssetLoadService assetLoadService
+            IGameFactory gameFactory
         )
         {
             _pixelDestroyer = pixelDestroyer ?? throw new ArgumentNullException(nameof(pixelDestroyer));
             _tankDestroyer = tankDestroyer ?? throw new ArgumentNullException(nameof(tankDestroyer));
             _cameraMover = cameraMover ?? throw new ArgumentNullException(nameof(cameraMover));
             _selector = selector ?? throw new ArgumentNullException(nameof(selector));
-
-            _colorRocketPrefab = assetLoadService.LoadColorRocketPrefab();
-
-            _selector.PixelSelected += LaunchRocket;
+            _gameFactory = gameFactory ?? throw new ArgumentNullException(nameof(gameFactory));
         }
 
         public event Action<IBonus> Activated;
 
         public Bonus Bonus => Bonus.ColorRocket;
-        public bool CanActivate => _isActivated == false; 
-
-        public void Dispose() => 
-            _selector.PixelSelected -= LaunchRocket;
+        public bool CanActivate => _isActivated == false;
 
         public void Activate()
         {
             if (_isActivated == false)
             {
+                _selector.PixelSelected += LaunchRocket;
+
                 _cameraMover.ZoomToArt();
+                
                 _isActivated = true;
             }
         }
@@ -62,17 +60,13 @@ namespace _Game.Code.Bonuses
         {
             if (_isActivated)
             {
-                ColorRocket colorRocket = Object.Instantiate
-                (
-                    _colorRocketPrefab,
-                    _colorRocketPrefab.transform.position,
-                    _colorRocketPrefab.transform.rotation
-                );
-                
+                _selector.PixelSelected -= LaunchRocket;
+
+                ColorRocket colorRocket = _gameFactory.CreateColorRocket();
+
                 colorRocket.RocketArrived += Explode;
 
-                Color pixelColor = pixel.Color;
-                colorRocket.Initialize(pixelColor);
+                colorRocket.Initialize(pixel.Color);
             }
         }
 
@@ -88,7 +82,7 @@ namespace _Game.Code.Bonuses
             _isActivated = false;
 
             _cameraMover.ZoomToStart();
-            
+
             Object.Destroy(colorRocket.gameObject);
 
             Activated?.Invoke(this);

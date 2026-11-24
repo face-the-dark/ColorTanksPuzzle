@@ -3,7 +3,6 @@ using _Game.Code.Cameras;
 using _Game.Code.Pixels;
 using _Game.Code.Players;
 using _Game.Code.Spawners.Lines;
-using UnityEngine;
 using VContainer;
 
 namespace _Game.Code.Bonuses
@@ -23,8 +22,6 @@ namespace _Game.Code.Bonuses
             _selector = selector ?? throw new ArgumentNullException(nameof(selector));
             _cameraMover = cameraMover ?? throw new ArgumentNullException(nameof(cameraMover));
             _spawnLines = spawnLines ?? throw new ArgumentNullException(nameof(spawnLines));
-
-            _selector.PixelSelected += SwitchTanks;
         }
 
         public event Action<IBonus> Activated;
@@ -37,19 +34,27 @@ namespace _Game.Code.Bonuses
         {
             if (_isActivated == false)
             {
+                _selector.PixelSelected += SwitchTanks;
+                
                 _cameraMover.ZoomToArt();
+                
                 _isActivated = true;
             }
         }
 
         private void SwitchTanks(Pixel pixel)
         {
-            _spawnLines.SwitchTanks(pixel.Color);
-            _cameraMover.ZoomToStart();
+            if (_isActivated)
+            {
+                _selector.PixelSelected -= SwitchTanks;
+                
+                _spawnLines.SwitchTanks(pixel.Color);
+                _cameraMover.ZoomToStart();
             
-            _isActivated = false;
+                _isActivated = false;
             
-            Activated?.Invoke(this);
+                Activated?.Invoke(this);
+            }
         }
     }
 }

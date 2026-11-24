@@ -8,7 +8,6 @@ using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Spawners.Lines;
 using _Game.Code.TankComponents;
 using _Game.Code.WaitingAreaComponents;
-using SplineMesh;
 using VContainer;
 
 namespace _Game.Code.Spawners
@@ -18,7 +17,7 @@ namespace _Game.Code.Spawners
         private readonly IReadOnlyList<SpawnLine> _spawnLines;
         private readonly List<Tank> _spawnedTanks = new();
         private readonly TanksDataGenerator _tanksDataGenerator;
-        private readonly GameFactory _gameFactory;
+        private readonly IGameFactory _gameFactory;
 
         public event Action<List<Tank>> TanksSpawned;
 
@@ -29,7 +28,7 @@ namespace _Game.Code.Spawners
             TanksDataGenerator tanksDataGenerator,
             WaitingArea waitingArea,
             IAssetLoadService assetLoadService,
-            GameFactory gameFactory
+            IGameFactory gameFactory
         )
         {
             _spawnLines = spawnLines.Lines;

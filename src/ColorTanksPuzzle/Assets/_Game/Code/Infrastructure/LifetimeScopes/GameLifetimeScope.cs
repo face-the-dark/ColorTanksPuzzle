@@ -70,7 +70,7 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
             builder.Register<ITankJumpAnimator, DOTweenTankJumpAnimator>(Lifetime.Transient);
             builder.Register<ITankGroupMoveAnimator, DOTweenTankGroupMoveAnimator>(Lifetime.Transient);
             builder.Register<DeterministicRandom>(Lifetime.Singleton);
-            builder.Register<GameFactory>(Lifetime.Singleton);
+            builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
             builder.Register<PixelArtSpawner>(Lifetime.Singleton)
                 .WithParameter(_pixelArtContainer);
             builder.Register<TankHpGenerator>(Lifetime.Singleton);
