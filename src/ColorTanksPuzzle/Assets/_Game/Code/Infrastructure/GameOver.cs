@@ -13,7 +13,7 @@ namespace _Game.Code.Infrastructure
     {
         private readonly PixelDestroyer _pixelDestroyer;
         private readonly WaitingArea _waitingArea;
-        private readonly PlayerDataService _playerDataService;
+        private readonly IPlayerDataService _playerDataService;
         private readonly LevelConfigurationProvider _levelConfigurationProvider;
 
         public event Action GameWon;
@@ -24,7 +24,7 @@ namespace _Game.Code.Infrastructure
         (
             PixelDestroyer pixelDestroyer,
             WaitingArea waitingArea,
-            PlayerDataService playerDataService,
+            IPlayerDataService playerDataService,
             LevelConfigurationProvider levelConfigurationProvider
         )
         {

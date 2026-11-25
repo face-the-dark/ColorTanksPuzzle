@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Code.Bullets;
+using _Game.Code.Coins;
 using _Game.Code.ColorRocketComponents;
 using _Game.Code.Infrastructure.Assets;
 using _Game.Code.TankComponents;
@@ -40,6 +41,13 @@ namespace _Game.Code.Infrastructure
             ColorRocket colorRocketPrefab = _assetLoadService.LoadColorRocketPrefab();
             
             return _container.Instantiate(colorRocketPrefab);
+        }
+
+        public Coin CreateCoin(Vector3 position)
+        {
+            Coin coinPrefab = _assetLoadService.LoadCoinPrefab();
+            
+            return _container.Instantiate(coinPrefab, position, Quaternion.identity);
         }
     }
 }

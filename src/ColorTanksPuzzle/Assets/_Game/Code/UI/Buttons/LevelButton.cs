@@ -23,10 +23,10 @@ namespace _Game.Code.UI
 
         private Button _button;
 
-        private PlayerDataService _playerDataService;
+        private IPlayerDataService _playerDataService;
         
         [Inject]
-        public void Construct(PlayerDataService playerDataService)
+        public void Construct(IPlayerDataService playerDataService)
         {
             _playerDataService = playerDataService ?? throw new ArgumentNullException(nameof(playerDataService));
         }

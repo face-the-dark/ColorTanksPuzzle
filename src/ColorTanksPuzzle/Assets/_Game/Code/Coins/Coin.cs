@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using _Game.Code.Extensions;
 using UnityEngine;
+using VContainer;
 
 namespace _Game.Code.Coins
 {
@@ -13,12 +14,12 @@ namespace _Game.Code.Coins
 
         private Coroutine _flyCoroutine;
 
-        public void Construct(Camera camera, RectTransform coinUiTarget)
-        {
+        [Inject]
+        public void Construct(Camera camera) => 
             _camera = camera;
 
-            StartFly(coinUiTarget);
-        }
+        public void Initialize(RectTransform coinUITarget) => 
+            StartFly(coinUITarget);
 
         private void StartFly(RectTransform coinUiTarget)
         {
@@ -27,7 +28,7 @@ namespace _Game.Code.Coins
             transform.LookAt(_camera.transform);
         }
 
-        private IEnumerator Fly(RectTransform coinUiTarget)
+        private IEnumerator Fly(RectTransform coinUITarget)
         {
             Vector3 startPosition = transform.position;
             Vector3 middlePosition = startPosition + Vector3.up * _arcHeight;
@@ -40,7 +41,7 @@ namespace _Game.Code.Coins
 
                 float step = time / _duration;
 
-                Vector3 screenTarget = RectTransformUtility.WorldToScreenPoint(null, coinUiTarget.position);
+                Vector3 screenTarget = RectTransformUtility.WorldToScreenPoint(null, coinUITarget.position);
 
                 float distance = Mathf.Abs(_camera.transform.position.z);
 

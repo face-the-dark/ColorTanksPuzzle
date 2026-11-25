@@ -29,103 +29,208 @@ namespace _Game.Code.Infrastructure.LifetimeScopes
     public class GameLifetimeScope : LifetimeScope
     {
         [Header("Scene Dependencies")]
-        [SerializeField] private Transform _pixelArtContainer;
-        [SerializeField] private WaitingAreaSpawnBoundaries _waitingAreaSpawnBoundaries;
-        [SerializeField] private ExpansionBonusButton _expansionBonusButton;
-        [SerializeField] private FreezeSplineBonusButton _freezeSplineBonusButton;
-        [SerializeField] private SacrificeBonusButton _sacrificeSplineBonusButton;
-        [SerializeField] private ColorRocketBonusButton _colorRocketSplineBonusButton;
         [SerializeField] private Camera _camera;
-        [SerializeField] private RectTransform _coinUiTarget;
-        [SerializeField] private SplineTanksCountView _splineTanksCountView;
         [SerializeField] private Spline _spline;
+        [SerializeField] private WaitingAreaCellsSpawnBoundaries _waitingAreaCellsSpawnBoundaries;
         [SerializeField] private SpawnLines _spawnLines;
         [SerializeField] private ZoomPoints _zoomPoints;
+        [SerializeField] private Transform _pixelArtContainer;
+        [SerializeField] private RectTransform _coinUITarget;
+
+        [Header("UI")]
         [SerializeField] private CoinsView _coinsView;
-        [SerializeField] private BuyingWindow _buyingWindow;
         [SerializeField] private LevelLabel _levelLabel;
-        [SerializeField] private WinWindow _winWindow;
-        [SerializeField] private LoseWindow _loseWindow;
-        [SerializeField] private SettingsWindow _settingsWindow;
-        [SerializeField] private GameRunner _gameRunner;
+        [SerializeField] private SplineTanksCountView _splineTanksCountView;
+
+        [Header("UI Buttons")]
+        [SerializeField] private ExpansionBonusButton _expansionBonusButton;
+        [SerializeField] private SwitchTanksBonusButton _switchTanksBonusButton;
+        [SerializeField] private SacrificeBonusButton _sacrificeSplineBonusButton;
+        [SerializeField] private ColorRocketBonusButton _colorRocketSplineBonusButton;
         [SerializeField] private SettingsButton _settingsButton;
 
+        [Header("UI Windows")]
+        [SerializeField] private BuyingWindow _buyingWindow;
+        [SerializeField] private SettingsWindow _settingsWindow;
+        [SerializeField] private WinWindow _winWindow;
+        [SerializeField] private LoseWindow _loseWindow;
+        
+        [Header("Debug")]
+        [SerializeField] private GameRunner _gameRunner;
+        
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterComponent(_expansionBonusButton);
-            builder.RegisterComponent(_freezeSplineBonusButton);
-            builder.RegisterComponent(_sacrificeSplineBonusButton);
-            builder.RegisterComponent(_colorRocketSplineBonusButton);
-            builder.RegisterComponent(_splineTanksCountView);
-            builder.RegisterComponent(_waitingAreaSpawnBoundaries);
+            RegisterEntryPoint(builder);
+            RegisterGameRunner(builder);
+
+            RegisterSceneComponents(builder);
+
+            RegisterSceneUIComponents(builder);
+            RegisterUIButtons(builder);
+            RegisterUIWindows(builder);
+
+            RegisterInfrastructure(builder);
+            RegisterConfigurationProviders(builder);
+            RegisterInput(builder);
+            RegisterTankGenerators(builder);
+            RegisterSpawners(builder);
+            RegisterDestroyers(builder);
+            RegisterWaitingArea(builder);
+            RegisterCoinsCounter(builder);
+            RegisterGameOver(builder);
+            RegisterCameraMover(builder);
+            RegisterBonuses(builder);
+            RegisterBonusServices(builder);
+            RegisterUtilities(builder);
+            RegisterAnimators(builder);
+            RegisterSplineModifiers(builder);
+
+            InjectIntoSpawnLinesDependencies(builder);
+        }
+
+        private void RegisterEntryPoint(IContainerBuilder builder)
+        {
+            builder.RegisterEntryPoint<GameEntryPoint>();
+        }
+
+        private void RegisterGameRunner(IContainerBuilder builder)
+        {
+            builder.RegisterComponent(_gameRunner);
+        }
+
+        private void RegisterSceneComponents(IContainerBuilder builder)
+        {
+            builder.RegisterComponent(_camera);
+            builder.RegisterComponent(_spline);
+            builder.RegisterComponent(_waitingAreaCellsSpawnBoundaries);
             builder.RegisterComponent(_spawnLines);
             builder.RegisterComponent(_zoomPoints);
+        }
+
+        private void RegisterSceneUIComponents(IContainerBuilder builder)
+        {
+            builder.RegisterComponent(_levelLabel);
             builder.RegisterComponent(_coinsView);
+            builder.RegisterComponent(_splineTanksCountView);
+        }
+
+        private void RegisterUIWindows(IContainerBuilder builder)
+        {
             builder.RegisterComponent(_buyingWindow);
             builder.RegisterComponent(_settingsWindow);
-            builder.RegisterComponent(_gameRunner);
-            builder.RegisterComponent(_spline);
+            builder.RegisterComponent(_winWindow);
+            builder.RegisterComponent(_loseWindow);
+        }
+
+        private void RegisterUIButtons(IContainerBuilder builder)
+        {
+            builder.RegisterComponent(_expansionBonusButton);
+            builder.RegisterComponent(_switchTanksBonusButton);
+            builder.RegisterComponent(_sacrificeSplineBonusButton);
+            builder.RegisterComponent(_colorRocketSplineBonusButton);
             builder.RegisterComponent(_settingsButton);
-            
-            builder.Register<ITankJumpAnimator, DOTweenTankJumpAnimator>(Lifetime.Transient);
-            builder.Register<ITankGroupMoveAnimator, DOTweenTankGroupMoveAnimator>(Lifetime.Transient);
-            builder.Register<DeterministicRandom>(Lifetime.Singleton);
+        }
+
+        private void RegisterInfrastructure(IContainerBuilder builder)
+        {
             builder.Register<IGameFactory, GameFactory>(Lifetime.Singleton);
-            builder.Register<PixelArtSpawner>(Lifetime.Singleton)
-                .WithParameter(_pixelArtContainer);
-            builder.Register<TankHpGenerator>(Lifetime.Singleton);
-            builder.Register<TankOrderGenerator>(Lifetime.Singleton);
-            builder.Register<TankLaneDistributor>(Lifetime.Singleton)
-                .WithParameter(_spawnLines);
-            builder.Register<TanksDataGenerator>(Lifetime.Singleton);
-            builder.Register<WaitingArea>(Lifetime.Singleton);
+        }
+
+        private void RegisterConfigurationProviders(IContainerBuilder builder)
+        {
+            builder.Register<TankConfigurationProvider>(Lifetime.Singleton);
+        }
+
+        private void RegisterInput(IContainerBuilder builder)
+        {
             builder.Register<PlayerInput>(Lifetime.Singleton);
             builder.Register<InputReader>(Lifetime.Singleton);
-            builder.Register<LastCircleFinalizer>(Lifetime.Singleton);
-            builder.Register<BonusActivator>(Lifetime.Singleton);
-            builder.Register<TankDestroyer>(Lifetime.Singleton);
-            builder.Register<PixelDestroyer>(Lifetime.Singleton);
-            builder.Register<CoinsCounter>(Lifetime.Singleton);
-            builder.Register<BonusBuyer>(Lifetime.Singleton);
-            builder.Register<GameOver>(Lifetime.Singleton);
-            builder.Register<CameraMover>(Lifetime.Singleton)
-                .WithParameter(_camera)
-                .WithParameter(_zoomPoints);
-
-            builder.Register<BonusesConfigurationProvider>(Lifetime.Singleton);
-            builder.Register<TankConfigurationProvider>(Lifetime.Singleton);
-            
             builder.Register<TankDispatcher>(Lifetime.Singleton);
-            builder.Register<Selector>(Lifetime.Singleton)
-                .WithParameter(_camera);
+            builder.Register<Selector>(Lifetime.Singleton);
+        }
+
+        private void RegisterTankGenerators(IContainerBuilder builder)
+        {
+            builder.Register<TankHpGenerator>(Lifetime.Singleton);
+            builder.Register<TankOrderGenerator>(Lifetime.Singleton);
+            builder.Register<TankLaneDistributor>(Lifetime.Singleton);
+            builder.Register<TanksDataGenerator>(Lifetime.Singleton);
+        }
+
+        private void RegisterSpawners(IContainerBuilder builder)
+        {
+            builder.Register<TankSpawner>(Lifetime.Singleton);
+            builder.Register<PixelArtSpawner>(Lifetime.Singleton)
+                .WithParameter(_pixelArtContainer);
             builder.Register<WaitingAreaCellSpawner>(Lifetime.Singleton);
             builder.Register<CoinSpawner>(Lifetime.Singleton)
-                .WithParameter(_camera)
-                .WithParameter(_coinUiTarget);
-            builder.Register<TankSpawner>(Lifetime.Singleton)
-                .WithParameter(_spline)
-                .WithParameter(_spawnLines);
-            
+                .WithParameter(_coinUITarget);
+        }
+
+        private void RegisterDestroyers(IContainerBuilder builder)
+        {
+            builder.Register<TankDestroyer>(Lifetime.Singleton);
+            builder.Register<PixelDestroyer>(Lifetime.Singleton);
+        }
+
+        private void RegisterWaitingArea(IContainerBuilder builder)
+        {
+            builder.Register<WaitingArea>(Lifetime.Singleton);
+        }
+
+        private void RegisterCoinsCounter(IContainerBuilder builder)
+        {
+            builder.Register<CoinsCounter>(Lifetime.Singleton);
+        }
+
+        private void RegisterGameOver(IContainerBuilder builder)
+        {
+            builder.Register<GameOver>(Lifetime.Singleton);
+        }
+
+        private void RegisterCameraMover(IContainerBuilder builder)
+        {
+            builder.Register<CameraMover>(Lifetime.Singleton);
+        }
+
+        private void RegisterBonuses(IContainerBuilder builder)
+        {
             builder.Register<IBonus, ExpansionBonus>(Lifetime.Singleton);
             builder.Register<IBonus, SwitchTanksBonus>(Lifetime.Singleton);
             builder.Register<IBonus, SacrificeBonus>(Lifetime.Singleton);
             builder.Register<IBonus, ColorRocketBonus>(Lifetime.Singleton);
-            
+        }
+
+        private void RegisterBonusServices(IContainerBuilder builder)
+        {
+            builder.Register<BonusActivator>(Lifetime.Singleton);
+            builder.Register<BonusBuyer>(Lifetime.Singleton);
+        }
+
+        private void RegisterUtilities(IContainerBuilder builder)
+        {
+            builder.Register<DeterministicRandom>(Lifetime.Singleton);
+        }
+
+        private void RegisterAnimators(IContainerBuilder builder)
+        {
+            builder.Register<ITankJumpAnimator, DOTweenTankJumpAnimator>(Lifetime.Transient);
+            builder.Register<ITankGroupMoveAnimator, DOTweenTankGroupMoveAnimator>(Lifetime.Transient);
+        }
+
+        private void RegisterSplineModifiers(IContainerBuilder builder)
+        {
+            builder.Register<LastCircleFinalizer>(Lifetime.Singleton);
             builder.RegisterBuildCallback(container => { container.Resolve<LastCircleFinalizer>(); });
-            builder.RegisterBuildCallback(container => { container.Resolve<GameOver>(); });
+        }
+
+        private void InjectIntoSpawnLinesDependencies(IContainerBuilder builder)
+        {
             builder.RegisterBuildCallback(container =>
             {
-                container.Inject(_levelLabel);
-                container.Inject(_winWindow);
-                container.Inject(_loseWindow);
-
-                foreach (SpawnLine spawnLine in _spawnLines.Lines)
-                {
+                foreach (SpawnLine spawnLine in _spawnLines.Lines) 
                     container.Inject(spawnLine);
-                }
             });
-
-            builder.RegisterEntryPoint<GameEntryPoint>();
         }
     }
 }

@@ -2,7 +2,7 @@
 using _Game.Code.ConfigurationProvider;
 using _Game.Code.Configurations.Levels;
 using _Game.Code.Infrastructure;
-using _Game.Code.Infrastructure.SceneManagment;
+using _Game.Code.Infrastructure.SceneManagement;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,12 +18,16 @@ namespace _Game.Code.UI.Window.GameOverScreens
         [SerializeField] private TextMeshProUGUI _rewardCoins;
 
         private LevelConfigurationProvider _levelConfigurationProvider;
-        private SceneLoader _sceneLoader;
+        private ISceneLoader _sceneLoader;
         private GameOver _gameOver;
 
         [Inject]
-        public void Construct(SceneLoader sceneLoader, GameOver gameOver,
-            LevelConfigurationProvider levelConfigurationProvider)
+        public void Construct
+        (
+            ISceneLoader sceneLoader,
+            GameOver gameOver,
+            LevelConfigurationProvider levelConfigurationProvider
+        )
         {
             _sceneLoader = sceneLoader ?? throw new ArgumentNullException(nameof(sceneLoader));
             _gameOver = gameOver ?? throw new ArgumentNullException(nameof(gameOver));

@@ -8,13 +8,13 @@ namespace _Game.Code.UI.View
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class CoinsView : MonoBehaviour
     {
-        private PlayerDataService _playerDataService;
+        private IPlayerDataService _playerDataService;
         
         private TextMeshProUGUI _moneyText;
 
         [Inject]
-        public void Construct(PlayerDataService coinsCounter) => 
-            _playerDataService = coinsCounter;
+        public void Construct(IPlayerDataService playerDataService) => 
+            _playerDataService = playerDataService;
 
         private void Awake() => 
             _moneyText = GetComponent<TextMeshProUGUI>();

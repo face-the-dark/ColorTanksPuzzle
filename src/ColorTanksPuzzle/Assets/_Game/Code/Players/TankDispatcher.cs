@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Game.Code.ConfigurationProvider;
-using _Game.Code.Spawners;
 using _Game.Code.Spawners.Lines;
 using _Game.Code.TankComponents;
 using _Game.Code.WaitingAreaComponents;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
@@ -14,7 +12,6 @@ namespace _Game.Code.Players
     public class TankDispatcher : IDisposable
     {
         private readonly LevelConfigurationProvider _levelConfigurationProvider;
-        private readonly BonusesConfigurationProvider _bonusesConfigurationProvider;
         private readonly Selector _selector;
         private readonly WaitingArea _waitingArea;
         private readonly SpawnLines _spawnLines;
@@ -31,15 +28,11 @@ namespace _Game.Code.Players
         public TankDispatcher
         (
             LevelConfigurationProvider levelConfigurationProvider,
-            BonusesConfigurationProvider bonusesConfigurationProvider,
             Selector selector,
             WaitingArea waitingArea,
             SpawnLines spawnLines
         )
         {
-            _bonusesConfigurationProvider = bonusesConfigurationProvider ??
-                                            throw new ArgumentNullException(nameof(bonusesConfigurationProvider));
-
             _levelConfigurationProvider = levelConfigurationProvider ??
                                           throw new ArgumentNullException(nameof(levelConfigurationProvider));
 
@@ -53,14 +46,6 @@ namespace _Game.Code.Players
         public void Dispose()
         {
             _selector.TankSelected -= Dispatch;
-        }
-
-        public void FreezeTanksOnSpline()
-        {
-            foreach (Tank tank in _tanksOnSpline)
-                tank.FreezeMoving();
-
-            DelayUnfreezeTanks().Forget();
         }
 
         public void IncreaseMaxCellsCount()
@@ -81,14 +66,6 @@ namespace _Game.Code.Players
             _maxTanksCountOnSpline = _levelConfigurationProvider.GetDifficultyConfiguration().StartMaxTanksCount;
 
             TanksCountChanged?.Invoke($"{_tanksOnSpline.Count}/{_maxTanksCountOnSpline}");
-        }
-
-        private async UniTask DelayUnfreezeTanks()
-        {
-            await UniTask.WaitForSeconds((int)_bonusesConfigurationProvider.BonusesConfiguration.FreezeSplineBonusTime);
-
-            foreach (Tank tank in _tanksOnSpline)
-                tank.UnfreezeMoving();
         }
 
         private void Dispatch(Tank tank)

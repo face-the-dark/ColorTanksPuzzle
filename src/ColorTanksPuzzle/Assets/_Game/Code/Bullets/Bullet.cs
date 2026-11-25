@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using _Game.Code.Destroyers;
 using _Game.Code.Extensions;
 using _Game.Code.Pixels;
@@ -21,12 +22,10 @@ namespace _Game.Code.Bullets
 
         [Inject]
         public void Construct(PixelDestroyer pixelDestroyer) =>
-            _pixelDestroyer = pixelDestroyer;
+            _pixelDestroyer = pixelDestroyer ?? throw new ArgumentNullException(nameof(pixelDestroyer));
 
-        private void Awake()
-        {
+        private void Awake() => 
             _bulletDyer = GetComponent<BulletDyer>();
-        }
 
         private void OnCollisionEnter(Collision collision)
         {

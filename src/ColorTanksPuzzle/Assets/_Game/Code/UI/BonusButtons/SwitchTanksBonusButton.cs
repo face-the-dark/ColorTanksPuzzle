@@ -2,7 +2,7 @@
 
 namespace _Game.Code.UI.BonusButtons
 {
-    public class FreezeSplineBonusButton : BonusButton
+    public class SwitchTanksBonusButton : BonusButton
     {
         protected override Bonus Bonus => Bonus.SwitchTanks;
     }

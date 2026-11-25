@@ -18,7 +18,7 @@ namespace _Game.Code.Spawners
         private const int MaxAreaCellsInRow = 5;
 
         private readonly LevelConfigurationProvider _levelConfigurationProvider;
-        private readonly WaitingAreaSpawnBoundaries _waitingAreaSpawnBoundaries;
+        private readonly WaitingAreaCellsSpawnBoundaries _waitingAreaCellsSpawnBoundaries;
 
         private readonly List<WaitingAreaCell> _currentWaitingAreaCells = new();
 
@@ -30,14 +30,14 @@ namespace _Game.Code.Spawners
         [Inject]
         public WaitingAreaCellSpawner
         (
-            WaitingAreaSpawnBoundaries waitingAreaSpawnBoundaries,
+            WaitingAreaCellsSpawnBoundaries waitingAreaCellsSpawnBoundaries,
             IAssetLoadService assetLoadService,
             DifficultyConfigurationProvider difficultyConfigurationProvider,
             LevelConfigurationProvider levelConfigurationProvider
         )
         {
-            _waitingAreaSpawnBoundaries = waitingAreaSpawnBoundaries ??
-                                          throw new ArgumentNullException(nameof(waitingAreaSpawnBoundaries));
+            _waitingAreaCellsSpawnBoundaries = waitingAreaCellsSpawnBoundaries ??
+                                          throw new ArgumentNullException(nameof(waitingAreaCellsSpawnBoundaries));
 
             _levelConfigurationProvider = levelConfigurationProvider ??
                                           throw new ArgumentNullException(nameof(levelConfigurationProvider));
@@ -84,10 +84,10 @@ namespace _Game.Code.Spawners
 
         private void InitializeStartPosition()
         {
-            _currentPositionByX = _waitingAreaSpawnBoundaries.LeftUpBoundary.position.x;
+            _currentPositionByX = _waitingAreaCellsSpawnBoundaries.LeftUpBoundary.position.x;
             _currentPositionByX += _waitingAreaCellPrefab.transform.localScale.x / Divisor;
 
-            _currentPositionByZ = _waitingAreaSpawnBoundaries.LeftUpBoundary.position.z;
+            _currentPositionByZ = _waitingAreaCellsSpawnBoundaries.LeftUpBoundary.position.z;
             _currentPositionByZ -= _waitingAreaCellPrefab.transform.localScale.z / Divisor;
         }
 
@@ -108,9 +108,9 @@ namespace _Game.Code.Spawners
             _currentPositionByX += _waitingAreaCellPrefab.transform.localScale.x;
             _currentPositionByX += DistanceBetweenCells;
 
-            if (_currentPositionByX > _waitingAreaSpawnBoundaries.RightUpBoundary.position.x)
+            if (_currentPositionByX > _waitingAreaCellsSpawnBoundaries.RightUpBoundary.position.x)
             {
-                _currentPositionByX = _waitingAreaSpawnBoundaries.LeftUpBoundary.position.x;
+                _currentPositionByX = _waitingAreaCellsSpawnBoundaries.LeftUpBoundary.position.x;
                 _currentPositionByX += _waitingAreaCellPrefab.transform.localScale.x / Divisor;
 
                 _currentPositionByZ -= DistanceBetweenCells;

@@ -64,7 +64,7 @@ namespace _Game.Code.Bonuses
             if (_isActivated)
             {
                 Color tankColor = tank.Color;
-                int tankHp = tank.Hp;
+                int tankHp = tank.HealthValue;
 
                 if (_pixelDestroyer.TryGetPixelsByColor(tankColor, out List<Pixel> pixels))
                 {

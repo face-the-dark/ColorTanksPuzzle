@@ -1,6 +1,8 @@
 ﻿using System;
+using _Game.Code.Bonuses;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 
 namespace _Game.Code.Players
 {
@@ -8,6 +10,7 @@ namespace _Game.Code.Players
     {
         private readonly PlayerInput _playerInput;
 
+        [Inject]
         public InputReader(PlayerInput playerInput)
         {
             _playerInput = playerInput;
@@ -22,10 +25,10 @@ namespace _Game.Code.Players
         }
 
         public event Action<Vector2> Clicked;
-        public event Action ExpansionBonusUsed;
-        public event Action FreezeSplineBonusUsed;
-        public event Action SacrificeBonusUsed;
-        public event Action ColorRocketBonusUsed;
+        public event Action<Bonus> ExpansionBonusUsed;
+        public event Action<Bonus> SwitchTanksBonusUsed;
+        public event Action<Bonus> SacrificeBonusUsed;
+        public event Action<Bonus> ColorRocketBonusUsed;
 
         public void Dispose()
         {
@@ -48,25 +51,25 @@ namespace _Game.Code.Players
         private void OnExpansionBonusActivated(InputAction.CallbackContext callbackContext)
         {
             if (callbackContext.performed)
-                ExpansionBonusUsed?.Invoke();
+                ExpansionBonusUsed?.Invoke(Bonus.Expansion);
         }
         
         private void OnFreezeSplineBonusActivated(InputAction.CallbackContext callbackContext)
         {
             if (callbackContext.performed)
-                FreezeSplineBonusUsed?.Invoke();
+                SwitchTanksBonusUsed?.Invoke(Bonus.SwitchTanks);
         }
         
         private void OnSacrificeBonusActivated(InputAction.CallbackContext callbackContext)
         {
             if (callbackContext.performed)
-                SacrificeBonusUsed?.Invoke();
+                SacrificeBonusUsed?.Invoke(Bonus.Sacrifice);
         }
         
         private void OnColorRocketBonusActivated(InputAction.CallbackContext callbackContext)
         {
             if (callbackContext.performed)
-                ColorRocketBonusUsed?.Invoke();
+                ColorRocketBonusUsed?.Invoke(Bonus.ColorRocket);
         }
     }
 }

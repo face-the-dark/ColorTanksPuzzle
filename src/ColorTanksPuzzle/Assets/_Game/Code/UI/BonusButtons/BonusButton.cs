@@ -16,12 +16,12 @@ namespace _Game.Code.UI.BonusButtons
         private Button _button;
 
         private BonusActivator _bonusActivator;
-        private PlayerDataService _playerDataService;
+        private IPlayerDataService _playerDataService;
 
         protected abstract Bonus Bonus { get; }
 
         [Inject]
-        public void Construct(BonusActivator bonusActivator, PlayerDataService playerDataService)
+        public void Construct(BonusActivator bonusActivator, IPlayerDataService playerDataService)
         {
             _bonusActivator = bonusActivator ?? throw new ArgumentNullException(nameof(bonusActivator));
             _playerDataService = playerDataService 

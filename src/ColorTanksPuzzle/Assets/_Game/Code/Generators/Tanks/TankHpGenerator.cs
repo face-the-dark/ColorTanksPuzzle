@@ -10,7 +10,7 @@ namespace _Game.Code.Generators.Tanks
 {
     public class TankHpGenerator
     {
-        private const int MinimumStandardHp = 10;
+        private const int MinimumStandardHp = 5;
 
         private readonly LevelConfigurationProvider _levelConfigurationProvider;
         private readonly DeterministicRandom _random;

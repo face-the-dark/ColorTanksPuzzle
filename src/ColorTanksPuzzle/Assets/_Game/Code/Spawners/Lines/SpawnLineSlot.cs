@@ -11,7 +11,6 @@ namespace _Game.Code.Spawners.Lines
         private Tank _tank;
 
         public Vector3 Position => _position;
-        public Tank Tank => _tank;
         
         public SpawnLineSlot(Vector3 position, Tank tank)
         {
@@ -27,19 +26,8 @@ namespace _Game.Code.Spawners.Lines
             
             _tank = tank;
         }
-        
-        public void SetTankPosition(Tank tank)
-        {
-            if (tank == null)
-                throw new InvalidOperationException(nameof(tank));
-            
-            _tank = tank;
-            _tank.transform.position = _position;
-        }
 
-        public bool EqualsTank(Tank tank)
-        {
-            return _tank.Equals(tank);
-        }
+        public bool EqualsTank(Tank tank) => 
+            _tank.Equals(tank);
     }
 }

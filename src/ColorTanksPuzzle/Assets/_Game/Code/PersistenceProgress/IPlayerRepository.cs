@@ -1,6 +1,6 @@
 ﻿namespace _Game.Code.PersistenceProgress
 {
-    public interface ISaveLoadService
+    public interface IPlayerRepository
     {
         void SavePlayerData(PlayerData playerData);
         PlayerData LoadPlayerData();

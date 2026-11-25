@@ -2318,8 +2318,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Configurations.WaitingAreaSpawnBoundaries
   _leftUpBoundary: {fileID: 835765104}
   _rightUpBoundary: {fileID: 1718538312}
-  _leftDownBoundary: {fileID: 1120542251}
-  _rightDownBoundary: {fileID: 320367344}
 --- !u!1 &398000370
 GameObject:
   m_ObjectHideFlags: 0
@@ -9809,26 +9807,26 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  _pixelArtContainer: {fileID: 843210120}
-  _waitingAreaSpawnBoundaries: {fileID: 391172780}
-  _expansionBonusButton: {fileID: 1055238755}
-  _freezeSplineBonusButton: {fileID: 1432756479}
-  _sacrificeSplineBonusButton: {fileID: 101430156}
-  _colorRocketSplineBonusButton: {fileID: 330718828}
   _camera: {fileID: 330585545}
-  _coinUiTarget: {fileID: 1536026268}
-  _splineTanksCountView: {fileID: 483331860}
   _spline: {fileID: 1553780079}
+  _waitingAreaCellsSpawnBoundaries: {fileID: 391172780}
+  _splineTanksCountView: {fileID: 483331860}
   _spawnLines: {fileID: 1655969781}
   _zoomPoints: {fileID: 141941061}
+  _pixelArtContainer: {fileID: 843210120}
+  _coinUiTarget: {fileID: 1536026268}
   _coinsView: {fileID: 990246004}
-  _buyingWindow: {fileID: 1575453535}
   _levelLabel: {fileID: 1112066073}
+  _expansionBonusButton: {fileID: 1055238755}
+  _switchTanksBonusButton: {fileID: 1432756479}
+  _sacrificeSplineBonusButton: {fileID: 101430156}
+  _colorRocketSplineBonusButton: {fileID: 330718828}
+  _settingsButton: {fileID: 293352691}
+  _buyingWindow: {fileID: 1575453535}
+  _settingsWindow: {fileID: 2107704270}
   _winWindow: {fileID: 197351409}
   _loseWindow: {fileID: 42006510}
-  _settingsWindow: {fileID: 2107704270}
   _gameRunner: {fileID: 1990759706}
-  _settingsButton: {fileID: 293352691}
 --- !u!4 &1857952941
 Transform:
   m_ObjectHideFlags: 0
@@ -16321,7 +16319,7 @@ SceneRoots:
   - {fileID: 391172779}
   - {fileID: 1655969780}
   - {fileID: 141941060}
-  - {fileID: 726481661}
   - {fileID: 490654056}
+  - {fileID: 726481661}
   - {fileID: 5452403334983902564}
   - {fileID: 1990759707}

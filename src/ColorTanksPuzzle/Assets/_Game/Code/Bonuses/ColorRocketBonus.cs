@@ -3,7 +3,6 @@ using _Game.Code.Cameras;
 using _Game.Code.ColorRocketComponents;
 using _Game.Code.Destroyers;
 using _Game.Code.Infrastructure;
-using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Pixels;
 using _Game.Code.Players;
 using UnityEngine;

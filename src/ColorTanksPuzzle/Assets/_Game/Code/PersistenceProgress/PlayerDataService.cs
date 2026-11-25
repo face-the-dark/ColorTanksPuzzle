@@ -6,19 +6,19 @@ using VContainer;
 
 namespace _Game.Code.PersistenceProgress
 {
-    public class PlayerDataService
+    public class PlayerDataService : IPlayerDataService
     {
-        private readonly ISaveLoadService _saveLoadService;
+        private readonly IPlayerRepository _playerRepository;
 
         private PlayerData _currentPlayerData;
         private PlayerData _previousPlayerData;
 
         [Inject]
-        public PlayerDataService(ISaveLoadService saveLoadService)
+        public PlayerDataService(IPlayerRepository playerRepository)
         {
-            _saveLoadService = saveLoadService ?? throw new ArgumentNullException(nameof(saveLoadService));
+            _playerRepository = playerRepository ?? throw new ArgumentNullException(nameof(playerRepository));
 
-            _previousPlayerData = saveLoadService.LoadPlayerData();
+            _previousPlayerData = playerRepository.LoadPlayerData();
             _currentPlayerData = _previousPlayerData.Clone();
         } 
 
@@ -173,6 +173,6 @@ namespace _Game.Code.PersistenceProgress
         }
 
         private void SavePlayerData() =>
-            _saveLoadService.SavePlayerData(_currentPlayerData);
+            _playerRepository.SavePlayerData(_currentPlayerData);
     }
 }

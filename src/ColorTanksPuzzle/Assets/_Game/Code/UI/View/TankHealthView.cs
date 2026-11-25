@@ -9,6 +9,9 @@ namespace _Game.Code.UI.View
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Tank _tank;
 
+        private void Start() => 
+            OnHealthValueChanged(_tank.HealthValue);
+
         private void OnEnable() => 
             _tank.HealthValueChanged += OnHealthValueChanged;
 

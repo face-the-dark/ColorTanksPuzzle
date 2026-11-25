@@ -11,7 +11,7 @@ namespace _Game.Code.TankComponents
 
         public event Action<int> ValueChanged;
         public event Action ValueEnded;
-        
+
         public void Initialize(int value)
         {
             if (value <= 0)

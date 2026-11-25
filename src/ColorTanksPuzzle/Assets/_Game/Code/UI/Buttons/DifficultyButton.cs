@@ -1,7 +1,7 @@
 ﻿using System;
 using _Game.Code.ConfigurationProvider;
 using _Game.Code.Configurations.Levels;
-using _Game.Code.Infrastructure.SceneManagment;
+using _Game.Code.Infrastructure.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -14,11 +14,11 @@ namespace _Game.Code.UI
         private Button _button;
         private LevelConfiguration _levelConfiguration;
 
-        private SceneLoader _sceneLoader;
+        private ISceneLoader _sceneLoader;
         private LevelConfigurationProvider _levelConfigurationProvider;
         
         [Inject]
-        public void Construct(SceneLoader sceneLoader, LevelConfigurationProvider levelConfigurationProvider)
+        public void Construct(ISceneLoader sceneLoader, LevelConfigurationProvider levelConfigurationProvider)
         {
             _sceneLoader = sceneLoader ?? throw new ArgumentNullException(nameof(sceneLoader));
             _levelConfigurationProvider = levelConfigurationProvider 

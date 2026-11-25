@@ -7,6 +7,8 @@ namespace _Game.Code.Cameras
 {
     public class CameraMover
     {
+        private const float ZoomDuration = 1f;
+        
         private readonly Camera _camera;
         private readonly Vector3 _tanksPoint;
         private readonly Vector3 _artPoint;
@@ -26,12 +28,12 @@ namespace _Game.Code.Cameras
         }
 
         public void ZoomToStart() => 
-            _camera.transform.DOMove(_startingPoint, 1f);
+            _camera.transform.DOMove(_startingPoint, ZoomDuration);
 
         public void ZoomToTanks() => 
-            _camera.transform.DOMove(_tanksPoint, 1f);
+            _camera.transform.DOMove(_tanksPoint, ZoomDuration);
 
         public void ZoomToArt() => 
-            _camera.transform.DOMove(_artPoint, 1f);
+            _camera.transform.DOMove(_artPoint, ZoomDuration);
     }
 }

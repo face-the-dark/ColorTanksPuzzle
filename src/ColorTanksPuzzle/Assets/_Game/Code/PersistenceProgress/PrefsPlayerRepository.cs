@@ -2,7 +2,7 @@
 
 namespace _Game.Code.PersistenceProgress
 {
-    public class PrefsSaveLoadService : ISaveLoadService
+    public class PrefsPlayerRepository : IPlayerRepository
     {
         public void SavePlayerData(PlayerData playerData)
         {

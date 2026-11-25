@@ -16,7 +16,7 @@ namespace _Game.Code.SplineModifiers
         [Inject]
         public LastCircleFinalizer(TankSpawner tankSpawner)
         {
-            _tankSpawner = tankSpawner;
+            _tankSpawner = tankSpawner ?? throw new ArgumentNullException(nameof(tankSpawner));
             
             _tankSpawner.TanksSpawned += OnTanksSpawned;
         }

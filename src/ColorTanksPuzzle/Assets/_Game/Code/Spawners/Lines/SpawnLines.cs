@@ -21,10 +21,8 @@ namespace _Game.Code.Spawners.Lines
 
         public void SwitchTanks(Color pixelColor)
         {
-            foreach (SpawnLine spawnLine in _lines)
-            {
+            foreach (SpawnLine spawnLine in _lines) 
                 spawnLine.SwitchTanks(pixelColor);
-            }
         }
     }
 }

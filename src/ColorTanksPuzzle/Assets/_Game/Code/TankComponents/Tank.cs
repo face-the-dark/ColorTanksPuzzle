@@ -23,7 +23,7 @@ namespace _Game.Code.TankComponents
 
         public bool IsMoving => _tankMover.IsMoving;
         public bool IsBlocked => _isBlocked;
-        public int Hp => _tankHealth.Value;
+        public int HealthValue => _tankHealth.Value;
         public Color Color => _tankShooter.Color;
 
         public event Action Shot;
@@ -57,12 +57,7 @@ namespace _Game.Code.TankComponents
 
         public void MoveToSpline()
         {
-            _tankJumpAnimator.JumpTo(
-                transform,
-                _spline.nodes.First().Position,
-                power: 20f,
-                duration: 0.5f,
-                onComplete: StartMove);
+            _tankJumpAnimator.JumpTo(transform, _spline.nodes.First().Position, 20f, 0.5f, StartMove);
         }
 
         private void StartMove()
@@ -107,12 +102,6 @@ namespace _Game.Code.TankComponents
 
         public void Block() => 
             _isBlocked = true;
-
-        public void FreezeMoving() =>
-            _tankMover.ZeroingSpeed();
-
-        public void UnfreezeMoving() =>
-            _tankMover.UnZeroingSpeed();
 
         public void Die()
         {

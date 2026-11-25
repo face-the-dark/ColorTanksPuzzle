@@ -25,15 +25,15 @@ namespace _Game.Code.Players
             _tankConfigurationProvider =
                 tankConfigurationProvider ?? throw new ArgumentNullException(nameof(tankConfigurationProvider));
 
-            _inputReader.Clicked += TrySelectUnmovingTank;
+            _inputReader.Clicked += TrySelect;
         }
 
         public void Dispose()
         {
-            _inputReader.Clicked -= TrySelectUnmovingTank;
+            _inputReader.Clicked -= TrySelect;
         }
 
-        private void TrySelectUnmovingTank(Vector2 position)
+        private void TrySelect(Vector2 position)
         {
             Ray ray = _camera.ScreenPointToRay(position);
             

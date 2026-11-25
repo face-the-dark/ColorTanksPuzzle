@@ -11,13 +11,13 @@ namespace _Game.Code.Bonuses
     {
         private readonly InputReader _inputReader;
         private readonly TankDispatcher _tankDispatcher;
-        private readonly PlayerDataService _playerDataService;
+        private readonly IPlayerDataService _playerDataService;
 
         private readonly Dictionary<Bonus, IBonus> _bonuses;
         
         private PlayerData _playerData;
         private bool _isAllBonusesBlocked;
-        
+
         public event Action<Bonus> BonusCountNotEnough;
 
         [Inject]
@@ -25,9 +25,8 @@ namespace _Game.Code.Bonuses
         (
             InputReader inputReader,
             TankDispatcher tankDispatcher,
-            BonusBuyer bonusBuyer,
-            IReadOnlyList<IBonus> bonuses,
-            PlayerDataService playerDataService
+            IPlayerDataService playerDataService,
+            IReadOnlyList<IBonus> bonuses
         )
         {
             _inputReader = inputReader ?? throw new ArgumentNullException(nameof(inputReader));
@@ -39,31 +38,19 @@ namespace _Game.Code.Bonuses
 
             _bonuses = bonuses.ToDictionary(k => k.Bonus, bonus => bonus);
             
-            _inputReader.ExpansionBonusUsed += ActivateExpansionBonus;
-            _inputReader.FreezeSplineBonusUsed += ActivateFreezeSplineBonus;
-            _inputReader.SacrificeBonusUsed += ActivateSacrificeBonus;
-            _inputReader.ColorRocketBonusUsed += ActivateColorRocketBonus;
+            _inputReader.ExpansionBonusUsed += ActivateBonus;
+            _inputReader.SwitchTanksBonusUsed += ActivateBonus;
+            _inputReader.SacrificeBonusUsed += ActivateBonus;
+            _inputReader.ColorRocketBonusUsed += ActivateBonus;
         }
 
         public void Dispose()
         {
-            _inputReader.ExpansionBonusUsed -= ActivateExpansionBonus;
-            _inputReader.FreezeSplineBonusUsed -= ActivateFreezeSplineBonus;
-            _inputReader.SacrificeBonusUsed -= ActivateSacrificeBonus;
-            _inputReader.ColorRocketBonusUsed -= ActivateColorRocketBonus;
+            _inputReader.ExpansionBonusUsed -= ActivateBonus;
+            _inputReader.SwitchTanksBonusUsed -= ActivateBonus;
+            _inputReader.SacrificeBonusUsed -= ActivateBonus;
+            _inputReader.ColorRocketBonusUsed -= ActivateBonus;
         }
-
-        private void ActivateExpansionBonus() =>
-            ActivateBonus(Bonus.Expansion);
-
-        private void ActivateFreezeSplineBonus() =>
-            ActivateBonus(Bonus.SwitchTanks);
-
-        private void ActivateSacrificeBonus() =>
-            ActivateBonus(Bonus.Sacrifice);
-
-        private void ActivateColorRocketBonus() =>
-            ActivateBonus(Bonus.ColorRocket);
 
         public void ActivateBonus(Bonus bonus)
         {

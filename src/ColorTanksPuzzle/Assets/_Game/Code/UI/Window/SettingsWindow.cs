@@ -1,5 +1,5 @@
 ﻿using System;
-using _Game.Code.Infrastructure.SceneManagment;
+using _Game.Code.Infrastructure.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -12,14 +12,14 @@ namespace _Game.Code.UI.Window
         [SerializeField] private Button _menuButton;
         [SerializeField] private Slider _soundsSlider;
 
-        private SceneLoader _sceneLoader;
+        private ISceneLoader _sceneLoader;
         
         private SettingsButton _settingsButton;
 
         public event Action<float> SoundsVolumeChanged;
         
         [Inject]
-        public void Construct(SceneLoader sceneLoader, SettingsButton settingsButton)
+        public void Construct(ISceneLoader sceneLoader, SettingsButton settingsButton)
         {
             _sceneLoader = sceneLoader ?? throw new ArgumentNullException(nameof(sceneLoader));
             _settingsButton = settingsButton ?? throw new ArgumentNullException(nameof(settingsButton));

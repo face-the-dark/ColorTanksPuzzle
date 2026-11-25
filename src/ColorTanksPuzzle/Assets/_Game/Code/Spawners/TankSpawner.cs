@@ -4,7 +4,6 @@ using System.Linq;
 using _Game.Code.Generators.Data;
 using _Game.Code.Generators.Tanks;
 using _Game.Code.Infrastructure;
-using _Game.Code.Infrastructure.Assets;
 using _Game.Code.Spawners.Lines;
 using _Game.Code.TankComponents;
 using _Game.Code.WaitingAreaComponents;
@@ -27,7 +26,6 @@ namespace _Game.Code.Spawners
             SpawnLines spawnLines,
             TanksDataGenerator tanksDataGenerator,
             WaitingArea waitingArea,
-            IAssetLoadService assetLoadService,
             IGameFactory gameFactory
         )
         {

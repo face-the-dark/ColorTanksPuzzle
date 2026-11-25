@@ -1,34 +1,27 @@
 ﻿using System;
 using _Game.Code.Coins;
-using _Game.Code.Infrastructure.Assets;
+using _Game.Code.Infrastructure;
 using UnityEngine;
 using VContainer;
-using Object = UnityEngine.Object;
 
 namespace _Game.Code.Spawners
 {
     public class CoinSpawner
     {
-        private readonly Camera _camera;
+        private readonly IGameFactory _gameFactory;
         private readonly RectTransform _coinUiTarget;
-        private readonly Coin _coinPrefab;
 
         [Inject]
-        public CoinSpawner(IAssetLoadService assetLoadService, Camera camera, RectTransform coinUiTarget)
+        public CoinSpawner(IGameFactory gameFactory, RectTransform coinUITarget)
         {
-            if (assetLoadService == null)
-                throw new ArgumentNullException(nameof(assetLoadService));
-
-            _camera = camera;
-            _coinUiTarget = coinUiTarget;
-
-            _coinPrefab = assetLoadService.LoadCoinPrefab();
+            _gameFactory = gameFactory ?? throw new ArgumentNullException(nameof(gameFactory));
+            _coinUiTarget = coinUITarget ?? throw new ArgumentNullException(nameof(coinUITarget));
         }
 
-        public void Spawn(Vector3 at)
+        public void Spawn(Vector3 position)
         {
-            Coin coin = Object.Instantiate(_coinPrefab, at, Quaternion.identity);
-            coin.Construct(_camera, _coinUiTarget);
+            Coin coin = _gameFactory.CreateCoin(position);
+            coin.Initialize(_coinUiTarget);
         }
     }
 }

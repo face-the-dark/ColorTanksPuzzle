@@ -6,17 +6,15 @@ namespace _Game.Code.Coins
 {
     public class CoinsCounter
     {
-        private readonly PlayerDataService _playerDataService;
+        private const int Amount = 1;
+        
+        private readonly IPlayerDataService _playerDataService;
 
         [Inject]
-        public CoinsCounter(PlayerDataService playerDataService)
-        {
+        public CoinsCounter(IPlayerDataService playerDataService) => 
             _playerDataService = playerDataService ?? throw new ArgumentNullException(nameof(playerDataService));
-        }
 
-        public void IncreaseMoney()
-        {
-            _playerDataService.IncreaseMoney(1);
-        }
+        public void IncreaseMoney() => 
+            _playerDataService.IncreaseMoney(Amount);
     }
 }

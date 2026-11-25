@@ -14,7 +14,7 @@ namespace _Game.Code.Infrastructure
         private readonly PixelArtSpawner _pixelArtSpawner;
         private readonly WaitingAreaCellSpawner _waitingAreaCellSpawner;
         private readonly TankDispatcher _tankDispatcher;
-        private readonly PlayerDataService _playerDataService;
+        private readonly IPlayerDataService _playerDataService;
         private readonly BonusBuyer _bonusBuyer;
 
         private readonly GameRunner _gameRunner;
@@ -27,7 +27,7 @@ namespace _Game.Code.Infrastructure
             WaitingAreaCellSpawner waitingAreaCellSpawner,
             TankDispatcher tankDispatcher,
             GameRunner gameRunner,
-            PlayerDataService playerDataService,
+            IPlayerDataService playerDataService,
             BonusBuyer bonusBuyer
         )
         {
